@@ -206,7 +206,7 @@ _RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_tabl
   br i1 %i.co, label %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionIBw_NtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2e_8PeekableINtNtB2g_7flatten7FlatMapINtNtNtB5_5array4iter8IntoIterNtBQ_13RowIdSequenceKj1_EINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterBM_ENCINvBQ_17rechunk_sequencesAB3T_B4e_INtNtB2g_3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBS_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB79_9UpdateJob12execute_impl0s8_0EE0EE4peek0ECsfR8GmIBoxTX_21lance_namespace_impls.exit112, label %.split.us, !llvm.loop !12027
 
 .split.us:                                        ; preds = %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.peel
-  %.lcssa436 = phi i64 [ %i.bs, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.peel ], [ %i.cl, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit ] ; 2 uses
+  %.lcssa436 = phi i64 [ %i.bs, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.peel ], [ %i.cl, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit ]
   %.lcssa433 = phi i64 [ %.ph415, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.peel ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit ] ; 3 uses
   %.sroa.0181.1377.lcssa430 = phi i64 [ %.sroa.0181.1.ph413, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.peel ], [ 0, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit ]
   %.lcssa = phi i64 [ %i.bt, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit.peel ], [ %i.cn, %_RINvMNtCscI6d9CVNmLh_4core6optionINtB3_6OptionRNtNtNtCs9KQ7US1M400_11lance_table6rowids7segment10U64SegmentE6map_oryNCINvBN_17rechunk_sequencesANtBN_13RowIdSequencej1_INtNtNtNtB5_4iter8adapters3map3MapINtNtNtB5_5slice4iter4IterNtNtNtBP_6format8fragment8FragmentENCNCNvMs_NtNtNtCshkPeWWG1flk_5lance7dataset5write6updateNtB4l_9UpdateJob12execute_impl0s8_0EEs1_0ECsfR8GmIBoxTX_21lance_namespace_impls.exit ]
@@ -334,10 +334,8 @@ bb.ae:                                            ; preds = %.split.us
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8269.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.565.sroa.6.0..sroa.456.0..sroa_idx.sroa_idx, i64 24, i1 false)
   store i64 -2, ptr %i.bi, align 8
   %.sroa.0.0.extract.trunc = trunc nuw nsw i64 %.lcssa436 to i8
-  %.sroa.0.1.extract.shift = lshr i64 %.lcssa436, 8
-  %.sroa.0.1.extract.trunc = trunc nuw nsw i64 %.sroa.0.1.extract.shift to i56
   store i8 %.sroa.0.0.extract.trunc, ptr %i.s, align 8
-  store i56 %.sroa.0.1.extract.trunc, ptr %.sroa.4265.0..sroa_idx, align 1
+  store i56 0, ptr %.sroa.4265.0..sroa_idx, align 1
   %i.dh = load <2 x ptr>, ptr %.sroa.456.0..sroa_idx, align 8
   store <2 x ptr> %i.dh, ptr %.sroa.5266.0..sroa_idx, align 8
   store ptr %.sroa.565.sroa.5.0.copyload, ptr %.sroa.7268.0..sroa_idx, align 8
@@ -740,7 +738,7 @@ bb.a:
   %i.m = alloca [56 x i8], align 8                ; 4 uses
   %i.n = alloca [24 x i8], align 8                ; 5 uses
   %i.o = alloca [24 x i8], align 8                ; 6 uses
-  %i.p = alloca [56 x i8], align 8                ; 9 uses
+  %i.p = alloca [56 x i8], align 8                ; 10 uses
   %i.q = alloca [56 x i8], align 8                ; 5 uses
   %i.r = alloca [24 x i8], align 8                ; 6 uses
   %i.s = alloca [56 x i8], align 8                ; 5 uses
@@ -1143,6 +1141,7 @@ bb.oa:                                            ; preds = %_RINvYINtNtNtNtCscI
   %.sroa.4.0..sroa_idx.i.i477 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %.sroa.5.0..sroa_idx.i.i478 = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %.sroa.561.0..sroa_idx62.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %.sroa.4243.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 1
   %.sroa.5244.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %.sroa.7246.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %.sroa.8247.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 32
@@ -1545,7 +1544,9 @@ bb.oz:                                            ; preds = %.split.us.i.i
   %.sroa.565.sroa.5.0.copyload.i.i = load ptr, ptr %.sroa.565.sroa.5.0..sroa.456.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !162340
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8247.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.565.sroa.6.0..sroa.456.0..sroa_idx.sroa_idx.i.i, i64 24, i1 false), !noalias !162340
   store i64 -2, ptr %i.ape, align 8, !noalias !162340
-  store i64 %i.ata, ptr %i.p, align 8, !noalias !162340
+  %.sroa.0.0.extract.trunc.i.i = trunc nuw nsw i64 %i.ata to i8
+  store i8 %.sroa.0.0.extract.trunc.i.i, ptr %i.p, align 8, !noalias !162340
+  store i56 0, ptr %.sroa.4243.0..sroa_idx.i.i, align 1, !noalias !162340
   %i.ath = load <2 x ptr>, ptr %.sroa.456.0..sroa_idx.i.i, align 8, !noalias !162340
   store <2 x ptr> %i.ath, ptr %.sroa.5244.0..sroa_idx.i.i, align 8, !noalias !162340
   store ptr %.sroa.565.sroa.5.0.copyload.i.i, ptr %.sroa.7246.0..sroa_idx.i.i, align 8, !noalias !162340

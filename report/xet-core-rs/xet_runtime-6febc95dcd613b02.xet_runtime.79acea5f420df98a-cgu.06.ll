@@ -204,7 +204,7 @@ bb.a:
   %i.h = alloca [8 x i8], align 8                 ; 9 uses
   %i.i = alloca [40 x i8], align 8                ; 10 uses
   %i.j = alloca [40 x i8], align 8                ; 11 uses
-  %i.k = alloca [672 x i8], align 8               ; 17 uses
+  %i.k = alloca [672 x i8], align 8               ; 16 uses
   %i.l = alloca [40 x i8], align 8                ; 7 uses
   %i.m = alloca [40 x i8], align 8                ; 8 uses
   %i.n = tail call noundef ptr @_RNvYNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtNtNtCskKLDkoKarTP_4core2io5write5Write9write_allCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @20, i64 noundef 1), !noalias !553 ; 2 uses
@@ -368,33 +368,19 @@ bb.o:                                             ; preds = %bb.n
   store i64 %i.as, ptr %i.ak, align 8
   %i.at = load i64, ptr %i.ao, align 8, !alias.scope !559, !noundef !4
   %i.au = icmp ugt i64 %i.at, 16
-  %2 = load i64, ptr %i.k, align 8, !range !18, !alias.scope !559, !noundef !4 ; 2 uses
-  br i1 %i.au, label %5, label %3
-
-3:                                                ; preds = %.lr.ph
-  %4 = icmp eq i64 %2, 0
-  call void @llvm.assume(i1 %4)
-  br label %_RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorECsarFSTFZzLuM_11xet_runtime.exit.thread.i.peel
-
-5:                                                ; preds = %.lr.ph
-  %6 = icmp ne i64 %2, 0
-  call void @llvm.assume(i1 %6)
-  %7 = load ptr, ptr %i.aq, align 8, !alias.scope !559, !nonnull !4, !noundef !4
-  br label %_RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorECsarFSTFZzLuM_11xet_runtime.exit.thread.i.peel
-
-_RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorECsarFSTFZzLuM_11xet_runtime.exit.thread.i.peel: ; preds = %3, %5
-  %.sink13.i.peel = phi ptr [ %7, %5 ], [ %i.ap, %3 ]
-  %8 = getelementptr inbounds nuw [40 x i8], ptr %.sink13.i.peel, i64 %i.as
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.j, ptr noundef nonnull align 8 dereferenceable(40) %8, i64 40, i1 false)
+  %2 = load ptr, ptr %i.aq, align 8, !nonnull !4
+  %.sink13.i.peel = select i1 %i.au, ptr %2, ptr %i.ap
+  %3 = getelementptr inbounds nuw [40 x i8], ptr %.sink13.i.peel, i64 %i.as
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.j, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef nonnull align 8 dereferenceable(40) %i.j, i64 40, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr %i.i, ptr %i.h, align 8
-  %9 = invoke noundef align 8 ptr @_RINvXs0_NtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6format4jsonINtB6_16SerializableSpanNtNtNtBc_8registry7sharded8RegistryNtB6_10JsonFieldsENtNtCs6SYjS1KFWza_10serde_core3ser9Serialize9serializeQINtNtCsiWcPrHiWZDL_10serde_json3ser10SerializerNtNtBa_6writer12WriteAdaptorEECsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %1)
+  %4 = invoke noundef align 8 ptr @_RINvXs0_NtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6format4jsonINtB6_16SerializableSpanNtNtNtBc_8registry7sharded8RegistryNtB6_10JsonFieldsENtNtCs6SYjS1KFWza_10serde_core3ser9Serialize9serializeQINtNtCsiWcPrHiWZDL_10serde_json3ser10SerializerNtNtBa_6writer12WriteAdaptorEECsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %1)
           to label %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.peel unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !560 ; 2 uses
 
-_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.peel: ; preds = %_RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorECsarFSTFZzLuM_11xet_runtime.exit.thread.i.peel
-  %.not8.peel = icmp eq ptr %9, null
+_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.peel: ; preds = %.lr.ph
+  %.not8.peel = icmp eq ptr %4, null
   br i1 %.not8.peel, label %bb.p, label %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.thread
 
 bb.p:                                             ; preds = %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.peel
@@ -471,7 +457,7 @@ _RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin
   %i.bi = invoke noundef align 8 ptr @_RINvXs0_NtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6format4jsonINtB6_16SerializableSpanNtNtNtBc_8registry7sharded8RegistryNtB6_10JsonFieldsENtNtCs6SYjS1KFWza_10serde_core3ser9Serialize9serializeQINtNtCsiWcPrHiWZDL_10serde_json3ser10SerializerNtNtBa_6writer12WriteAdaptorEECsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %1)
           to label %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !560 ; 2 uses
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorECsarFSTFZzLuM_11xet_runtime.exit.thread.i, %.peel.next, %_RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorECsarFSTFZzLuM_11xet_runtime.exit.thread.i.peel, %.loopexit
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RINvYNtNtCsiWcPrHiWZDL_10serde_json3ser16CompactFormatterNtB5_9Formatter17begin_array_valueNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorECsarFSTFZzLuM_11xet_runtime.exit.thread.i, %.peel.next, %.lr.ph, %.loopexit
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs6_NtCskeoOuuhwsQF_12sharded_slab4poolINtB5_3RefNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber8registry7sharded9DataInnerENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ar)
@@ -482,7 +468,7 @@ _RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tr
   br i1 %.not8, label %bb.s, label %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.thread
 
 _RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.thread: ; preds = %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit, %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.peel, %.loopexit
-  %.sroa.0.1.i52 = phi ptr [ %i.bh, %.loopexit ], [ %9, %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.peel ], [ %i.bi, %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit ]
+  %.sroa.0.1.i52 = phi ptr [ %i.bh, %.loopexit ], [ %4, %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit.peel ], [ %i.bi, %_RINvXs2_NtCsiWcPrHiWZDL_10serde_json3serINtB6_8CompoundNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber3fmt6writer12WriteAdaptorNtB6_16CompactFormatterENtNtCs6SYjS1KFWza_10serde_core3ser12SerializeSeq17serialize_elementINtNtNtBV_6format4json16SerializableSpanNtNtNtBX_8registry7sharded8RegistryNtB3q_10JsonFieldsEECsarFSTFZzLuM_11xet_runtime.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   invoke void @_RNvXs6_NtCskeoOuuhwsQF_12sharded_slab4poolINtB5_3RefNtNtNtCs8C3ZpOVqhBL_18tracing_subscriber8registry7sharded9DataInnerENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsarFSTFZzLuM_11xet_runtime(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ar)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs8C3ZpOVqhBL_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECsarFSTFZzLuM_11xet_runtime.exit23 unwind label %.loopexit.split-lp54.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

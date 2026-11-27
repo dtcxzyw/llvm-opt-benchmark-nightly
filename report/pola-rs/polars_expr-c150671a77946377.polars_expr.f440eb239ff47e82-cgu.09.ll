@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.63.1.i.ph277 = phi i64 [ %.sroa.63.1.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.63.4.i, %bb.al ] ; 5 uses
   %.sroa.59.1.i.ph278 = phi i64 [ %.sroa.59.1.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.59.3.i, %bb.al ] ; 3 uses
   %.sroa.55.1.i.ph279 = phi i64 [ %.sroa.55.1.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.55.3.i, %bb.al ] ; 3 uses
-  %.sroa.45.1.i.ph280 = phi ptr [ %.sroa.45.1.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.4.i, %bb.al ] ; 10 uses
+  %.sroa.45.1.i.ph280 = phi ptr [ %.sroa.45.1.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.4.i, %bb.al ] ; 9 uses
   %.sroa.35.1.i.ph282 = phi ptr [ %.sroa.35.1.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %spec.select153.i, %bb.al ] ; 5 uses
   %.sroa.31.1.i.ph = phi i64 [ %.sroa.31.9.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.31.5.i.peel, %bb.al ] ; 6 uses
   %.sroa.27.1.i.ph = phi i64 [ %.sroa.27.7.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.27.4.i.peel, %bb.al ] ; 4 uses
@@ -469,7 +469,6 @@ bb.am:                                            ; preds = %bb.ah, %bb.aj
   %.sroa.7.3.i = phi ptr [ %i.dq, %bb.aj ], [ %.sroa.7.1.i, %bb.ah ], !dbg !11022
   %.sroa.067.4.i = phi ptr [ null, %bb.aj ], [ %spec.select151.i, %bb.ah ], !dbg !11022
   %.sroa.3.0.i.pn.i.ph.i.i.i = phi ptr [ %.sroa.7.1.i, %bb.aj ], [ %..i.i.i.i.i, %bb.ah ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.1.i.ph280) ]
   %i.eg = icmp eq ptr %.sroa.39.1.i, %.sroa.45.1.i.ph280, !dbg !11125
   br i1 %i.eg, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters10filter_mapINtB5_9FilterMapINtNtB7_3zip3ZipINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRNtNtCs2mZqlW55729_12polars_utils7float164pf16INtNtNtBb_5slice4iter4IterB2G_ENtNtB1v_8iterator10BitmapIterEB1q_ENCINvNtCslFlrwjHoTci_14polars_compute6moment12pearson_corrB2G_B2G_E0ENtNtNtB9_6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.thread.i, label %.lr.ph.i.i.i.i, !dbg !11126, !llvm.loop !10735
 
@@ -872,7 +871,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.63.2.i.ph223 = phi i64 [ %.sroa.63.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.63.5.i, %bb.al ] ; 5 uses
   %.sroa.59.2.i.ph224 = phi i64 [ %.sroa.59.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.59.4.i, %bb.al ] ; 3 uses
   %.sroa.55.2.i.ph225 = phi i64 [ %.sroa.55.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.55.4.i, %bb.al ] ; 3 uses
-  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 10 uses
+  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 9 uses
   %.sroa.35.2.i.ph228 = phi ptr [ %.sroa.35.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %spec.select140.i, %bb.al ] ; 5 uses
   %.sroa.31.2.i.ph = phi i64 [ %.sroa.31.10.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.31.6.i.peel, %bb.al ] ; 6 uses
   %.sroa.27.2.i.ph = phi i64 [ %.sroa.27.8.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.27.5.i.peel, %bb.al ] ; 4 uses
@@ -1143,7 +1142,6 @@ bb.am:                                            ; preds = %bb.ah, %bb.aj
   %.sroa.7.4.i = phi ptr [ %i.ds, %bb.aj ], [ %.sroa.7.2.i, %bb.ah ], !dbg !11896
   %.sroa.053.5.i = phi ptr [ null, %bb.aj ], [ %spec.select138.i, %bb.ah ], !dbg !11896
   %.sroa.3.0.i.pn.i.ph.i.i.i = phi ptr [ %.sroa.7.2.i, %bb.aj ], [ %..i.i.i.i.i, %bb.ah ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.2.i.ph226) ]
   %i.ei = icmp eq ptr %.sroa.39.2.i, %.sroa.45.2.i.ph226, !dbg !12001
   br i1 %i.ei, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB4_3ZipINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRdINtNtNtBa_5slice4iter4IterdENtNtB10_8iterator10BitmapIterEBV_ENtNtNtB8_6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit52.thread.i, label %.lr.ph.i.i.i.i, !dbg !12002, !llvm.loop !11672
 
@@ -1546,7 +1544,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.63.2.i.ph223 = phi i64 [ %.sroa.63.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.63.5.i, %bb.al ] ; 5 uses
   %.sroa.59.2.i.ph224 = phi i64 [ %.sroa.59.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.59.4.i, %bb.al ] ; 3 uses
   %.sroa.55.2.i.ph225 = phi i64 [ %.sroa.55.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.55.4.i, %bb.al ] ; 3 uses
-  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 10 uses
+  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 9 uses
   %.sroa.35.2.i.ph228 = phi ptr [ %.sroa.35.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %spec.select140.i, %bb.al ] ; 5 uses
   %.sroa.31.2.i.ph = phi i64 [ %.sroa.31.10.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.31.6.i.peel, %bb.al ] ; 6 uses
   %.sroa.27.2.i.ph = phi i64 [ %.sroa.27.8.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.27.5.i.peel, %bb.al ] ; 4 uses
@@ -1817,7 +1815,6 @@ bb.am:                                            ; preds = %bb.ah, %bb.aj
   %.sroa.7.4.i = phi ptr [ %i.dr, %bb.aj ], [ %.sroa.7.2.i, %bb.ah ], !dbg !12614
   %.sroa.053.5.i = phi ptr [ null, %bb.aj ], [ %spec.select138.i, %bb.ah ], !dbg !12614
   %.sroa.3.0.i.pn.i.ph.i.i.i = phi ptr [ %.sroa.7.2.i, %bb.aj ], [ %..i.i.i.i.i, %bb.ah ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.2.i.ph226) ]
   %i.eh = icmp eq ptr %.sroa.39.2.i, %.sroa.45.2.i.ph226, !dbg !12719
   br i1 %i.eh, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB4_3ZipINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRfINtNtNtBa_5slice4iter4IterfENtNtB10_8iterator10BitmapIterEBV_ENtNtNtB8_6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit52.thread.i, label %.lr.ph.i.i.i.i, !dbg !12720, !llvm.loop !12387
 
@@ -2220,7 +2217,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.63.2.i.ph223 = phi i64 [ %.sroa.63.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.63.5.i, %bb.al ] ; 5 uses
   %.sroa.59.2.i.ph224 = phi i64 [ %.sroa.59.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.59.4.i, %bb.al ] ; 3 uses
   %.sroa.55.2.i.ph225 = phi i64 [ %.sroa.55.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.55.4.i, %bb.al ] ; 3 uses
-  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 10 uses
+  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 9 uses
   %.sroa.35.2.i.ph228 = phi ptr [ %.sroa.35.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %spec.select140.i, %bb.al ] ; 5 uses
   %.sroa.31.2.i.ph = phi i64 [ %.sroa.31.10.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.31.6.i.peel, %bb.al ] ; 6 uses
   %.sroa.27.2.i.ph = phi i64 [ %.sroa.27.8.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.27.5.i.peel, %bb.al ] ; 4 uses
@@ -2491,7 +2488,6 @@ bb.am:                                            ; preds = %bb.ah, %bb.aj
   %.sroa.7.4.i = phi ptr [ %i.dr, %bb.aj ], [ %.sroa.7.2.i, %bb.ah ], !dbg !13335
   %.sroa.053.5.i = phi ptr [ null, %bb.aj ], [ %spec.select138.i, %bb.ah ], !dbg !13335
   %.sroa.3.0.i.pn.i.ph.i.i.i = phi ptr [ %.sroa.7.2.i, %bb.aj ], [ %..i.i.i.i.i, %bb.ah ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.2.i.ph226) ]
   %i.eh = icmp eq ptr %.sroa.39.2.i, %.sroa.45.2.i.ph226, !dbg !13440
   br i1 %i.eh, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB4_3ZipINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRlINtNtNtBa_5slice4iter4IterlENtNtB10_8iterator10BitmapIterEBV_ENtNtNtB8_6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit52.thread.i, label %.lr.ph.i.i.i.i, !dbg !13441, !llvm.loop !13108
 
@@ -2894,7 +2890,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.63.2.i.ph223 = phi i64 [ %.sroa.63.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.63.5.i, %bb.al ] ; 5 uses
   %.sroa.59.2.i.ph224 = phi i64 [ %.sroa.59.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.59.4.i, %bb.al ] ; 3 uses
   %.sroa.55.2.i.ph225 = phi i64 [ %.sroa.55.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.55.4.i, %bb.al ] ; 3 uses
-  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 10 uses
+  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 9 uses
   %.sroa.35.2.i.ph228 = phi ptr [ %.sroa.35.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %spec.select140.i, %bb.al ] ; 5 uses
   %.sroa.31.2.i.ph = phi i64 [ %.sroa.31.10.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.31.6.i.peel, %bb.al ] ; 6 uses
   %.sroa.27.2.i.ph = phi i64 [ %.sroa.27.8.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.27.5.i.peel, %bb.al ] ; 4 uses
@@ -3165,7 +3161,6 @@ bb.am:                                            ; preds = %bb.ah, %bb.aj
   %.sroa.7.4.i = phi ptr [ %i.ds, %bb.aj ], [ %.sroa.7.2.i, %bb.ah ], !dbg !14057
   %.sroa.053.5.i = phi ptr [ null, %bb.aj ], [ %spec.select138.i, %bb.ah ], !dbg !14057
   %.sroa.3.0.i.pn.i.ph.i.i.i = phi ptr [ %.sroa.7.2.i, %bb.aj ], [ %..i.i.i.i.i, %bb.ah ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.2.i.ph226) ]
   %i.ei = icmp eq ptr %.sroa.39.2.i, %.sroa.45.2.i.ph226, !dbg !14162
   br i1 %i.ei, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB4_3ZipINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRmINtNtNtBa_5slice4iter4ItermENtNtB10_8iterator10BitmapIterEBV_ENtNtNtB8_6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit52.thread.i, label %.lr.ph.i.i.i.i, !dbg !14163, !llvm.loop !13829
 
@@ -3568,7 +3563,7 @@ bb.t:                                             ; preds = %bb.s
   %.sroa.63.2.i.ph223 = phi i64 [ %.sroa.63.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.63.5.i, %bb.al ] ; 5 uses
   %.sroa.59.2.i.ph224 = phi i64 [ %.sroa.59.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.59.4.i, %bb.al ] ; 3 uses
   %.sroa.55.2.i.ph225 = phi i64 [ %.sroa.55.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.55.4.i, %bb.al ] ; 3 uses
-  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 10 uses
+  %.sroa.45.2.i.ph226 = phi ptr [ %.sroa.45.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.45.5.i, %bb.al ] ; 9 uses
   %.sroa.35.2.i.ph228 = phi ptr [ %.sroa.35.2.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %spec.select140.i, %bb.al ] ; 5 uses
   %.sroa.31.2.i.ph = phi i64 [ %.sroa.31.10.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.31.6.i.peel, %bb.al ] ; 6 uses
   %.sroa.27.2.i.ph = phi i64 [ %.sroa.27.8.i, %.lr.ph.i.i.i.i.preheader ], [ %.sroa.27.5.i.peel, %bb.al ] ; 4 uses
@@ -3839,7 +3834,6 @@ bb.am:                                            ; preds = %bb.ah, %bb.aj
   %.sroa.7.4.i = phi ptr [ %i.ds, %bb.aj ], [ %.sroa.7.2.i, %bb.ah ], !dbg !14780
   %.sroa.053.5.i = phi ptr [ null, %bb.aj ], [ %spec.select138.i, %bb.ah ], !dbg !14780
   %.sroa.3.0.i.pn.i.ph.i.i.i = phi ptr [ %.sroa.7.2.i, %bb.aj ], [ %..i.i.i.i.i, %bb.ah ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.45.2.i.ph226) ]
   %i.ei = icmp eq ptr %.sroa.39.2.i, %.sroa.45.2.i.ph226, !dbg !14885
   br i1 %i.ei, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB4_3ZipINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValidityRxINtNtNtBa_5slice4iter4IterxENtNtB10_8iterator10BitmapIterEBV_ENtNtNtB8_6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit52.thread.i, label %.lr.ph.i.i.i.i, !dbg !14886, !llvm.loop !14552
 

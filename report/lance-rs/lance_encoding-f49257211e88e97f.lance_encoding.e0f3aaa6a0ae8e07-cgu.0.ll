@@ -205,7 +205,6 @@ _RNCNvMsc_NtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive6spa
 
 bb.v:                                             ; preds = %bb.q
   %i.ax = getelementptr inbounds nuw i8, ptr %.8.val, i64 %i.ao ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   switch i64 %i.v, label %.split340 [
     i64 4, label %bb.z

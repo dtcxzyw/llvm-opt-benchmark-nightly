@@ -202,7 +202,7 @@ bb.t:                                             ; preds = %bb.s, %bb.n
 
 bb.u:                                             ; preds = %bb.t
   %i.et = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
-  %i.eu = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
+  %i.eu = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %.pre51 = load ptr, ptr %i.h, align 8           ; 5 uses
   %i.ev = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %.pre51, ptr noundef nonnull @.str.6, i64 noundef 1) #14 ; 0 uses
   %i.ew = load ptr, ptr %i.em, align 8            ; 3 uses
@@ -252,7 +252,7 @@ bb.y:                                             ; preds = %_ZStlsISt11char_tra
   %i.fq = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.fn, ptr noundef %i.fo, i64 noundef %i.fp) #14 ; 0 uses
   %i.fr = load ptr, ptr %2, align 8               ; 2 uses
   %i.fs = icmp eq ptr %i.fr, %i.et
-  br i1 %i.fs, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.peel
+  br i1 %i.fs, label %_ZN2v88platform7tracing15JSONTraceWriter14AppendArgValueEPNS_24ConvertableToTraceFormatE.exit.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.peel
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.peel: ; preds = %bb.y
   %i.ft = load i64, ptr %i.et, align 8
@@ -260,13 +260,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.fr, i64 noundef %i.fu) #15
   br label %_ZN2v88platform7tracing15JSONTraceWriter14AppendArgValueEPNS_24ConvertableToTraceFormatE.exit.peel
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.peel: ; preds = %bb.y
-  %3 = load i64, ptr %i.eu, align 8
-  %4 = icmp ult i64 %3, 16
-  call void @llvm.assume(i1 %4)
-  br label %_ZN2v88platform7tracing15JSONTraceWriter14AppendArgValueEPNS_24ConvertableToTraceFormatE.exit.peel
-
-_ZN2v88platform7tracing15JSONTraceWriter14AppendArgValueEPNS_24ConvertableToTraceFormatE.exit.peel: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.peel, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.peel
+_ZN2v88platform7tracing15JSONTraceWriter14AppendArgValueEPNS_24ConvertableToTraceFormatE.exit.peel: ; preds = %bb.y, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.peel
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   br label %bb.z
 

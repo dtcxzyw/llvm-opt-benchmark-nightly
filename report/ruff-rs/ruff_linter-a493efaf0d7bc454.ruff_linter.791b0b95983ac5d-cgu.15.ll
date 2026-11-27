@@ -206,11 +206,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4_13SemanticModel19current_expressions(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(472) %i.b)
-  %.sroa.01.sroa.0.0.copyload = load ptr, ptr %i.a, align 8 ; 4 uses
+  %.sroa.01.sroa.0.0.copyload = load ptr, ptr %i.a, align 8 ; 3 uses
   %.sroa.01.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.01.sroa.2.0.copyload = load i32, ptr %.sroa.01.sroa.2.0..sroa_idx, align 8 ; 2 uses
   %.sroa.01.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.01.sroa.4.0.copyload = load ptr, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.01.sroa.4.0.copyload = load ptr, ptr %.sroa.01.sroa.4.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.c = getelementptr inbounds nuw i8, ptr %.sroa.01.sroa.0.0.copyload, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.01.sroa.0.0.copyload, i64 8
@@ -260,7 +260,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %.peel.next
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.sroa.0.0.copyload) ]
   %i.v = add i32 %i.n, -1
   %i.w = zext i32 %i.v to i64                     ; 7 uses
   %i.x = icmp ugt i64 %i.g, %i.w
@@ -275,7 +274,6 @@ bb.f:                                             ; preds = %bb.e
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.k, i64 %i.w
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %i.aa = load i32, ptr %i.z, align 8, !noalias !8839, !noundef !20
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.sroa.4.0.copyload) ]
   %i.ab = icmp ugt i64 %i.o, %i.w
   br i1 %i.ab, label %bb.g, label %.loopexit56
 

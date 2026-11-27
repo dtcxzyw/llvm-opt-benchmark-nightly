@@ -205,9 +205,7 @@ bb.d:                                             ; preds = %.preheader
   %i.z = load i32, ptr %i.y, align 4, !tbaa !202
   %i.aa = zext i32 %i.z to i64
   call void @OPENSSL_cleanse(ptr noundef %i.x, i64 noundef %i.aa) #36
-  %i.ab = call i32 @EVP_MD_CTX_copy_ex(ptr noundef nonnull %i.m, ptr noundef nonnull %i.o)
-  %.not.i.peel = icmp ne i32 %i.ab, 0
-  call void @llvm.assume(i1 %.not.i.peel)
+  %i.ab = call i32 @EVP_MD_CTX_copy_ex(ptr noundef nonnull %i.m, ptr noundef nonnull %i.o) ; 0 uses
   %i.ac = zext i32 %i.w to i64
   %i.ad = load ptr, ptr %i.m, align 8, !tbaa !208
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 24

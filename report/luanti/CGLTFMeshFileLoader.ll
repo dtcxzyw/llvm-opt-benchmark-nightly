@@ -205,7 +205,7 @@ bb.at:                                            ; preds = %_ZN10tiniergltfL5ch
   %i.em = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 9 uses
   %i.en = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %i.ep = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
+  %i.ep = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.eq = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 8 uses
   %i.er = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 3 uses
   %i.es = invoke noundef i32 @_ZNK4Json5Value4sizeEv(ptr noundef nonnull align 8 dereferenceable(40) %10)
@@ -285,7 +285,7 @@ bb.bb:                                            ; preds = %_ZNSt6vectorIN10tin
   store i8 0, ptr %i.ek, align 8, !tbaa !93
   %i.fj = load ptr, ptr %12, align 8, !tbaa !61   ; 2 uses
   %i.fk = icmp eq ptr %i.fj, %i.em
-  br i1 %i.fk, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.peel
+  br i1 %i.fk, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.peel, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.peel
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.peel: ; preds = %bb.bb
   %i.fl = load i64, ptr %i.em, align 8, !tbaa !60
@@ -293,13 +293,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.fj, i64 noundef %i.fm) #31
   br label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.peel
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.peel: ; preds = %bb.bb
-  %32 = load i64, ptr %i.ep, align 8, !tbaa !59
-  %33 = icmp ult i64 %32, 16
-  call void @llvm.assume(i1 %33)
-  br label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.peel
-
-_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.peel: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i.i.i.peel, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.peel, %_ZNSt6vectorIN10tiniergltf6BufferESaIS1_EE12emplace_backIJRN4Json5ValueERKSt8functionIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSE_EESt8optionalISE_EEEERS1_DpOT_.exit.peel
+_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.peel: ; preds = %bb.bb, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.peel, %_ZNSt6vectorIN10tiniergltf6BufferESaIS1_EE12emplace_backIJRN4Json5ValueERKSt8functionIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSE_EESt8optionalISE_EEEERS1_DpOT_.exit.peel
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #30
   br label %bb.bc
 

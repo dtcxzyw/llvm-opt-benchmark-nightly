@@ -205,13 +205,13 @@ bb.a:
   %7 = alloca %"class.jxl::Plane.61", align 8     ; 6 uses
   %8 = alloca %"class.jxl::StatusOr.62", align 8  ; 9 uses
   %9 = alloca %"class.jxl::Plane.61", align 8     ; 7 uses
-  %i.a = alloca [12 x ptr], align 16              ; 21 uses
+  %i.a = alloca [12 x ptr], align 16              ; 17 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !104  ; 2 uses
   %i.d = load i32, ptr %0, align 8, !tbaa !88     ; 2 uses
   %i.e = zext i32 %i.d to i64                     ; 13 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !89   ; 12 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !89   ; 2 uses
   %i.h = zext i32 %i.g to i64                     ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !442)
@@ -380,28 +380,28 @@ bb.h:                                             ; preds = %_ZN3jxl5PlaneIfE6Cr
   %.val103 = load ptr, ptr %i.ce, align 8
   call fastcc void @_ZN3jxl12_GLOBAL__N_110CreateMaskERKNS_5PlaneIfEERS2_(ptr noundef nonnull align 8 dereferenceable(56) %5, i64 %.val, ptr %.val103) #24
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.cg = load i32, ptr %i.cf, align 4, !tbaa !89 ; 6 uses
+  %i.cg = load i32, ptr %i.cf, align 4, !tbaa !89 ; 4 uses
   %i.ch = zext i32 %i.cg to i64                   ; 2 uses
   %.not = icmp eq i32 %i.cg, 0
   br i1 %.not, label %._crit_edge158, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !91 ; 4 uses
+  %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !91 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cl = load i64, ptr %i.ck, align 8, !tbaa !92 ; 3 uses
+  %i.cl = load i64, ptr %i.ck, align 8, !tbaa !92
   %i.cm = load ptr, ptr %i.ce, align 8, !tbaa !91 ; 2 uses
   %i.cn = load i64, ptr %i.cd, align 8, !tbaa !92
-  %i.co = add nsw i64 %i.h, -1                    ; 22 uses
+  %i.co = add nsw i64 %i.h, -1                    ; 12 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !91 ; 22 uses
+  %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !91 ; 12 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.cs = load i64, ptr %i.cr, align 8, !tbaa !92 ; 22 uses
+  %i.cs = load i64, ptr %i.cr, align 8, !tbaa !92 ; 12 uses
   %i.ct = load i32, ptr %1, align 8, !tbaa !88    ; 2 uses
   %i.cu = zext i32 %i.ct to i64
   %.not159 = icmp eq i32 %i.ct, 0
   %i.cv = add nsw i64 %i.e, -1                    ; 12 uses
-  br i1 %.not159, label %.lr.ph.split.preheader, label %.lr.ph.split.us.preheader
+  br i1 %.not159, label %.lr.ph.split.peel.next167, label %.lr.ph.split.us.preheader
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.cw = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -417,80 +417,13 @@ bb.h:                                             ; preds = %_ZN3jxl5PlaneIfE6Cr
   %i.dg = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   br label %.lr.ph.split.us
 
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
+.lr.ph.split.peel.next167:                        ; preds = %.lr.ph
   call void @llvm.assume(i1 true) [ "align"(ptr %i.cj, i64 64) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   call void @llvm.assume(i1 true) [ "align"(ptr %i.cm, i64 64) ]
-  %.not100.6.peel = icmp ugt i32 %i.g, 1
-  %spec.select.6.peel = select i1 %.not100.6.peel, i64 1, i64 %i.co
-  %10 = mul i64 %i.cs, %spec.select.6.peel
-  %11 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %10
-  call void @llvm.assume(i1 true) [ "align"(ptr %11, i64 64) ]
-  %.not100.7.peel = icmp ugt i32 %i.g, 2
-  %spec.select.7.peel = select i1 %.not100.7.peel, i64 2, i64 %i.co
-  %12 = mul i64 %i.cs, %spec.select.7.peel
-  %13 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %12
-  call void @llvm.assume(i1 true) [ "align"(ptr %13, i64 64) ]
-  %.not100.8.peel = icmp ugt i32 %i.g, 3
-  %spec.select.8.peel = select i1 %.not100.8.peel, i64 3, i64 %i.co
-  %14 = mul i64 %i.cs, %spec.select.8.peel
-  %15 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %14
-  call void @llvm.assume(i1 true) [ "align"(ptr %15, i64 64) ]
-  %.not100.9.peel = icmp ugt i32 %i.g, 4
-  %spec.select.9.peel = select i1 %.not100.9.peel, i64 4, i64 %i.co
-  %16 = mul i64 %i.cs, %spec.select.9.peel
-  %17 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %16
-  call void @llvm.assume(i1 true) [ "align"(ptr %17, i64 64) ]
-  %.not100.10.peel = icmp ugt i32 %i.g, 5
-  %spec.select.10.peel = select i1 %.not100.10.peel, i64 5, i64 %i.co
-  %18 = mul i64 %i.cs, %spec.select.10.peel
-  %19 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %18
-  call void @llvm.assume(i1 true) [ "align"(ptr %19, i64 64) ]
-  %.not100.11.peel = icmp ugt i32 %i.g, 6
-  %spec.select.11.peel = select i1 %.not100.11.peel, i64 6, i64 %i.co
-  %20 = mul i64 %i.cs, %spec.select.11.peel
-  %21 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %20
-  call void @llvm.assume(i1 true) [ "align"(ptr %21, i64 64) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  %exitcond166.peel.not = icmp eq i32 %i.cg, 1
-  br i1 %exitcond166.peel.not, label %._crit_edge158, label %.lr.ph.split.peel.next
-
-.lr.ph.split.peel.next:                           ; preds = %.lr.ph.split.preheader
-  %22 = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.cl
-  call void @llvm.assume(i1 true) [ "align"(ptr %22, i64 64) ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  %.not100.10.peel195 = icmp ugt i32 %i.g, 7
-  %spec.select.10.peel196 = select i1 %.not100.10.peel195, i64 7, i64 %i.co
-  %23 = mul i64 %i.cs, %spec.select.10.peel196
-  %24 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %23
-  call void @llvm.assume(i1 true) [ "align"(ptr %24, i64 64) ]
-  %.not100.11.peel197 = icmp ugt i32 %i.g, 8
-  %spec.select.11.peel198 = select i1 %.not100.11.peel197, i64 8, i64 %i.co
-  %25 = mul i64 %i.cs, %spec.select.11.peel198
-  %26 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %25
-  call void @llvm.assume(i1 true) [ "align"(ptr %26, i64 64) ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  %exitcond166.peel199.not = icmp eq i32 %i.cg, 2
-  br i1 %exitcond166.peel199.not, label %._crit_edge158, label %.lr.ph.split.peel.next167
-
-.lr.ph.split.peel.next167:                        ; preds = %.lr.ph.split.peel.next
-  %27 = shl i64 %i.cl, 1
-  %28 = getelementptr inbounds nuw i8, ptr %i.cj, i64 %27
-  call void @llvm.assume(i1 true) [ "align"(ptr %28, i64 64) ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  %.not100.10.peel228 = icmp ugt i32 %i.g, 9
-  %spec.select.10.peel229 = select i1 %.not100.10.peel228, i64 9, i64 %i.co
-  %29 = mul i64 %i.cs, %spec.select.10.peel229
-  %30 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %29
-  call void @llvm.assume(i1 true) [ "align"(ptr %30, i64 64) ]
-  %.not100.11.peel230 = icmp ugt i32 %i.g, 10
-  %spec.select.11.peel231 = select i1 %.not100.11.peel230, i64 10, i64 %i.co
-  %31 = mul i64 %i.cs, %spec.select.11.peel231
-  %32 = getelementptr inbounds nuw i8, ptr %i.cq, i64 %31
-  call void @llvm.assume(i1 true) [ "align"(ptr %32, i64 64) ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  %exitcond166.peel232.not = icmp eq i32 %i.cg, 3
-  br i1 %exitcond166.peel232.not, label %._crit_edge158, label %.lr.ph.split.preheader249
+  %switch = icmp ult i32 %i.cg, 4
+  br i1 %switch, label %._crit_edge158, label %.lr.ph.split.preheader249
 
 .lr.ph.split.preheader249:                        ; preds = %.lr.ph.split.peel.next167
   %i.dh = add nsw i64 %i.ch, -3                   ; 2 uses
@@ -793,7 +726,7 @@ bb.k:                                             ; preds = %.sink.split, %bb.j
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %._crit_edge158, label %.lr.ph.split.epil, !llvm.loop !441
 
-._crit_edge158:                                   ; preds = %._crit_edge.us, %._crit_edge158.loopexit.unr-lcssa, %.lr.ph.split.epil, %.lr.ph.split.preheader, %.lr.ph.split.peel.next, %.lr.ph.split.peel.next167, %bb.h
+._crit_edge158:                                   ; preds = %._crit_edge.us, %._crit_edge158.loopexit.unr-lcssa, %.lr.ph.split.epil, %.lr.ph.split.peel.next167, %bb.h
   call void @_ZN3jxl13AlignedMemoryD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.by) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #23
   %.pr = load i32, ptr %i.bp, align 8, !tbaa !111

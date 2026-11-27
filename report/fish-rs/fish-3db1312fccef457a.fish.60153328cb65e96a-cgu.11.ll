@@ -206,14 +206,10 @@ bb.i:                                             ; preds = %bb.h
   %i.z = tail call { i64, i64 } @_RNvNtCs8frGy5WneL6_4fish6screen16wcwidth_rendered(i32 noundef %i.t) ; 2 uses
   %i.aa = extractvalue { i64, i64 } %i.z, 0
   %i.ab = trunc nuw i64 %i.aa to i1
-  br i1 %i.ab, label %.loopexit94, label %.peel.next
+  br i1 %i.ab, label %.loopexit94, label %bb.j
 
-.peel.next:                                       ; preds = %bb.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
-  br label %bb.j
-
-bb.j:                                             ; preds = %bb.l, %.peel.next
-  %.sroa.035.0 = phi ptr [ %i.ah, %bb.l ], [ %i.x, %.peel.next ] ; 3 uses
+bb.j:                                             ; preds = %bb.i, %bb.l
+  %.sroa.035.0 = phi ptr [ %i.ah, %bb.l ], [ %i.x, %bb.i ] ; 3 uses
   %i.ac = icmp eq ptr %.sroa.035.0, %3
   br i1 %i.ac, label %_RNvXs5_NtNtCslLGyqsphxMB_10widestring6utfstr4iterNtB5_10CharsUtf32NtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4next.exit.thread, label %bb.k
 

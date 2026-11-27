@@ -205,8 +205,7 @@ _RNvYINtNtCs3Ol6WPi9G6e_12tokio_rustls6common15SyncReadAdapterINtNtCsgCecv3eZDcN
   br i1 %i.bq, label %bb.n, label %.thread44
 
 bb.n:                                             ; preds = %.split35.peel
-  %i.br = getelementptr i8, ptr %i.bk, i64 -1     ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
+  %i.br = getelementptr i8, ptr %i.bk, i64 -1     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13571
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   store ptr %i.br, ptr %i.w, align 8, !alias.scope !13572, !noalias !13571
@@ -609,8 +608,7 @@ bb.n:                                             ; preds = %_RNvMs8_NtNtCsf3Ta7
   br i1 %i.bq, label %bb.o, label %.thread33
 
 bb.o:                                             ; preds = %.split28.peel
-  %i.br = getelementptr i8, ptr %.sroa.0.0.i.i.ph.peel, i64 -1 ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
+  %i.br = getelementptr i8, ptr %.sroa.0.0.i.i.ph.peel, i64 -1 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13612
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   store ptr %i.br, ptr %i.w, align 8, !alias.scope !13613, !noalias !13612

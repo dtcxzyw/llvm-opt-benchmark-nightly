@@ -206,10 +206,7 @@ bb.n:                                             ; preds = %"_ZN14regex_automat
   %i.ch = phi ptr [ %.sroa.03.0.val11.peel, %"_ZN14regex_automata4util4pool5inner17Pool$LT$T$C$F$GT$3get17hfc95ba6e9568e2f0E.exit.i.thread.i.peel" ], [ %.pre, %"_ZN14regex_automata4util4pool5inner17Pool$LT$T$C$F$GT$3get17hfc95ba6e9568e2f0E.exit.i.i.peel._crit_edge" ]
   %i.ci = phi ptr [ %i.cg, %"_ZN14regex_automata4util4pool5inner17Pool$LT$T$C$F$GT$3get17hfc95ba6e9568e2f0E.exit.i.thread.i.peel" ], [ %i.bu, %"_ZN14regex_automata4util4pool5inner17Pool$LT$T$C$F$GT$3get17hfc95ba6e9568e2f0E.exit.i.i.peel._crit_edge" ]
   %i.cj = phi ptr [ %i.ca, %"_ZN14regex_automata4util4pool5inner17Pool$LT$T$C$F$GT$3get17hfc95ba6e9568e2f0E.exit.i.thread.i.peel" ], [ %i.bo, %"_ZN14regex_automata4util4pool5inner17Pool$LT$T$C$F$GT$3get17hfc95ba6e9568e2f0E.exit.i.i.peel._crit_edge" ]
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.ch, i64 48 ; 2 uses
-  %4 = load i64, ptr %i.ck, align 8, !range !66, !noalias !8028, !noundef !33
-  %5 = icmp ne i64 %4, 3
-  call void @llvm.assume(i1 %5)
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.ch, i64 48
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m

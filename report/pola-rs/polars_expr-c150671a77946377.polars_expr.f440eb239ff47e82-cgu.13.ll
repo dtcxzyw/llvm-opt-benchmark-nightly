@@ -205,7 +205,7 @@ bb.fa:                                            ; preds = %bb.ev
   %.sroa.34.0.ph = phi i64 [ undef, %bb.fa ], [ %.sroa.34.0.ph.be, %.thread376.thread507.outer.backedge ] ; 3 uses
   %.sroa.30.0.ph = phi i64 [ undef, %bb.fa ], [ %.sroa.30.0.ph.be, %.thread376.thread507.outer.backedge ] ; 3 uses
   %.sroa.20.0.ph = phi ptr [ undef, %bb.fa ], [ %.sroa.20.0.ph.be, %.thread376.thread507.outer.backedge ] ; 8 uses
-  %.sroa.15.0.ph = phi ptr [ undef, %bb.fa ], [ %.sroa.15.0.ph.be, %.thread376.thread507.outer.backedge ] ; 9 uses
+  %.sroa.15.0.ph = phi ptr [ undef, %bb.fa ], [ %.sroa.15.0.ph.be, %.thread376.thread507.outer.backedge ] ; 8 uses
   %.sroa.9.0.ph = phi ptr [ undef, %bb.fa ], [ %.sroa.9.0.ph.be, %.thread376.thread507.outer.backedge ] ; 5 uses
   %.sroa.0274.0.ph = phi i1 [ false, %bb.fa ], [ true, %.thread376.thread507.outer.backedge ]
   br i1 %.sroa.0274.0.ph, label %bb.fb, label %.loopexit, !dbg !144511
@@ -276,7 +276,6 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   %.sroa.30.0 = phi i64 [ %.sroa.30.8, %.noexc230 ], [ %.sroa.30.8.peel, %.noexc230.peel ], !dbg !143878 ; 2 uses
   %.sroa.20.0 = phi ptr [ %.sroa.20.10, %.noexc230 ], [ %.sroa.20.10.peel, %.noexc230.peel ], !dbg !143878 ; 5 uses
   %.sroa.9.0 = phi ptr [ %.sroa.9.8, %.noexc230 ], [ %.sroa.9.8.peel, %.noexc230.peel ], !dbg !143878 ; 4 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.15.0.ph) ]
   %i.rn = icmp eq ptr %.sroa.9.0, %.sroa.15.0.ph, !dbg !144514
   br i1 %i.rn, label %_RNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters6copiedINtB4_6CopiedINtNtNtBa_5slice4iter4ItermEENtNtNtB8_6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.peel.i, label %bb.ff, !dbg !144515
 
