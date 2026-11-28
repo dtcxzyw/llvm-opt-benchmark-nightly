@@ -205,63 +205,63 @@ bb.a:
 vector.ph:                                        ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(256) %i.b, i8 0, i64 256, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 2.000000e+00, float 3.000000e+00>, ptr %i.a, align 4, !tbaa !49
-  store <4 x float> <float 4.000000e+00, float 5.000000e+00, float 6.000000e+00, float 7.000000e+00>, ptr %i.c, align 4, !tbaa !49
+  store <4 x float> <float 1.000000e+00, float 2.000000e+00, float 3.000000e+00, float 4.000000e+00>, ptr %i.a, align 4, !tbaa !49
+  store <4 x float> <float 5.000000e+00, float 6.000000e+00, float 7.000000e+00, float 8.000000e+00>, ptr %i.c, align 4, !tbaa !49
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store <4 x float> <float 1.000000e+00, float 2.000000e+00, float 3.000000e+00, float 4.000000e+00>, ptr %i.b, align 4, !tbaa !49
   store <4 x float> <float 5.000000e+00, float 6.000000e+00, float 7.000000e+00, float 8.000000e+00>, ptr %i.d, align 4, !tbaa !49
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store <4 x float> <float 8.000000e+00, float 9.000000e+00, float 1.000000e+01, float 1.100000e+01>, ptr %i.e, align 4, !tbaa !49
-  store <4 x float> <float 1.200000e+01, float 1.300000e+01, float 1.400000e+01, float 1.500000e+01>, ptr %i.f, align 4, !tbaa !49
+  store <4 x float> <float 9.000000e+00, float 1.000000e+01, float 1.100000e+01, float 1.200000e+01>, ptr %i.e, align 4, !tbaa !49
+  store <4 x float> <float 1.300000e+01, float 1.400000e+01, float 1.500000e+01, float 1.600000e+01>, ptr %i.f, align 4, !tbaa !49
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   store <4 x float> <float 9.000000e+00, float 1.000000e+01, float 1.100000e+01, float 1.200000e+01>, ptr %i.g, align 4, !tbaa !49
   store <4 x float> <float 1.300000e+01, float 1.400000e+01, float 1.500000e+01, float 1.600000e+01>, ptr %i.h, align 4, !tbaa !49
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  store <4 x float> <float 1.600000e+01, float 1.700000e+01, float 1.800000e+01, float 1.900000e+01>, ptr %i.i, align 4, !tbaa !49
-  store <4 x float> <float 2.000000e+01, float 2.100000e+01, float 2.200000e+01, float 2.300000e+01>, ptr %i.j, align 4, !tbaa !49
+  store <4 x float> <float 1.700000e+01, float 1.800000e+01, float 1.900000e+01, float 2.000000e+01>, ptr %i.i, align 4, !tbaa !49
+  store <4 x float> <float 2.100000e+01, float 2.200000e+01, float 2.300000e+01, float 2.400000e+01>, ptr %i.j, align 4, !tbaa !49
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   store <4 x float> <float 1.700000e+01, float 1.800000e+01, float 1.900000e+01, float 2.000000e+01>, ptr %i.k, align 4, !tbaa !49
   store <4 x float> <float 2.100000e+01, float 2.200000e+01, float 2.300000e+01, float 2.400000e+01>, ptr %i.l, align 4, !tbaa !49
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  store <4 x float> <float 2.400000e+01, float 2.500000e+01, float 2.600000e+01, float 2.700000e+01>, ptr %i.m, align 4, !tbaa !49
-  store <4 x float> <float 2.800000e+01, float 2.900000e+01, float 3.000000e+01, float 3.100000e+01>, ptr %i.n, align 4, !tbaa !49
+  store <4 x float> <float 2.500000e+01, float 2.600000e+01, float 2.700000e+01, float 2.800000e+01>, ptr %i.m, align 4, !tbaa !49
+  store <4 x float> <float 2.900000e+01, float 3.000000e+01, float 3.100000e+01, float 3.200000e+01>, ptr %i.n, align 4, !tbaa !49
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   store <4 x float> <float 2.500000e+01, float 2.600000e+01, float 2.700000e+01, float 2.800000e+01>, ptr %i.o, align 4, !tbaa !49
   store <4 x float> <float 2.900000e+01, float 3.000000e+01, float 3.100000e+01, float 3.200000e+01>, ptr %i.p, align 4, !tbaa !49
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  store <4 x float> <float 3.200000e+01, float 3.300000e+01, float 3.400000e+01, float 3.500000e+01>, ptr %i.q, align 4, !tbaa !49
-  store <4 x float> <float 3.600000e+01, float 3.700000e+01, float 3.800000e+01, float 3.900000e+01>, ptr %i.r, align 4, !tbaa !49
+  store <4 x float> <float 3.300000e+01, float 3.400000e+01, float 3.500000e+01, float 3.600000e+01>, ptr %i.q, align 4, !tbaa !49
+  store <4 x float> <float 3.700000e+01, float 3.800000e+01, float 3.900000e+01, float 4.000000e+01>, ptr %i.r, align 4, !tbaa !49
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 128
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   store <4 x float> <float 3.300000e+01, float 3.400000e+01, float 3.500000e+01, float 3.600000e+01>, ptr %i.s, align 4, !tbaa !49
   store <4 x float> <float 3.700000e+01, float 3.800000e+01, float 3.900000e+01, float 4.000000e+01>, ptr %i.t, align 4, !tbaa !49
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 160
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 176
-  store <4 x float> <float 4.000000e+01, float 4.100000e+01, float 4.200000e+01, float 4.300000e+01>, ptr %i.u, align 4, !tbaa !49
-  store <4 x float> <float 4.400000e+01, float 4.500000e+01, float 4.600000e+01, float 4.700000e+01>, ptr %i.v, align 4, !tbaa !49
+  store <4 x float> <float 4.100000e+01, float 4.200000e+01, float 4.300000e+01, float 4.400000e+01>, ptr %i.u, align 4, !tbaa !49
+  store <4 x float> <float 4.500000e+01, float 4.600000e+01, float 4.700000e+01, float 4.800000e+01>, ptr %i.v, align 4, !tbaa !49
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 160
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 176
   store <4 x float> <float 4.100000e+01, float 4.200000e+01, float 4.300000e+01, float 4.400000e+01>, ptr %i.w, align 4, !tbaa !49
   store <4 x float> <float 4.500000e+01, float 4.600000e+01, float 4.700000e+01, float 4.800000e+01>, ptr %i.x, align 4, !tbaa !49
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 192
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 208
-  store <4 x float> <float 4.800000e+01, float 4.900000e+01, float 5.000000e+01, float 5.100000e+01>, ptr %i.y, align 4, !tbaa !49
-  store <4 x float> <float 5.200000e+01, float 5.300000e+01, float 5.400000e+01, float 5.500000e+01>, ptr %i.z, align 4, !tbaa !49
+  store <4 x float> <float 4.900000e+01, float 5.000000e+01, float 5.100000e+01, float 5.200000e+01>, ptr %i.y, align 4, !tbaa !49
+  store <4 x float> <float 5.300000e+01, float 5.400000e+01, float 5.500000e+01, float 5.600000e+01>, ptr %i.z, align 4, !tbaa !49
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 192
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 208
   store <4 x float> <float 4.900000e+01, float 5.000000e+01, float 5.100000e+01, float 5.200000e+01>, ptr %i.aa, align 4, !tbaa !49
   store <4 x float> <float 5.300000e+01, float 5.400000e+01, float 5.500000e+01, float 5.600000e+01>, ptr %i.ab, align 4, !tbaa !49
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 224
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 240
-  store <4 x float> <float 5.600000e+01, float 5.700000e+01, float 5.800000e+01, float 5.900000e+01>, ptr %i.ac, align 4, !tbaa !49
-  store <4 x float> <float 6.000000e+01, float 6.100000e+01, float 6.200000e+01, float 6.300000e+01>, ptr %i.ad, align 4, !tbaa !49
+  store <4 x float> <float 5.700000e+01, float 5.800000e+01, float 5.900000e+01, float 6.000000e+01>, ptr %i.ac, align 4, !tbaa !49
+  store <4 x float> <float 6.100000e+01, float 6.200000e+01, float 6.300000e+01, float 6.400000e+01>, ptr %i.ad, align 4, !tbaa !49
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 224
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 240
   store <4 x float> <float 5.700000e+01, float 5.800000e+01, float 5.900000e+01, float 6.000000e+01>, ptr %i.ae, align 4, !tbaa !49

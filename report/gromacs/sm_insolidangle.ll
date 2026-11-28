@@ -204,9 +204,9 @@ vector.ph:                                        ; preds = %bb.e
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <4 x i64> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind58 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next60, %vector.body ] ; 2 uses
-  %vec.ind59 = phi <4 x i32> [ %induction57, %vector.ph ], [ %vec.ind.next61, %vector.body ] ; 2 uses
-  %i.ax = uitofp nneg <4 x i32> %vec.ind58 to <4 x double>
+  %vec.ind58 = phi <4 x i32> [ %induction57, %vector.ph ], [ %vec.ind.next60, %vector.body ] ; 2 uses
+  %vec.ind59 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next61, %vector.body ] ; 2 uses
+  %i.ax = uitofp nneg <4 x i32> %vec.ind59 to <4 x double>
   %i.ay = fmul nnan <4 x double> %i.ax, splat (double f0x401921FB54442D18)
   %i.az = fdiv <4 x double> %i.ay, %broadcast.splat
   %i.ba = fadd <4 x double> %i.az, splat (double f0xC00921FB54442D18)
@@ -214,7 +214,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bc = fptrunc <4 x double> %i.bb to <4 x float>
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %index
   %i.be = bitcast <4 x float> %i.bc to <4 x i32>
-  %interleaved.vec = shufflevector <4 x i32> %i.be, <4 x i32> %vec.ind59, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec = shufflevector <4 x i32> %i.be, <4 x i32> %vec.ind58, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i32> %interleaved.vec, ptr %i.bd, align 4, !tbaa !26
   %wide.gep = getelementptr inbounds [16 x i8], ptr %i.ac, <4 x i64> %vec.ind
   tail call void @llvm.masked.scatter.v4i32.v4p0(<4 x i32> zeroinitializer, <4 x ptr> align 8 %wide.gep, <4 x i1> splat (i1 true)), !tbaa !47
