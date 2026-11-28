@@ -45,15 +45,15 @@ declare void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dea
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost15program_options6detail18utf8_codecvt_facetD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) unnamed_addr #3 align 2 !guid !24 {
 bb.a:
-  tail call void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #11
+  tail call void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #10
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost15program_options6detail18utf8_codecvt_facetD0Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #3 align 2 !guid !25 {
 bb.a:
-  tail call void @_ZN5boost15program_options6detail18utf8_codecvt_facetD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #11
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #12
+  tail call void @_ZN5boost15program_options6detail18utf8_codecvt_facetD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #10
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #11
   ret void
 }
 
@@ -251,8 +251,10 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   br i1 %i.w, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
+  %8 = sub i64 %i.f, %.0486197
   %i.x = add nsw i32 %.0.i.i, -1
   %i.y = zext i32 %i.x to i64                     ; 2 uses
+  %9 = tail call i64 @llvm.umin.i64(i64 %8, i64 %i.y) ; 4 uses
   %i.z = sub i64 %i.e, %.0486197
   %i.aa = tail call i64 @llvm.umin.i64(i64 %i.z, i64 %i.y)
   %i.ab = getelementptr i8, ptr %.04861, i64 %i.aa
@@ -266,8 +268,6 @@ _ZN5boost15program_options6detail18utf8_codecvt_facet24get_cont_octet_out_countE
   br i1 %found.conflict, label %.lr.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %8 = sub i64 %i.f, %.0486197
-  %9 = tail call i64 @llvm.umin.i64(i64 %8, i64 %i.y) ; 3 uses
   %i.ag = getelementptr i8, ptr %.14955, i64 %9
   %i.ah = getelementptr i8, ptr %i.ag, i64 1
   %broadcast.splatinsert100 = insertelement <8 x i32> poison, i32 %i.m, i64 0
@@ -277,7 +277,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.ai = load i32, ptr %.04662, align 4, !tbaa !21, !alias.scope !34
   %broadcast.splatinsert111 = insertelement <8 x i32> poison, i32 %i.ai, i64 0
   %broadcast.splat112 = shufflevector <8 x i32> %broadcast.splatinsert111, <8 x i32> poison, <8 x i32> zeroinitializer
-  %i.aj = icmp samesign uge <8 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7> ; 10 uses
+  %i.aj = icmp samesign uge <8 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7> ; 9 uses
   %next.gep104 = getelementptr i8, ptr %.04861, i64 2
   %next.gep105 = getelementptr i8, ptr %.04861, i64 3
   %next.gep106 = getelementptr i8, ptr %.04861, i64 4
@@ -363,10 +363,7 @@ pred.store.if125:                                 ; preds = %pred.store.continue
   br label %pred.store.continue126
 
 pred.store.continue126:                           ; preds = %pred.store.if125, %pred.store.continue124
-  %10 = xor <8 x i1> %i.aj, splat (i1 true)
-  %first.inactive.lane = tail call i64 @llvm.experimental.cttz.elts.i64.v8i1(<8 x i1> %10, i1 false)
-  %last.active.lane = add i64 %first.inactive.lane, -1
-  %i.bg = extractelement <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, i64 %last.active.lane
+  %i.bg = extractelement <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, i64 %9
   %i.bh = add nuw nsw i32 %i.bg, 1
   %i.bi = icmp ne i32 %i.bh, %.0.i.i
   br label %._crit_edge.loopexit
@@ -680,9 +677,6 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <8 x i32> @llvm.masked.sdiv.v8i32(<8 x i32>, <8 x i32>, <8 x i1>) #9
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.experimental.cttz.elts.i64.v8i1(<8 x i1>, i1 immarg) #10
-
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -693,9 +687,8 @@ attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nounwind }
-attributes #12 = { builtin nounwind }
+attributes #10 = { nounwind }
+attributes #11 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
