@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.bg = phi ptr [ null, %.lr.ph ], [ %i.cs, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit ] ; 9 uses
   %i.bh = phi ptr [ null, %.lr.ph ], [ %i.ct, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit ] ; 8 uses
   %.sroa.075.092 = phi ptr [ %i.at, %.lr.ph ], [ %i.cv, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit ] ; 3 uses
-  %i.bi = phi ptr [ null, %.lr.ph ], [ %i.cu, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit ] ; 12 uses
+  %i.bi = phi ptr [ null, %.lr.ph ], [ %i.cu, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit ] ; 11 uses
   %i.bj = load ptr, ptr %.sroa.075.092, align 8, !tbaa !123 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 1
   %i.bl = load i16, ptr %i.bk, align 1
@@ -325,7 +325,7 @@ bb.j:                                             ; preds = %.lr.ph100, %_ZNSt6v
   %i.cw = phi ptr [ %i.ay, %.lr.ph100 ], [ %i.ek, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit46 ] ; 9 uses
   %i.cx = phi ptr [ %i.az, %.lr.ph100 ], [ %i.el, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit46 ] ; 8 uses
   %.sroa.057.098 = phi ptr [ %i.bb, %.lr.ph100 ], [ %i.en, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit46 ] ; 3 uses
-  %i.cy = phi ptr [ %.lcssa88, %.lr.ph100 ], [ %i.em, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit46 ] ; 12 uses
+  %i.cy = phi ptr [ %.lcssa88, %.lr.ph100 ], [ %i.em, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit46 ] ; 11 uses
   %i.cz = load ptr, ptr %.sroa.057.098, align 8, !tbaa !136 ; 3 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 1
   %i.db = load i8, ptr %i.da, align 1
@@ -434,14 +434,12 @@ _ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE17_M_realloc_insertIJ
 .loopexit:                                        ; preds = %_ZNKSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i32
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.cy, ptr %0, align 8
-  br label %.loopexit.split-lp
+  br label %.loopexit.split-lp.sink.split
 
 .loopexit.split-lp.loopexit:                      ; preds = %_ZNKSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit79 = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.bi, ptr %0, align 8
-  br label %.loopexit.split-lp
+  br label %.loopexit.split-lp.sink.split
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.h, %bb.o
   %i.ei = phi ptr [ %i.bg, %bb.h ], [ %i.cw, %bb.o ]
@@ -450,10 +448,17 @@ _ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE17_M_realloc_insertIJ
           cleanup
   br label %.loopexit.split-lp
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit, %.loopexit
-  %3 = phi ptr [ %i.cw, %.loopexit ], [ %i.bg, %.loopexit.split-lp.loopexit ], [ %i.ei, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %4 = phi ptr [ %i.cy, %.loopexit ], [ %i.bi, %.loopexit.split-lp.loopexit ], [ %i.ej, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 3 uses
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit79, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp106, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp.sink.split:                    ; preds = %.loopexit, %.loopexit.split-lp.loopexit
+  %.lcssa145.sink = phi ptr [ %i.bi, %.loopexit.split-lp.loopexit ], [ %i.cy, %.loopexit ] ; 2 uses
+  %.ph = phi ptr [ %i.bg, %.loopexit.split-lp.loopexit ], [ %i.cw, %.loopexit ]
+  %lpad.phi.ph = phi { ptr, i32 } [ %lpad.loopexit79, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit, %.loopexit ]
+  store ptr %.lcssa145.sink, ptr %0, align 8
+  br label %.loopexit.split-lp
+
+.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.sink.split, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %3 = phi ptr [ %i.ei, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.ph, %.loopexit.split-lp.sink.split ]
+  %4 = phi ptr [ %i.ej, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.lcssa145.sink, %.loopexit.split-lp.sink.split ] ; 3 uses
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp106, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.phi.ph, %.loopexit.split-lp.sink.split ]
   %.not.i.i.i = icmp eq ptr %4, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EED2Ev.exit, label %bb.q
 

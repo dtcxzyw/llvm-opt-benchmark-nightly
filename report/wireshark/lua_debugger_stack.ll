@@ -204,7 +204,7 @@ define noundef ptr @_ZN17LuaDebuggerDialog18createStackSectionEP7QWidget(ptr nou
 bb.a:
   %2 = alloca %class.QString, align 8             ; 9 uses
   %3 = alloca %class.QList.21, align 8            ; 10 uses
-  %4 = alloca [2 x %class.QString], align 8       ; 13 uses
+  %4 = alloca [2 x %class.QString], align 8       ; 12 uses
   %5 = alloca %class.QString, align 8             ; 9 uses
   %i.a = tail call noalias noundef dereferenceable_or_null(104) ptr @_Znwm(i64 noundef 104) #14 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
@@ -461,8 +461,7 @@ bb.q:                                             ; preds = %_ZN7QStringD2Ev.exi
 .loopexit.loopexit38:                             ; preds = %_ZN17LuaDebuggerDialog2trEPKcS1_i.exit16
   %i.bn = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN7QStringD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %4) #13
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .loopexit.loopexit:                               ; preds = %_ZN5QListI7QStringEC2ESt16initializer_listIS0_E.exit
   %i.bo = landingpad { ptr, i32 }
@@ -470,11 +469,15 @@ bb.q:                                             ; preds = %_ZN7QStringD2Ev.exi
   call void @_ZN5QListI7QStringED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %3) #13
   %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 24
   call void @_ZN7QStringD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %i.bp) #13
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.loopexit.loopexit, %.loopexit.loopexit38
+  %.pn11.pn.ph = phi { ptr, i32 } [ %i.bn, %.loopexit.loopexit38 ], [ %i.bo, %.loopexit.loopexit ]
   call void @_ZN7QStringD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %4) #13
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit38, %.loopexit.loopexit, %.thread
-  %.pn11.pn = phi { ptr, i32 } [ %i.bo, %.loopexit.loopexit ], [ %i.i, %.thread ], [ %i.bn, %.loopexit.loopexit38 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn11.pn = phi { ptr, i32 } [ %i.i, %.thread ], [ %.pn11.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   br label %bb.u

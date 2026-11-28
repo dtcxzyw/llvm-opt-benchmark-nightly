@@ -204,8 +204,7 @@ bb.s:                                             ; preds = %bb.e, %bb.c, %bb.x,
 bb.t:                                             ; preds = %bb.k
   %i.bu = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %6) #20
-  br label %bb.am
+  br label %.sink.split
 
 bb.u:                                             ; preds = %.critedge
   %i.bv = load ptr, ptr %2, align 8, !tbaa !47    ; 13 uses
@@ -303,8 +302,7 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.aa
   %i.de = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #20
-  br label %bb.am
+  br label %.sink.split
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.ad, %bb.ac, %bb.ab, %bb.n, %bb.m, %bb.l
   %i.df = load ptr, ptr %4, align 8, !tbaa !11    ; 3 uses
@@ -365,8 +363,14 @@ _ZN4cvc58internal8TypeNodeD2Ev.exit:              ; preds = %_ZN4cvc58internal12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   ret void
 
-bb.am:                                            ; preds = %bb.af, %bb.t, %bb.s
-  %.pn18 = phi { ptr, i32 } [ %i.bu, %bb.t ], [ %i.bt, %bb.s ], [ %i.de, %bb.af ]
+.sink.split:                                      ; preds = %bb.t, %bb.af
+  %.sink = phi ptr [ %7, %bb.af ], [ %6, %bb.t ]
+  %.pn18.ph = phi { ptr, i32 } [ %i.de, %bb.af ], [ %i.bu, %bb.t ]
+  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #20
+  br label %bb.am
+
+bb.am:                                            ; preds = %.sink.split, %bb.s
+  %.pn18 = phi { ptr, i32 } [ %i.bt, %bb.s ], [ %.pn18.ph, %.sink.split ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #20
   br label %bb.an
 

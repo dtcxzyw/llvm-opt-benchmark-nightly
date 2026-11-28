@@ -202,7 +202,7 @@ bb.a:
   %17 = alloca %"class.std::vector.24", align 8   ; 10 uses
   %18 = alloca %"class.std::vector.24", align 8   ; 13 uses
   %19 = alloca [1 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 8 uses
-  %20 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
+  %20 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 5 uses
   %21 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %22 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %23 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
@@ -605,8 +605,7 @@ bb.cf:                                            ; preds = %bb.ax
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #19
   call void @_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %17) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #19
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %16) #19
-  br label %bb.cj
+  br label %bb.ci
 
 bb.cg:                                            ; preds = %bb.bs
   %i.ke = landingpad { ptr, i32 }
@@ -619,13 +618,14 @@ bb.ch:                                            ; preds = %_ZN4cvc58internal12
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %21) #19
   br label %bb.ci
 
-bb.ci:                                            ; preds = %bb.ch, %bb.cg
-  %.pn45 = phi { ptr, i32 } [ %i.kf, %bb.ch ], [ %i.ke, %bb.cg ]
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %20) #19
+bb.ci:                                            ; preds = %bb.cg, %bb.ch, %.loopexit
+  %.sink = phi ptr [ %16, %.loopexit ], [ %20, %bb.ch ], [ %20, %bb.cg ]
+  %.pn45.pn.ph = phi { ptr, i32 } [ %.pn42.pn, %.loopexit ], [ %i.kf, %bb.ch ], [ %i.ke, %bb.cg ]
+  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #19
   br label %bb.cj
 
-bb.cj:                                            ; preds = %bb.ci, %.loopexit, %bb.cd
-  %.pn45.pn = phi { ptr, i32 } [ %.pn45, %bb.ci ], [ %i.kb, %bb.cd ], [ %.pn42.pn, %.loopexit ]
+bb.cj:                                            ; preds = %bb.ci, %bb.cd
+  %.pn45.pn = phi { ptr, i32 } [ %i.kb, %bb.cd ], [ %.pn45.pn.ph, %bb.ci ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %15) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #19
   br label %common.resume
@@ -1028,7 +1028,7 @@ bb.j:                                             ; preds = %bb.i
           cleanup
   call void @_ZN4cvc58internal11NodeBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(124) dereferenceable(124) %3) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19, !noalias !113
-  br label %.body.a
+  br label %.body
 
 bb.k:                                             ; preds = %bb.j
   call void @_ZN4cvc58internal11NodeBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(124) dereferenceable(124) %3) #19
@@ -1163,13 +1163,12 @@ bb.y:                                             ; preds = %bb.d
 bb.z:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit
   %i.cb = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %8) #19
-  br label %bb.ae
+  br label %.body.a
 
 bb.aa:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
   %i.cc = landingpad { ptr, i32 }
           cleanup
-  br label %.body.a
+  br label %.body
 
 bb.ab:                                            ; preds = %bb.n
   %i.cd = landingpad { ptr, i32 }
@@ -1185,16 +1184,21 @@ bb.ac:                                            ; preds = %_ZN4cvc58internal12
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %.pn = phi { ptr, i32 } [ %i.ce, %bb.ac ], [ %i.cd, %bb.ab ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %9) #19
-  br label %.body.a
+  br label %.body
 
-.body.a:                                          ; preds = %bb.aa, %.body.i, %bb.ad
+.body:                                            ; preds = %bb.aa, %.body.i, %bb.ad
   %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.ad ], [ %i.cc, %bb.aa ], [ %i.ai, %.body.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #19
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #19
+  br label %.body.a
+
+.body.a:                                          ; preds = %bb.z, %.body
+  %.sink = phi ptr [ %7, %.body ], [ %8, %bb.z ]
+  %.pn.pn.pn.ph = phi { ptr, i32 } [ %.pn.pn, %.body ], [ %i.cb, %bb.z ]
+  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #19
   br label %bb.ae
 
-bb.ae:                                            ; preds = %.body.a, %bb.z, %bb.y
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body.a ], [ %i.cb, %bb.z ], [ %i.ca, %bb.y ]
+bb.ae:                                            ; preds = %.body.a, %bb.y
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.ca, %bb.y ], [ %.pn.pn.pn.ph, %.body.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
   call void @_ZN4cvc58internal13NodeConverterD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %6) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19

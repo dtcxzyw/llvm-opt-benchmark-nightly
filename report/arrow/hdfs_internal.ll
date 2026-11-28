@@ -204,9 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread: ; preds = %.thread
   %i.sa = load i64, ptr %i.ng, align 8, !tbaa !121, !noalias !404
-  %51 = add i64 %i.sa, 1
-  call void @_ZdlPvm(ptr noundef %i.ry, i64 noundef %51) #21
-  br label %.preheader.preheader.i.sink.split
+  br label %.preheader.preheader.i.sink.split.sink.split
 
 .thread754.i:                                     ; preds = %bb.an, %bb.al
   %i.sb = landingpad { ptr, i32 }
@@ -218,9 +216,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i38
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i: ; preds = %.thread754.i
   %i.sf = load i64, ptr %i.sd, align 8, !tbaa !121, !noalias !404
-  %52 = add i64 %i.sf, 1
-  call void @_ZdlPvm(ptr noundef %i.sc, i64 noundef %52) #21
-  br label %.preheader.preheader.i.sink.split
+  br label %.preheader.preheader.i.sink.split.sink.split
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i385.i
   %i.sg = load i64, ptr %i.ng, align 8, !tbaa !121, !noalias !404
@@ -233,9 +229,18 @@ bb.be:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #18, !noalias !404
   br i1 %i.rp, label %.loopexit.i, label %.preheader.preheader.i
 
-.preheader.preheader.i.sink.split:                ; preds = %.thread754.i, %.thread, %.thread747.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread
-  %.pn133.pn.pn.pn.pn752.i.ph = phi { ptr, i32 } [ %i.rx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread ], [ %i.qw, %.thread747.i ], [ %i.sb, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i ], [ %i.rx, %.thread ], [ %i.sb, %.thread754.i ]
-  %.178751.i.ph = phi ptr [ %i.nx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread ], [ %i.my, %.thread747.i ], [ %i.my, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i ], [ %i.nx, %.thread ], [ %i.my, %.thread754.i ]
+.preheader.preheader.i.sink.split.sink.split:     ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i
+  %.sink540 = phi i64 [ %i.sf, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i ], [ %i.sa, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread ]
+  %.sink = phi ptr [ %i.sc, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i ], [ %i.ry, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread ]
+  %.pn133.pn.pn.pn.pn752.i.ph.ph = phi { ptr, i32 } [ %i.sb, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i ], [ %i.rx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread ]
+  %.178751.i.ph.ph = phi ptr [ %i.my, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.thread.i ], [ %i.nx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i387.i.thread ]
+  %51 = add i64 %.sink540, 1
+  call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %51) #21
+  br label %.preheader.preheader.i.sink.split
+
+.preheader.preheader.i.sink.split:                ; preds = %.preheader.preheader.i.sink.split.sink.split, %.thread754.i, %.thread, %.thread747.i
+  %.pn133.pn.pn.pn.pn752.i.ph = phi { ptr, i32 } [ %i.rx, %.thread ], [ %i.qw, %.thread747.i ], [ %i.sb, %.thread754.i ], [ %.pn133.pn.pn.pn.pn752.i.ph.ph, %.preheader.preheader.i.sink.split.sink.split ]
+  %.178751.i.ph = phi ptr [ %i.nx, %.thread ], [ %i.my, %.thread747.i ], [ %i.my, %.thread754.i ], [ %.178751.i.ph.ph, %.preheader.preheader.i.sink.split.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #18, !noalias !404
   br label %.preheader.preheader.i
 

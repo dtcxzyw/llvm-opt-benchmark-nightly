@@ -202,8 +202,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.g
   %i.ad = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #29
-  br label %bb.x
+  br label %bb.w
 
 bb.m:                                             ; preds = %_ZN9grpc_core10latent_see5ScopeC2EPKNS0_8MetadataE.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %i.g, i64 24
@@ -222,7 +221,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !61
   invoke void %i.aj(ptr noundef nonnull align 16 dereferenceable(32) %i.ah, ptr noundef nonnull align 8 dereferenceable(8) %4)
-          to label %_ZN4absl12lts_2025051222internal_any_invocable4ImplIFvNS0_6StatusEEEclES3_.exit14 unwind label %bb.w, !inline_history !14
+          to label %_ZN4absl12lts_2025051222internal_any_invocable4ImplIFvNS0_6StatusEEEclES3_.exit14 unwind label %5, !inline_history !14
 
 _ZN4absl12lts_2025051222internal_any_invocable4ImplIFvNS0_6StatusEEEclES3_.exit14: ; preds = %bb.o
   %i.ak = load i64, ptr %4, align 8, !tbaa !28    ; 2 uses
@@ -306,14 +305,19 @@ _ZN9grpc_core10latent_see5ScopeD2Ev.exit13:       ; preds = %_ZN9grpc_core19Sess
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
   ret void
 
-bb.w:                                             ; preds = %bb.o
-  %5 = landingpad { ptr, i32 }
+5:                                                ; preds = %bb.o
+  %6 = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #29
+  br label %bb.w
+
+bb.w:                                             ; preds = %bb.l, %5
+  %.sink = phi ptr [ %4, %5 ], [ %3, %bb.l ]
+  %.pn.ph = phi { ptr, i32 } [ %6, %5 ], [ %i.ad, %bb.l ]
+  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #29
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.w, %bb.l, %bb.e
-  %.pn = phi { ptr, i32 } [ %i.ad, %bb.l ], [ %i.j, %bb.e ], [ %5, %bb.w ]
+bb.x:                                             ; preds = %bb.w, %bb.e
+  %.pn = phi { ptr, i32 } [ %i.j, %bb.e ], [ %.pn.ph, %bb.w ]
   %i.bo = load ptr, ptr %2, align 8, !tbaa !64
   %.not22 = icmp eq ptr %i.bo, null
   br i1 %.not22, label %_ZN9grpc_core10latent_see5ScopeD2Ev.exit, label %bb.y, !prof !65
@@ -716,8 +720,7 @@ bb.g:                                             ; preds = %bb.i, %_ZN9grpc_cor
 bb.h:                                             ; preds = %bb.d
   %i.r = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #29
-  br label %bb.s
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.c
   invoke void @_ZN4absl12lts_2025051216UnavailableErrorESt17basic_string_viewIcSt11char_traitsIcEE(ptr dead_on_unwind nonnull writable sret(%"class.absl::lts_20250512::Status") align 8 %4, i64 12, ptr nonnull @.str.13)
@@ -750,8 +753,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.j
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #29
-  br label %bb.s
+  br label %.sink.split
 
 _ZN4absl12lts_202505126StatusD2Ev.exit:           ; preds = %bb.k, %_ZN4absl12lts_2025051222internal_any_invocable4ImplIFvNS0_6StatusEEEclES3_.exit6, %bb.e, %_ZN4absl12lts_2025051222internal_any_invocable4ImplIFvNS0_6StatusEEEclES3_.exit
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -818,8 +820,14 @@ _ZN9grpc_core10latent_see5ScopeD2Ev.exit5:        ; preds = %_ZN9grpc_core19Sess
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #29
   ret void
 
-bb.s:                                             ; preds = %bb.m, %bb.h, %bb.g
-  %.pn = phi { ptr, i32 } [ %i.r, %bb.h ], [ %i.q, %bb.g ], [ %i.aa, %bb.m ]
+.sink.split:                                      ; preds = %bb.h, %bb.m
+  %.sink = phi ptr [ %4, %bb.m ], [ %3, %bb.h ]
+  %.pn.ph = phi { ptr, i32 } [ %i.aa, %bb.m ], [ %i.r, %bb.h ]
+  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #29
+  br label %bb.s
+
+bb.s:                                             ; preds = %.sink.split, %bb.g
+  %.pn = phi { ptr, i32 } [ %i.q, %bb.g ], [ %.pn.ph, %.sink.split ]
   %i.ba = load ptr, ptr %2, align 8, !tbaa !64
   %.not9 = icmp eq ptr %i.ba, null
   br i1 %.not9, label %_ZN9grpc_core10latent_see5ScopeD2Ev.exit, label %bb.t, !prof !65

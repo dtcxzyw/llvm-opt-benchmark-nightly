@@ -202,7 +202,7 @@ bb.a:
   %67 = alloca %"class.Catch::StringRef", align 8 ; 6 uses
   %68 = alloca %"struct.Catch::SourceLineInfo", align 8 ; 6 uses
   %69 = alloca %"class.Catch::StringRef", align 8 ; 3 uses
-  %70 = alloca %"class.Catch::MatchExpr", align 8 ; 21 uses
+  %70 = alloca %"class.Catch::MatchExpr", align 8 ; 20 uses
   %i.g = alloca double, align 8                   ; 6 uses
   %71 = alloca %"struct.vcpkg::LineInfo", align 8 ; 4 uses
   %72 = alloca %"struct.Catch::Matchers::Floating::WithinUlpsMatcher", align 8 ; 11 uses
@@ -219,7 +219,7 @@ bb.a:
   %83 = alloca %"class.Catch::StringRef", align 8 ; 6 uses
   %84 = alloca %"struct.Catch::SourceLineInfo", align 8 ; 6 uses
   %85 = alloca %"class.Catch::StringRef", align 8 ; 3 uses
-  %86 = alloca %"class.Catch::MatchExpr", align 8 ; 21 uses
+  %86 = alloca %"class.Catch::MatchExpr", align 8 ; 20 uses
   %i.h = alloca double, align 8                   ; 6 uses
   %87 = alloca %"struct.vcpkg::LineInfo", align 8 ; 4 uses
   %88 = alloca %"struct.Catch::Matchers::Floating::WithinUlpsMatcher", align 8 ; 11 uses
@@ -622,8 +622,7 @@ bb.em:                                            ; preds = %._crit_edge.i.i.i.i
 bb.en:                                            ; preds = %.noexc.i.i.i.i.i.i
   %i.mz = landingpad { ptr, i32 }
           catch ptr null
-  call void @_ZN5Catch20ITransientExpressionD2Ev(ptr noundef nonnull align 8 dead_on_return(10) dereferenceable(112) %70) #17
-  br label %.body141
+  br label %.body141.sink.split
 
 bb.eo:                                            ; preds = %bb.em, %bb.el, %._crit_edge.i.i.i.i.i.i.i
   %i.na = load i64, ptr %i.b, align 8, !tbaa !15, !noalias !333 ; 2 uses
@@ -699,11 +698,15 @@ bb.ex:                                            ; preds = %bb.eo
           catch ptr null
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5Catch9MatchExprIdNS_8Matchers8Floating17WithinUlpsMatcherEEE, i64 16), ptr %70, align 8, !tbaa !28
   call void @_ZN5Catch8Matchers4Impl18MatcherUntypedBaseD2Ev(ptr noundef nonnull align 8 dead_on_return(65) dereferenceable(65) %i.mn) #17, !inline_history !66
-  call void @_ZN5Catch20ITransientExpressionD2Ev(ptr noundef nonnull align 8 dead_on_return(10) dereferenceable(112) %70) #17, !inline_history !66
+  br label %.body141.sink.split
+
+.body141.sink.split:                              ; preds = %bb.ex, %bb.en
+  %.pn81.ph = phi { ptr, i32 } [ %i.mz, %bb.en ], [ %i.nn, %bb.ex ]
+  call void @_ZN5Catch20ITransientExpressionD2Ev(ptr noundef nonnull align 8 dead_on_return(10) dereferenceable(112) %70) #17
   br label %.body141
 
-.body141:                                         ; preds = %bb.ew, %bb.en, %bb.ex
-  %.pn81 = phi { ptr, i32 } [ %i.nn, %bb.ex ], [ %i.nm, %bb.ew ], [ %i.mz, %bb.en ]
+.body141:                                         ; preds = %.body141.sink.split, %bb.ew
+  %.pn81 = phi { ptr, i32 } [ %i.nm, %bb.ew ], [ %.pn81.ph, %.body141.sink.split ]
   call void @_ZN5Catch8Matchers4Impl18MatcherUntypedBaseD2Ev(ptr noundef nonnull align 8 dead_on_return(65) dereferenceable(65) %72) #17
   br label %bb.ey
 
@@ -1091,8 +1094,7 @@ bb.gj:                                            ; preds = %._crit_edge.i.i.i.i
 bb.gk:                                            ; preds = %.noexc.i.i.i.i.i.i158
   %i.rl = landingpad { ptr, i32 }
           catch ptr null
-  call void @_ZN5Catch20ITransientExpressionD2Ev(ptr noundef nonnull align 8 dead_on_return(10) dereferenceable(112) %86) #17
-  br label %.body161
+  br label %.body161.sink.split
 
 bb.gl:                                            ; preds = %bb.gj, %bb.gi, %._crit_edge.i.i.i.i.i.i.i157
   %i.rm = load i64, ptr %i.a, align 8, !tbaa !15, !noalias !336 ; 2 uses
@@ -1168,11 +1170,15 @@ bb.gu:                                            ; preds = %bb.gl
           catch ptr null
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5Catch9MatchExprIdNS_8Matchers8Floating17WithinUlpsMatcherEEE, i64 16), ptr %86, align 8, !tbaa !28
   call void @_ZN5Catch8Matchers4Impl18MatcherUntypedBaseD2Ev(ptr noundef nonnull align 8 dead_on_return(65) dereferenceable(65) %i.qz) #17, !inline_history !66
-  call void @_ZN5Catch20ITransientExpressionD2Ev(ptr noundef nonnull align 8 dead_on_return(10) dereferenceable(112) %86) #17, !inline_history !66
+  br label %.body161.sink.split
+
+.body161.sink.split:                              ; preds = %bb.gu, %bb.gk
+  %.pn91.ph = phi { ptr, i32 } [ %i.rl, %bb.gk ], [ %i.rz, %bb.gu ]
+  call void @_ZN5Catch20ITransientExpressionD2Ev(ptr noundef nonnull align 8 dead_on_return(10) dereferenceable(112) %86) #17
   br label %.body161
 
-.body161:                                         ; preds = %bb.gt, %bb.gk, %bb.gu
-  %.pn91 = phi { ptr, i32 } [ %i.rz, %bb.gu ], [ %i.ry, %bb.gt ], [ %i.rl, %bb.gk ]
+.body161:                                         ; preds = %.body161.sink.split, %bb.gt
+  %.pn91 = phi { ptr, i32 } [ %i.ry, %bb.gt ], [ %.pn91.ph, %.body161.sink.split ]
   call void @_ZN5Catch8Matchers4Impl18MatcherUntypedBaseD2Ev(ptr noundef nonnull align 8 dead_on_return(65) dereferenceable(65) %88) #17
   br label %bb.gv
 

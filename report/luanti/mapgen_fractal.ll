@@ -149,8 +149,7 @@ bb.e:                                             ; preds = %bb.g, %bb.b
 bb.f:                                             ; preds = %bb.c
   %i.at = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef 88) #13
-  br label %bb.k
+  br label %bb.j
 
 bb.g:                                             ; preds = %bb.d, %bb.a
   %i.au = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #12
@@ -167,7 +166,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bc = load i16, ptr %i.bb, align 4, !tbaa !86
   %i.bd = sext i16 %i.bc to i32
   invoke void @_ZN5NoiseC1EPK11NoiseParamsijjj(ptr noundef nonnull align 8 dereferenceable(88) %i.au, ptr noundef nonnull %i.av, i32 noundef %i.ax, i32 noundef %i.ba, i32 noundef %i.bd, i32 noundef 1)
-          to label %bb.i unwind label %bb.j
+          to label %bb.i unwind label %3
 
 bb.i:                                             ; preds = %bb.h
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 208
@@ -194,14 +193,19 @@ bb.i:                                             ; preds = %bb.h
   store i8 %i.bt, ptr %i.bq, align 4, !tbaa !62
   ret void
 
-bb.j:                                             ; preds = %bb.h
-  %3 = landingpad { ptr, i32 }
+3:                                                ; preds = %bb.h
+  %4 = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.au, i64 noundef 88) #13
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.f, %3
+  %.sink = phi ptr [ %i.au, %3 ], [ %i.ai, %bb.f ]
+  %.pn.ph = phi { ptr, i32 } [ %4, %3 ], [ %i.at, %bb.f ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 88) #13
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.f, %bb.e
-  %.pn = phi { ptr, i32 } [ %3, %bb.j ], [ %i.as, %bb.e ], [ %i.at, %bb.f ]
+bb.k:                                             ; preds = %bb.j, %bb.e
+  %.pn = phi { ptr, i32 } [ %i.as, %bb.e ], [ %.pn.ph, %bb.j ]
   tail call void @_ZN11MapgenBasicD2Ev(ptr noundef nonnull align 8 dead_on_return(474) dereferenceable(474) %0) #14
   resume { ptr, i32 } %.pn
 }

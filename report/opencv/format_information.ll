@@ -202,8 +202,7 @@ bb.f:                                             ; preds = %.noexc
 bb.g:                                             ; preds = %.noexc, %bb.e
   %i.ea = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.df, i64 noundef 32) #12
-  br label %bb.v
+  br label %.sink.split
 
 _ZN5zxing3RefINS_6qrcode17FormatInformationEEC2ERKS3_.exit: ; preds = %bb.f
   %i.eb = add i32 %i.dw, 2
@@ -397,8 +396,7 @@ bb.r:                                             ; preds = %.split.us, %bb.o
 bb.s:                                             ; preds = %.noexc66, %bb.p
   %i.iw = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.id, i64 noundef 32) #12
-  br label %bb.v
+  br label %.sink.split
 
 _ZN5zxing3RefINS_6qrcode17FormatInformationEEC2ERKS3_.exit73: ; preds = %bb.q
   %i.ix = add i32 %i.ir, 2
@@ -444,8 +442,14 @@ _ZN5zxing12ErrorHandlerD2Ev.exit:                 ; preds = %_ZN5zxing3RefINS_6q
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
   ret void
 
-bb.v:                                             ; preds = %bb.r, %bb.s, %bb.g
-  %.pn60.pn = phi { ptr, i32 } [ %i.ea, %bb.g ], [ %i.iv, %bb.r ], [ %i.iw, %bb.s ]
+.sink.split:                                      ; preds = %bb.g, %bb.s
+  %.sink = phi ptr [ %i.id, %bb.s ], [ %i.df, %bb.g ]
+  %.pn60.pn.ph = phi { ptr, i32 } [ %i.iw, %bb.s ], [ %i.ea, %bb.g ]
+  call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 32) #12
+  br label %bb.v
+
+bb.v:                                             ; preds = %.sink.split, %bb.r
+  %.pn60.pn = phi { ptr, i32 } [ %i.iv, %bb.r ], [ %.pn60.pn.ph, %.sink.split ]
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN5zxing12ErrorHandlerE, i64 16), ptr %3, align 8, !tbaa !12
   %i.jk = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !36 ; 2 uses

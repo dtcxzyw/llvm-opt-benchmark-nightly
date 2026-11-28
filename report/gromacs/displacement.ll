@@ -204,23 +204,27 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 80) #30
-  br label %_ZNSt10unique_ptrIN3gmx30AnalysisDataDisplacementModule4ImplESt14default_deleteIS2_EED2Ev.exit
+  br label %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a
 
 bb.g:                                             ; preds = %bb.c
   %i.f = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !12   ; 3 uses
   %.not.i = icmp eq ptr %i.g, null
-  br i1 %.not.i, label %_ZNSt10unique_ptrIN3gmx30AnalysisDataDisplacementModule4ImplESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a
+  br i1 %.not.i, label %_ZNSt10unique_ptrIN3gmx30AnalysisDataDisplacementModule4ImplESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i
 
-_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a: ; preds = %bb.g
+_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i: ; preds = %bb.g
   tail call void @_ZN3gmx30AnalysisDataDisplacementModule4ImplD1Ev(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %i.g) #27
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef 80) #30
+  br label %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a
+
+_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a: ; preds = %bb.f, %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i
+  %.sink = phi ptr [ %i.g, %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i ], [ %i.c, %bb.f ]
+  %.pn.ph = phi { ptr, i32 } [ %i.f, %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i ], [ %i.e, %bb.f ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 80) #30
   br label %_ZNSt10unique_ptrIN3gmx30AnalysisDataDisplacementModule4ImplESt14default_deleteIS2_EED2Ev.exit
 
-_ZNSt10unique_ptrIN3gmx30AnalysisDataDisplacementModule4ImplESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a, %bb.g, %bb.f, %bb.e
-  %.pn = phi { ptr, i32 } [ %i.d, %bb.e ], [ %i.e, %bb.f ], [ %i.f, %bb.g ], [ %i.f, %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a ]
+_ZNSt10unique_ptrIN3gmx30AnalysisDataDisplacementModule4ImplESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a, %bb.g, %bb.e
+  %.pn = phi { ptr, i32 } [ %i.d, %bb.e ], [ %i.f, %bb.g ], [ %.pn.ph, %_ZNKSt14default_deleteIN3gmx30AnalysisDataDisplacementModule4ImplEEclEPS2_.exit.i.a ]
   tail call void @_ZN3gmx20AbstractAnalysisDataD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #27
   resume { ptr, i32 } %.pn
 }

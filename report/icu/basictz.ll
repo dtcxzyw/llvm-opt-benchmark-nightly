@@ -202,8 +202,7 @@ bb.bi:                                            ; preds = %bb.bh
 bb.bj:                                            ; preds = %bb.ad
   %i.cr = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.ax) #12
-  br label %bb.ea
+  br label %.sink.split
 
 bb.bk:                                            ; preds = %bb.ab, %bb.y, %bb.dy, %bb.dx, %bb.dw, %bb.dq, %bb.dp, %bb.do, %bb.dn, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit125, %bb.dj, %bb.di, %bb.df, %bb.dd, %bb.dc, %bb.db, %bb.da, %bb.cz, %bb.cy, %bb.cw, %bb.cv, %bb.ct, %bb.cs, %bb.cq, %bb.cp, %bb.cn, %bb.cm, %bb.ck, %bb.cg, %bb.cf, %bb.cd, %bb.cc, %bb.ca, %bb.bz, %bb.by, %bb.bx, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit123, %bb.bq, %bb.bp, %bb.bm, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.ba, %bb.ay, %bb.ax, %bb.av, %bb.au, %bb.as, %bb.ar, %bb.ap, %bb.ao, %bb.am, %bb.ak, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit, %bb.af, %bb.ae
   %.sroa.0143.1 = phi ptr [ %i.bg, %bb.dy ], [ %i.bg, %bb.dx ], [ %i.bg, %bb.dw ], [ %i.bg, %bb.dq ], [ %i.bg, %bb.dp ], [ %i.bg, %bb.do ], [ %i.bg, %bb.dn ], [ %i.bg, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit125 ], [ %i.bg, %bb.dj ], [ %i.bg, %bb.di ], [ %i.bg, %bb.df ], [ %i.bg, %bb.dd ], [ %i.bg, %bb.dc ], [ %i.bg, %bb.db ], [ %i.bg, %bb.da ], [ %i.bg, %bb.cz ], [ %i.bg, %bb.cy ], [ %i.bg, %bb.cw ], [ %i.bg, %bb.cv ], [ %i.bg, %bb.ct ], [ %i.bg, %bb.cs ], [ %i.bg, %bb.cq ], [ %i.bg, %bb.cp ], [ %i.bg, %bb.cn ], [ %i.bg, %bb.cm ], [ %i.bg, %bb.ck ], [ %i.bg, %bb.cg ], [ %i.bg, %bb.cf ], [ %i.bg, %bb.cd ], [ %i.bg, %bb.cc ], [ %i.bg, %bb.ca ], [ %i.bg, %bb.bz ], [ %i.bg, %bb.by ], [ %i.bg, %bb.bx ], [ %i.bg, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit123 ], [ %i.bg, %bb.bq ], [ %i.bg, %bb.bp ], [ %i.bg, %bb.bm ], [ %i.bg, %bb.bh ], [ %i.bg, %bb.bg ], [ %i.bg, %bb.bf ], [ %i.bg, %bb.be ], [ %i.bg, %bb.bd ], [ %i.bg, %bb.bc ], [ %i.bg, %bb.ba ], [ %i.bg, %bb.ay ], [ %i.bg, %bb.ax ], [ %i.bg, %bb.av ], [ %i.bg, %bb.au ], [ %i.bg, %bb.as ], [ %i.bg, %bb.ar ], [ %i.bg, %bb.ap ], [ %i.bg, %bb.ao ], [ %i.bg, %bb.am ], [ %i.bg, %bb.ak ], [ %i.bg, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit ], [ null, %bb.af ], [ null, %bb.ae ], [ null, %bb.ab ], [ null, %bb.y ]
@@ -215,8 +214,7 @@ bb.bk:                                            ; preds = %bb.ab, %bb.y, %bb.d
 bb.bl:                                            ; preds = %bb.aj, %bb.ai, %bb.ah
   %i.ct = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.bg) #12
-  br label %bb.ea
+  br label %.sink.split
 
 bb.bm:                                            ; preds = %bb.bi
   %i.cu = load i32, ptr %i.c, align 4, !tbaa !12
@@ -341,14 +339,12 @@ _ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit124: ;
 bb.ci:                                            ; preds = %bb.bo
   %i.ej = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.da) #12
-  br label %bb.ea
+  br label %.sink.split
 
 bb.cj:                                            ; preds = %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs
   %i.ek = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.dj) #12
-  br label %bb.ea
+  br label %.sink.split
 
 bb.ck:                                            ; preds = %bb.an, %bb.aw, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit124, %bb.bb, %bb.az, %bb.al
   %i.el = load ptr, ptr %0, align 8, !tbaa !9
@@ -528,14 +524,12 @@ _ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit126: ;
 bb.ds:                                            ; preds = %bb.dh
   %i.gr = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.fq) #12
-  br label %bb.ea
+  br label %.sink.split
 
 bb.dt:                                            ; preds = %bb.dm, %bb.dl
   %i.gs = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.fz) #12
-  br label %bb.ea
+  br label %.sink.split
 
 bb.du:                                            ; preds = %bb.cl, %bb.cu, %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit126, %bb.cx
   br i1 %i.bh, label %_ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit127, label %bb.dv
@@ -576,10 +570,17 @@ _ZN6icu_7812LocalPointerINS_18AnnualTimeZoneRuleEE12adoptInsteadEPS1_.exit127: ;
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   br label %bb.em
 
-bb.ea:                                            ; preds = %bb.dt, %bb.ds, %bb.cj, %bb.ci, %bb.bl, %bb.bj, %bb.bk
-  %.sroa.0143.3 = phi ptr [ %.sroa.0143.1, %bb.bk ], [ %i.bg, %bb.dt ], [ %i.bg, %bb.ds ], [ %i.bg, %bb.cj ], [ %i.bg, %bb.ci ], [ null, %bb.bl ], [ null, %bb.bj ]
-  %.sroa.0.4 = phi ptr [ %.sroa.0.1, %bb.bk ], [ null, %bb.dt ], [ null, %bb.ds ], [ null, %bb.cj ], [ null, %bb.ci ], [ null, %bb.bl ], [ null, %bb.bj ]
-  %.pn.pn.pn = phi { ptr, i32 } [ %i.cs, %bb.bk ], [ %i.gs, %bb.dt ], [ %i.gr, %bb.ds ], [ %i.ek, %bb.cj ], [ %i.ej, %bb.ci ], [ %i.ct, %bb.bl ], [ %i.cr, %bb.bj ]
+.sink.split:                                      ; preds = %bb.bj, %bb.bl, %bb.ci, %bb.cj, %bb.ds, %bb.dt
+  %.sink = phi ptr [ %i.fz, %bb.dt ], [ %i.fq, %bb.ds ], [ %i.dj, %bb.cj ], [ %i.da, %bb.ci ], [ %i.bg, %bb.bl ], [ %i.ax, %bb.bj ]
+  %.sroa.0143.3.ph = phi ptr [ %i.bg, %bb.dt ], [ %i.bg, %bb.ds ], [ %i.bg, %bb.cj ], [ %i.bg, %bb.ci ], [ null, %bb.bl ], [ null, %bb.bj ]
+  %.pn.pn.pn.ph = phi { ptr, i32 } [ %i.gs, %bb.dt ], [ %i.gr, %bb.ds ], [ %i.ek, %bb.cj ], [ %i.ej, %bb.ci ], [ %i.ct, %bb.bl ], [ %i.cr, %bb.bj ]
+  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %.sink) #12
+  br label %bb.ea
+
+bb.ea:                                            ; preds = %.sink.split, %bb.bk
+  %.sroa.0143.3 = phi ptr [ %.sroa.0143.1, %bb.bk ], [ %.sroa.0143.3.ph, %.sink.split ]
+  %.sroa.0.4 = phi ptr [ %.sroa.0.1, %bb.bk ], [ null, %.sink.split ]
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.cs, %bb.bk ], [ %.pn.pn.pn.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12

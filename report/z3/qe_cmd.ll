@@ -202,7 +202,7 @@ bb.a:
 define linkonce_odr hidden void @_ZN6qe_cmd7executeER11cmd_context(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(936) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %class.obj_ref, align 8             ; 8 uses
-  %3 = alloca %"class.qe::simplify_rewriter_star", align 8 ; 13 uses
+  %3 = alloca %"class.qe::simplify_rewriter_star", align 8 ; 12 uses
   %4 = alloca %class.obj_ref.111, align 8         ; 9 uses
   %5 = alloca %class.statistics, align 8          ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
@@ -231,8 +231,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.noexc
   %i.f = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN12rewriter_tplIN2qe21simplify_rewriter_cfgEED2Ev(ptr noundef nonnull align 8 dead_on_return(536) dereferenceable(544) %3) #12
-  br label %.body
+  br label %.body.sink.split
 
 _ZN2qe22simplify_rewriter_starC2ER11ast_manager.exit: ; preds = %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
@@ -481,11 +480,15 @@ bb.ah:                                            ; preds = %bb.ag, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN2qe22simplify_rewriter_starE, i64 16), ptr %3, align 8, !tbaa !9
   call void @_ZN2qe21simplify_rewriter_cfgD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.e) #12, !inline_history !46
-  call void @_ZN12rewriter_tplIN2qe21simplify_rewriter_cfgEED2Ev(ptr noundef nonnull align 8 dead_on_return(536) dereferenceable(544) %3) #12, !inline_history !46
+  br label %.body.sink.split
+
+.body.sink.split:                                 ; preds = %bb.ah, %bb.c
+  %.pn.pn.pn.ph = phi { ptr, i32 } [ %i.f, %bb.c ], [ %.pn.pn, %bb.ah ]
+  call void @_ZN12rewriter_tplIN2qe21simplify_rewriter_cfgEED2Ev(ptr noundef nonnull align 8 dead_on_return(536) dereferenceable(544) %3) #12
   br label %.body
 
-.body:                                            ; preds = %bb.n, %bb.c, %bb.ah
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.ah ], [ %i.ao, %bb.n ], [ %i.f, %bb.c ]
+.body:                                            ; preds = %.body.sink.split, %bb.n
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.ao, %bb.n ], [ %.pn.pn.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   call void @_ZN7obj_refI3app11ast_managerED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12

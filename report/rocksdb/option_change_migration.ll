@@ -202,11 +202,11 @@ bb.a:
   %13 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %14 = alloca %"class.rocksdb::Slice", align 8   ; 5 uses
   %15 = alloca %"struct.rocksdb::Options", align 8 ; 12 uses
-  %16 = alloca %"struct.rocksdb::Options", align 8 ; 13 uses
-  %17 = alloca %"struct.rocksdb::(anonymous namespace)::BaseOptionsResult", align 8 ; 14 uses
+  %16 = alloca %"struct.rocksdb::Options", align 8 ; 12 uses
+  %17 = alloca %"struct.rocksdb::(anonymous namespace)::BaseOptionsResult", align 8 ; 13 uses
   %18 = alloca %"struct.rocksdb::ColumnFamilyOptions", align 8 ; 9 uses
-  %19 = alloca %"struct.rocksdb::Options", align 8 ; 9 uses
-  %20 = alloca %"struct.rocksdb::Options", align 8 ; 13 uses
+  %19 = alloca %"struct.rocksdb::Options", align 8 ; 8 uses
+  %20 = alloca %"struct.rocksdb::Options", align 8 ; 12 uses
   %21 = alloca %"struct.rocksdb::ColumnFamilyOptions", align 8 ; 8 uses
   %22 = alloca %"class.rocksdb::Slice", align 8   ; 6 uses
   %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -609,8 +609,7 @@ bb.el:                                            ; preds = %bb.ek
 bb.em:                                            ; preds = %bb.es, %bb.eq, %bb.eo, %bb.ek
   %i.yx = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN7rocksdb19ColumnFamilyOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(976) dereferenceable(977) %17) #18
-  br label %.body.i
+  br label %bb.fk
 
 bb.en:                                            ; preds = %bb.ej
   %i.yy = getelementptr inbounds nuw i8, ptr %i.ym, i64 160
@@ -663,7 +662,7 @@ bb.eu:                                            ; preds = %bb.ei
 bb.ev:                                            ; preds = %_ZN7rocksdb12_GLOBAL__N_120DetermineBaseOptionsERKNS_19ColumnFamilyOptionsES3_.exit.i
   %i.zl = landingpad { ptr, i32 }
           cleanup
-  br label %bb.fk
+  br label %52
 
 bb.ew:                                            ; preds = %bb.et
   %i.zm = getelementptr i8, ptr %i.ym, i64 160
@@ -692,8 +691,7 @@ _ZN7rocksdb12_GLOBAL__N_131ApplySpecialSingleLevelSettingsERKNS_19ColumnFamilyOp
 bb.ez:                                            ; preds = %.noexc30.i
   %i.zo = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN7rocksdb9DBOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(753) dereferenceable(1736) %19) #18
-  br label %.body31.i
+  br label %.body31.sink.split.i
 
 _ZN7rocksdb7OptionsC2ERKNS_9DBOptionsERKNS_19ColumnFamilyOptionsE.exit.i: ; preds = %.noexc30.i
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #18, !noalias !304
@@ -707,8 +705,7 @@ _ZN7rocksdb7OptionsC2ERKNS_9DBOptionsERKNS_19ColumnFamilyOptionsE.exit.i: ; pred
 bb.fa:                                            ; preds = %.noexc33.i
   %i.zp = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN7rocksdb9DBOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(753) dereferenceable(1736) %20) #18
-  br label %.body34.i
+  br label %.body34.sink.split.i
 
 bb.fb:                                            ; preds = %.noexc33.i
   store i8 1, ptr %i.yc, align 8, !tbaa !313, !alias.scope !314, !noalias !304
@@ -787,30 +784,42 @@ bb.fj:                                            ; preds = %bb.fi, %bb.fh
   %.pn.i41 = phi { ptr, i32 } [ %i.aaf, %bb.fi ], [ %i.aae, %bb.fh ]
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #18, !noalias !304
   call void @_ZN7rocksdb19ColumnFamilyOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(976) dereferenceable(976) %i.yb) #18
+  br label %.body34.sink.split.i
+
+.body34.sink.split.i:                             ; preds = %bb.fj, %bb.fa
+  %.pn.pn.ph.i = phi { ptr, i32 } [ %i.zp, %bb.fa ], [ %.pn.i41, %bb.fj ]
   call void @_ZN7rocksdb9DBOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(753) dereferenceable(1736) %20) #18
   br label %.body34.i
 
-.body34.i:                                        ; preds = %bb.fj, %bb.fg, %bb.fa
-  %.pn.pn.i40 = phi { ptr, i32 } [ %.pn.i41, %bb.fj ], [ %i.aad, %bb.fg ], [ %i.zp, %bb.fa ]
+.body34.i:                                        ; preds = %.body34.sink.split.i, %bb.fg
+  %.pn.pn.i40 = phi { ptr, i32 } [ %i.aad, %bb.fg ], [ %.pn.pn.ph.i, %.body34.sink.split.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #18, !noalias !304
   call void @_ZN7rocksdb19ColumnFamilyOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(976) dereferenceable(976) %i.ya) #18
+  br label %.body31.sink.split.i
+
+.body31.sink.split.i:                             ; preds = %.body34.i, %bb.ez
+  %.pn.pn.pn.ph.i = phi { ptr, i32 } [ %i.zo, %bb.ez ], [ %.pn.pn.i40, %.body34.i ]
   call void @_ZN7rocksdb9DBOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(753) dereferenceable(1736) %19) #18
   br label %.body31.i
 
-.body31.i:                                        ; preds = %.body34.i, %bb.ff, %bb.ez
-  %.pn.pn.pn.i39 = phi { ptr, i32 } [ %.pn.pn.i40, %.body34.i ], [ %i.aac, %bb.ff ], [ %i.zo, %bb.ez ]
+.body31.i:                                        ; preds = %.body31.sink.split.i, %bb.ff
+  %.pn.pn.pn.i39 = phi { ptr, i32 } [ %i.aac, %bb.ff ], [ %.pn.pn.pn.ph.i, %.body31.sink.split.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #18, !noalias !304
   call void @_ZN7rocksdb19ColumnFamilyOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(976) dereferenceable(976) %18) #18
+  br label %52
+
+52:                                               ; preds = %.body31.i, %bb.ev
+  %.pn.pn.pn.pn.i38 = phi { ptr, i32 } [ %.pn.pn.pn.i39, %.body31.i ], [ %i.zl, %bb.ev ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %18) #18, !noalias !304
   br label %bb.fk
 
-bb.fk:                                            ; preds = %.body31.i, %bb.ev
-  %.pn.pn.pn.pn.i38.a = phi { ptr, i32 } [ %.pn.pn.pn.i39, %.body31.i ], [ %i.zl, %bb.ev ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %18) #18, !noalias !304
+bb.fk:                                            ; preds = %52, %bb.em
+  %.pn.pn.pn.pn.i38.a = phi { ptr, i32 } [ %i.yx, %bb.em ], [ %.pn.pn.pn.pn.i38, %52 ]
   call void @_ZN7rocksdb19ColumnFamilyOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(976) dereferenceable(977) %17) #18
   br label %.body.i
 
-.body.i:                                          ; preds = %bb.fk, %bb.eu, %bb.em
-  %.pn.pn.pn.pn.pn.i36 = phi { ptr, i32 } [ %.pn.pn.pn.pn.i38.a, %bb.fk ], [ %i.zk, %bb.eu ], [ %i.yx, %bb.em ]
+.body.i:                                          ; preds = %bb.fk, %bb.eu
+  %.pn.pn.pn.pn.pn.i36 = phi { ptr, i32 } [ %i.zk, %bb.eu ], [ %.pn.pn.pn.pn.i38.a, %bb.fk ]
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #18, !noalias !304
   br label %.body
 
@@ -1029,8 +1038,7 @@ _ZN7rocksdb7OptionsC2ERKNS_9DBOptionsERKNS_19ColumnFamilyOptionsE.exit.i56: ; pr
 bb.fu:                                            ; preds = %.noexc.i59
   %i.adw = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN7rocksdb9DBOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(753) dereferenceable(1736) %16) #18
-  br label %.body.i57
+  br label %.body28.i.a
 
 _ZN7rocksdb7OptionsC2ERKNS_9DBOptionsERKNS_19ColumnFamilyOptionsE.exit27.i: ; preds = %.noexc.i59
   %i.adx = load ptr, ptr %44, align 8, !tbaa !130, !noalias !323
@@ -1126,7 +1134,7 @@ bb.gf:                                            ; preds = %bb.ge, %bb.fz
           cleanup
   call void @_ZN7rocksdb20ColumnFamilyMetaDataD2Ev(ptr noundef nonnull align 8 dead_on_return(112) dereferenceable(112) %12) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #18, !noalias !329
-  br label %.body28.i.a
+  br label %.body28.i
 
 bb.gg:                                            ; preds = %bb.gb, %bb.ga
   store ptr null, ptr %i.acp, align 8, !tbaa !37, !alias.scope !352
@@ -1330,7 +1338,7 @@ bb.gu:                                            ; preds = %_ZN7rocksdb7Options
 bb.gv:                                            ; preds = %bb.gt, %bb.gs, %_ZN7rocksdb12_GLOBAL__N_114CompactToLevelEPNS_2DBEPNS_18ColumnFamilyHandleEi.exit.i15.i.i, %bb.gn
   %i.age = landingpad { ptr, i32 }
           cleanup
-  br label %.body28.i.a
+  br label %.body28.i
 
 bb.gw:                                            ; preds = %.noexc33.i68, %.noexc32.i, %.noexc31.i, %.noexc30.i64, %_ZN7rocksdb20ColumnFamilyMetaDataD2Ev.exit.i.i.i
   %.pr.i = load i8, ptr %46, align 8, !tbaa !48, !alias.scope !323
@@ -1363,14 +1371,18 @@ _ZN7rocksdb6StatusD2Ev.exit37.i:                  ; preds = %_ZNKSt14default_del
   %i.agn = icmp ult i64 %i.agg, %i.agm
   br i1 %i.agn, label %bb.fs, label %_ZN7rocksdb12_GLOBAL__N_113MigrateAllCFsEPNS_2DBERKSt6vectorIPNS_18ColumnFamilyHandleESaIS5_EERKNS_9DBOptionsESC_RKS3_INS_22ColumnFamilyDescriptorESaISD_EESH_.exit, !llvm.loop !268
 
-.body28.i.a:                                      ; preds = %bb.gv, %bb.gf
-  %.pn.i61 = phi { ptr, i32 } [ %i.aeq, %bb.gf ], [ %i.age, %bb.gv ]
+.body28.i:                                        ; preds = %bb.gv, %bb.gf
+  %.pn.i63 = phi { ptr, i32 } [ %i.aeq, %bb.gf ], [ %i.age, %bb.gv ]
   call void @_ZN7rocksdb19ColumnFamilyOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(976) dereferenceable(976) %i.abt) #18
+  br label %.body28.i.a
+
+.body28.i.a:                                      ; preds = %.body28.i, %bb.fu
+  %.pn.i61 = phi { ptr, i32 } [ %i.adw, %bb.fu ], [ %.pn.i63, %.body28.i ]
   call void @_ZN7rocksdb9DBOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(753) dereferenceable(1736) %16) #18
   br label %.body.i57
 
-.body.i57:                                        ; preds = %.body28.i.a, %bb.gu, %bb.fu
-  %.pn.pn.i58 = phi { ptr, i32 } [ %.pn.i61, %.body28.i.a ], [ %i.agd, %bb.gu ], [ %i.adw, %bb.fu ]
+.body.i57:                                        ; preds = %.body28.i.a, %bb.gu
+  %.pn.pn.i58 = phi { ptr, i32 } [ %i.agd, %bb.gu ], [ %.pn.i61, %.body28.i.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #18, !noalias !323
   call void @_ZN7rocksdb19ColumnFamilyOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(976) dereferenceable(976) %i.abs) #18
   call void @_ZN7rocksdb9DBOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(753) dereferenceable(1736) %15) #18

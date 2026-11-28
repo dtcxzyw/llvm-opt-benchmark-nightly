@@ -204,7 +204,7 @@ define void @_ZN4bzla11RewriteRuleILNS_15RewriteRuleKindE285EE6_applyERNS_8Rewri
 bb.a:
   %3 = alloca %"class.bzla::Node", align 8        ; 8 uses
   %4 = alloca %"class.std::vector.44", align 8    ; 13 uses
-  %5 = alloca [2 x %"class.bzla::Node"], align 8  ; 11 uses
+  %5 = alloca [2 x %"class.bzla::Node"], align 8  ; 10 uses
   %6 = alloca %"class.std::vector.49", align 8    ; 12 uses
   %7 = alloca %"class.std::vector.44", align 8    ; 13 uses
   %8 = alloca [3 x %"class.bzla::Node"], align 8  ; 21 uses
@@ -335,18 +335,14 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.ag = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.ah = load ptr, ptr %6, align 8, !tbaa !17    ; 3 uses
+  %i.ah = load ptr, ptr %6, align 8, !tbaa !17    ; 2 uses
   %.not.i.i4.i = icmp eq ptr %i.ah, null
   br i1 %.not.i.i4.i, label %.body83, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !18
-  %17 = ptrtoint ptr %i.aj to i64
-  %18 = ptrtoint ptr %i.ah to i64
-  %19 = sub i64 %17, %18
-  call void @_ZdlPvm(ptr noundef nonnull %i.ah, i64 noundef %19) #14
-  br label %.body83
+  br label %bb.bf
 
 bb.p:                                             ; preds = %bb.m
   store ptr %i.af, ptr %6, align 8, !tbaa !17
@@ -749,8 +745,7 @@ _ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev.exit142:    ; preds = %_ZSt8_DestroyIPN4bz
 .loopexit211.loopexit220:                         ; preds = %bb.e, %bb.d
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #10
-  br label %.loopexit211
+  br label %.loopexit211.sink.split
 
 bb.bd:                                            ; preds = %bb.l, %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.1
   %i.fm = landingpad { ptr, i32 }
@@ -760,20 +755,26 @@ bb.bd:                                            ; preds = %bb.l, %_ZSt10_Const
 bb.be:                                            ; preds = %bb.q, %bb.p
   %i.fn = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.fo = load ptr, ptr %6, align 8, !tbaa !17    ; 3 uses
+  %i.fo = load ptr, ptr %6, align 8, !tbaa !17    ; 2 uses
   %.not.i.i.i143 = icmp eq ptr %i.fo, null
-  br i1 %.not.i.i.i143, label %.body83, label %bb.bf
+  br i1 %.not.i.i.i143, label %.body83, label %17
 
-bb.bf:                                            ; preds = %bb.be
-  %20 = load ptr, ptr %i.al, align 8, !tbaa !18
-  %i.fp = ptrtoint ptr %20 to i64
-  %i.fq = ptrtoint ptr %i.fo to i64
+17:                                               ; preds = %bb.be
+  %18 = load ptr, ptr %i.al, align 8, !tbaa !18
+  br label %bb.bf
+
+bb.bf:                                            ; preds = %17, %bb.o
+  %.sink279 = phi ptr [ %i.aj, %bb.o ], [ %18, %17 ]
+  %.sink278 = phi ptr [ %i.ah, %bb.o ], [ %i.fo, %17 ] ; 2 uses
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.ag, %bb.o ], [ %i.fn, %17 ]
+  %i.fp = ptrtoint ptr %.sink279 to i64
+  %i.fq = ptrtoint ptr %.sink278 to i64
   %i.fr = sub i64 %i.fp, %i.fq
-  call void @_ZdlPvm(ptr noundef nonnull %i.fo, i64 noundef %i.fr) #14
+  call void @_ZdlPvm(ptr noundef nonnull %.sink278, i64 noundef %i.fr) #14
   br label %.body83
 
-.body83:                                          ; preds = %bb.n, %bb.o, %bb.be, %bb.bf, %bb.bd
-  %.pn.pn = phi { ptr, i32 } [ %i.fm, %bb.bd ], [ %i.ag, %bb.n ], [ %i.fn, %bb.bf ], [ %i.ag, %bb.o ], [ %i.fn, %bb.be ]
+.body83:                                          ; preds = %bb.bf, %bb.n, %bb.be, %bb.bd
+  %.pn.pn = phi { ptr, i32 } [ %i.fm, %bb.bd ], [ %i.ag, %bb.n ], [ %i.fn, %bb.be ], [ %.pn.pn.ph, %bb.bf ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   call void @_ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %4) #10
   br label %.body
@@ -782,11 +783,15 @@ bb.bf:                                            ; preds = %bb.be
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body83 ], [ %eh.lpad-body156, %.body155 ], [ %eh.lpad-body156, %bb.k ]
   %i.fs = getelementptr inbounds nuw i8, ptr %5, i64 8
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.fs) #10
+  br label %.loopexit211.sink.split
+
+.loopexit211.sink.split:                          ; preds = %.body, %.loopexit211.loopexit220
+  %.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.loopexit211.loopexit220 ], [ %.pn.pn.pn, %.body ]
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #10
   br label %.loopexit211
 
-.loopexit211:                                     ; preds = %.loopexit211.loopexit220, %.body, %.thread
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %.body ], [ %lpad.thr_comm, %.thread ], [ %lpad.thr_comm.split-lp, %.loopexit211.loopexit220 ]
+.loopexit211:                                     ; preds = %.loopexit211.sink.split, %.thread
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %lpad.thr_comm, %.thread ], [ %.pn.pn.pn.pn.ph, %.loopexit211.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   br label %bb.bt
@@ -1189,18 +1194,14 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad
   %i.bx = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.by = load ptr, ptr %11, align 8, !tbaa !17   ; 3 uses
+  %i.by = load ptr, ptr %11, align 8, !tbaa !17   ; 2 uses
   %.not.i.i4.i = icmp eq ptr %i.by, null
   br i1 %.not.i.i4.i, label %.body64, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.bz = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !18
-  %12 = ptrtoint ptr %i.ca to i64
-  %13 = ptrtoint ptr %i.by to i64
-  %14 = sub i64 %12, %13
-  call void @_ZdlPvm(ptr noundef nonnull %i.by, i64 noundef %14) #14
-  br label %.body64
+  br label %bb.at
 
 bb.ag:                                            ; preds = %bb.ad
   %i.cb = add i64 %i.bv, 1
@@ -1399,20 +1400,26 @@ bb.ar:                                            ; preds = %bb.ac, %bb.ab, %bb.
 bb.as:                                            ; preds = %bb.ah, %bb.ag
   %i.ea = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.eb = load ptr, ptr %11, align 8, !tbaa !17   ; 3 uses
+  %i.eb = load ptr, ptr %11, align 8, !tbaa !17   ; 2 uses
   %.not.i.i.i96 = icmp eq ptr %i.eb, null
-  br i1 %.not.i.i.i96, label %.body64, label %bb.at
+  br i1 %.not.i.i.i96, label %.body64, label %12
 
-bb.at:                                            ; preds = %bb.as
-  %15 = load ptr, ptr %i.cd, align 8, !tbaa !18
-  %i.ec = ptrtoint ptr %15 to i64
-  %i.ed = ptrtoint ptr %i.eb to i64
+12:                                               ; preds = %bb.as
+  %13 = load ptr, ptr %i.cd, align 8, !tbaa !18
+  br label %bb.at
+
+bb.at:                                            ; preds = %12, %bb.af
+  %.sink198 = phi ptr [ %i.ca, %bb.af ], [ %13, %12 ]
+  %.sink197 = phi ptr [ %i.by, %bb.af ], [ %i.eb, %12 ] ; 2 uses
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.bx, %bb.af ], [ %i.ea, %12 ]
+  %i.ec = ptrtoint ptr %.sink198 to i64
+  %i.ed = ptrtoint ptr %.sink197 to i64
   %i.ee = sub i64 %i.ec, %i.ed
-  call void @_ZdlPvm(ptr noundef nonnull %i.eb, i64 noundef %i.ee) #14
+  call void @_ZdlPvm(ptr noundef nonnull %.sink197, i64 noundef %i.ee) #14
   br label %.body64
 
-.body64:                                          ; preds = %bb.ae, %bb.af, %bb.as, %bb.at, %bb.ar
-  %.pn.pn = phi { ptr, i32 } [ %i.dz, %bb.ar ], [ %i.bx, %bb.ae ], [ %i.ea, %bb.at ], [ %i.bx, %bb.af ], [ %i.ea, %bb.as ]
+.body64:                                          ; preds = %bb.at, %bb.ae, %bb.as, %bb.ar
+  %.pn.pn = phi { ptr, i32 } [ %i.dz, %bb.ar ], [ %i.bx, %bb.ae ], [ %i.ea, %bb.as ], [ %.pn.pn.ph, %bb.at ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #10
   call void @_ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #10
   br label %.body61

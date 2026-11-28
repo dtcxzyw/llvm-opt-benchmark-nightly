@@ -204,8 +204,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81: ; preds = %_ZN5Eigen8
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72: ; preds = %.noexc83
   %i.et = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.em) #23
-  br label %.body84
+  br label %.body84.sink.split
 
 _ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit.i.i79: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i76
   %i.eu = phi ptr [ %.pre23.i.i78, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i76 ], [ %i.es, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81 ] ; 2 uses
@@ -400,8 +399,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i95: ; preds = %_ZN5Eigen8
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86: ; preds = %.noexc98
   %i.hs = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.hn) #23
-  br label %.body84
+  br label %.body84.sink.split
 
 _ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit.i.i93: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i95, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i90
   %i.ht = phi ptr [ %.pre23.i.i92, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i90 ], [ %i.hr, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i95 ] ; 2 uses
@@ -474,8 +472,14 @@ _ZN5Eigen12SparseMatrixIdLi1ElED2Ev.exit:         ; preds = %bb.ai, %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   br label %_ZN5Eigen12SparseMatrixIdLi1ElE8finalizeEv.exit
 
-.body84:                                          ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72
-  %.pn.pn = phi { ptr, i32 } [ %i.et, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ], [ %i.hs, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86 ], [ %lpad.loopexit.split-lp178, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body84.sink.split:                               ; preds = %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86
+  %.lcssa176.sink = phi ptr [ %i.hn, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86 ], [ %i.em, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.hs, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86 ], [ %i.et, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ]
+  tail call void @_ZdaPv(ptr noundef nonnull %.lcssa176.sink) #23
+  br label %.body84
+
+.body84:                                          ; preds = %.body84.sink.split, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp178, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn.pn.ph, %.body84.sink.split ]
   call void @_ZN5Eigen12SparseMatrixIdLi1ElED2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %2) #20
   br label %.body
 
@@ -878,8 +882,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81: ; preds = %_ZN5Eigen8
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72: ; preds = %.noexc83
   %i.dr = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.dk) #23
-  br label %.body84
+  br label %.body84.sink.split
 
 _ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit.i.i79: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i76
   %i.ds = phi ptr [ %.pre23.i.i78, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i76 ], [ %i.dq, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81 ] ; 2 uses
@@ -1063,8 +1066,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i95: ; preds = %_ZN5Eigen8
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86: ; preds = %.noexc98
   %i.gf = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.ga) #23
-  br label %.body84
+  br label %.body84.sink.split
 
 _ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit.i.i93: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i95, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i90
   %i.gg = phi ptr [ %.pre23.i.i92, %_ZN5Eigen8internal12scoped_arrayIlEC2El.exit._ZN5Eigen8internal10smart_copyIlEEvPKT_S4_PS2_.exit_crit_edge.i.i90 ], [ %i.ge, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i95 ] ; 2 uses
@@ -1137,8 +1139,14 @@ _ZN5Eigen12SparseMatrixIdLi1ElED2Ev.exit:         ; preds = %bb.ai, %bb.aj
           cleanup
   br label %.body84
 
-.body84:                                          ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72
-  %.pn.pn = phi { ptr, i32 } [ %i.dr, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ], [ %i.gf, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86 ], [ %lpad.loopexit.split-lp170, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body84.sink.split:                               ; preds = %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86
+  %.lcssa168.sink = phi ptr [ %i.ga, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86 ], [ %i.dk, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.gf, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i86 ], [ %i.dr, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ]
+  tail call void @_ZdaPv(ptr noundef nonnull %.lcssa168.sink) #23
+  br label %.body84
+
+.body84:                                          ; preds = %.body84.sink.split, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp170, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn.pn.ph, %.body84.sink.split ]
   call void @_ZN5Eigen12SparseMatrixIdLi1ElED2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %2) #20
   br label %.body
 
@@ -1541,8 +1549,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i99: ; preds = %_ZN5Eigen8
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i90: ; preds = %.noexc102
   %i.hg = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.gw) #23
-  br label %.body103
+  br label %.body103.sink.split
 
 _ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit.i.i97: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i99, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i94
   %i.hh = phi ptr [ %.pre23.i.i96, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i94 ], [ %i.hf, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i99 ] ; 2 uses
@@ -1856,8 +1863,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i115: ; preds = %_ZN5Eigen
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i106: ; preds = %.noexc119
   %i.lw = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.lq) #23
-  br label %.body103
+  br label %.body103.sink.split
 
 _ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit.i.i113: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i115, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i110
   %i.lx = phi ptr [ %.pre23.i.i112, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i110 ], [ %i.lv, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i115 ] ; 2 uses
@@ -1992,8 +1998,14 @@ _ZN5Eigen12SparseMatrixIdLi0EiED2Ev.exit:         ; preds = %bb.bg, %bb.bh
           cleanup
   br label %.body103
 
-.body103:                                         ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i106, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i90
-  %.pn.pn = phi { ptr, i32 } [ %i.hg, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i90 ], [ %i.lw, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i106 ], [ %lpad.loopexit.split-lp283, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body103.sink.split:                              ; preds = %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i90, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i106
+  %.lcssa265.sink = phi ptr [ %i.lq, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i106 ], [ %i.gw, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i90 ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.lw, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i106 ], [ %i.hg, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i90 ]
+  tail call void @_ZdaPv(ptr noundef nonnull %.lcssa265.sink) #23
+  br label %.body103
+
+.body103:                                         ; preds = %.body103.sink.split, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp283, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn.pn.ph, %.body103.sink.split ]
   call void @_ZN5Eigen12SparseMatrixIdLi0EiED2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %2) #20
   br label %.body
 
@@ -2396,8 +2408,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81: ; preds = %_ZN5Eigen8
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72: ; preds = %.noexc84
   %i.eh = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.dx) #23
-  br label %.body85
+  br label %.body85.sink.split
 
 _ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit.i.i79: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i76
   %i.ei = phi ptr [ %.pre23.i.i78, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i76 ], [ %i.eg, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i81 ] ; 2 uses
@@ -2621,8 +2632,7 @@ _ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i97: ; preds = %_ZN5Eigen8
 _ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i88: ; preds = %.noexc101
   %i.hh = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdaPv(ptr noundef nonnull %i.hb) #23
-  br label %.body85
+  br label %.body85.sink.split
 
 _ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit.i.i95: ; preds = %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i97, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i92
   %i.hi = phi ptr [ %.pre23.i.i94, %_ZN5Eigen8internal12scoped_arrayIiEC2El.exit._ZN5Eigen8internal10smart_copyIiEEvPKT_S4_PS2_.exit_crit_edge.i.i92 ], [ %i.hg, %_ZN5Eigen8internal10smart_copyIdEEvPKT_S4_PS2_.exit.i.i97 ] ; 2 uses
@@ -2696,8 +2706,14 @@ _ZN5Eigen12SparseMatrixIdLi0EiED2Ev.exit:         ; preds = %bb.ai, %bb.aj
           cleanup
   br label %.body85
 
-.body85:                                          ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i88, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72
-  %.pn.pn = phi { ptr, i32 } [ %i.eh, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ], [ %i.hh, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i88 ], [ %lpad.loopexit.split-lp194, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body85.sink.split:                               ; preds = %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i88
+  %.lcssa176.sink = phi ptr [ %i.hb, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i88 ], [ %i.dx, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.hh, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i88 ], [ %i.eh, %_ZN5Eigen8internal12scoped_arrayIdED2Ev.exit9.i.i72 ]
+  tail call void @_ZdaPv(ptr noundef nonnull %.lcssa176.sink) #23
+  br label %.body85
+
+.body85:                                          ; preds = %.body85.sink.split, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp194, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn.pn.ph, %.body85.sink.split ]
   call void @_ZN5Eigen12SparseMatrixIdLi0EiED2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %2) #20
   br label %.body
 

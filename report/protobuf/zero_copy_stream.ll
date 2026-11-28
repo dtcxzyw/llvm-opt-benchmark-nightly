@@ -204,8 +204,7 @@ _ZN4absl12lts_202505124Cord6AppendENS0_10CordBufferE.exit: ; preds = %_ZNK4absl1
 bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w, %bb.v
   %i.df = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_2025051210CordBufferD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %5) #16
-  br label %.loopexit.split-lp.loopexit.split-lp
+  br label %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a
 
 bb.aa:                                            ; preds = %.thread122, %bb.p
   %.in = phi i32 [ %i.bo, %.thread122 ], [ %i.bx, %bb.p ]
@@ -410,8 +409,7 @@ _ZN4absl12lts_202505124Cord6AppendENS0_10CordBufferE.exit48: ; preds = %_ZNK4abs
 bb.as:                                            ; preds = %bb.ar, %bb.aq, %bb.ap, %bb.ao
   %i.fv = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_2025051210CordBufferD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %6) #16
-  br label %.loopexit.split-lp.loopexit.split-lp
+  br label %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a
 
 _ZN4absl12lts_2025051210CordBufferD2Ev.exit53.sink.split: ; preds = %_ZN4absl12lts_202505124Cord6AppendENS0_10CordBufferE.exit48, %_ZN4absl12lts_202505124Cord6AppendENS0_10CordBufferE.exit
   %.sink142 = phi ptr [ %5, %_ZN4absl12lts_202505124Cord6AppendENS0_10CordBufferE.exit ], [ %6, %_ZN4absl12lts_202505124Cord6AppendENS0_10CordBufferE.exit48 ]
@@ -437,7 +435,7 @@ _ZN4absl12lts_2025051210CordBufferD2Ev.exit53:    ; preds = %_ZN4absl12lts_20250
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   %i.gf = load i8, ptr %3, align 8, !tbaa !18
   %i.gg = trunc i8 %i.gf to i1
-  br i1 %i.gg, label %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a, label %bb.at
+  br i1 %i.gg, label %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58, label %bb.at
 
 bb.at:                                            ; preds = %_ZN4absl12lts_2025051210CordBufferD2Ev.exit53
   %i.gh = load ptr, ptr %3, align 8, !tbaa !18    ; 2 uses
@@ -454,21 +452,27 @@ bb.at:                                            ; preds = %_ZN4absl12lts_20250
   %i.go = add nsw i32 %i.gn, %.sink5.i.i.i57
   %i.gp = sext i32 %i.go to i64
   call void @_ZdlPvm(ptr noundef %i.gh, i64 noundef %i.gp) #16
-  br label %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a
+  br label %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58
 
-_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a:  ; preds = %_ZN4absl12lts_2025051210CordBufferD2Ev.exit53, %bb.at
+_ZN4absl12lts_2025051210CordBufferD2Ev.exit58:    ; preds = %_ZN4absl12lts_2025051210CordBufferD2Ev.exit53, %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %bb.au
 
-.loopexit.split-lp.loopexit.split-lp:             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.z, %bb.as
-  %.pn14 = phi { ptr, i32 } [ %i.fv, %bb.as ], [ %i.df, %bb.z ], [ %lpad.loopexit.split-lp153, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a:  ; preds = %bb.as, %bb.z
+  %.sink = phi ptr [ %5, %bb.z ], [ %6, %bb.as ]
+  %.pn14.ph = phi { ptr, i32 } [ %i.df, %bb.z ], [ %i.fv, %bb.as ]
+  call void @_ZN4absl12lts_2025051210CordBufferD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %.sink) #16
+  br label %.loopexit.split-lp.loopexit.split-lp
+
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a
+  %.pn14 = phi { ptr, i32 } [ %.pn14.ph, %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a ], [ %lpad.loopexit.split-lp153, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   call void @_ZN4absl12lts_2025051210CordBufferD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   resume { ptr, i32 } %.pn14
 
-bb.au:                                            ; preds = %bb.a, %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a
-  %.3 = phi i1 [ %.212, %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58.a ], [ true, %bb.a ]
+bb.au:                                            ; preds = %bb.a, %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58
+  %.3 = phi i1 [ %.212, %_ZN4absl12lts_2025051210CordBufferD2Ev.exit58 ], [ true, %bb.a ]
   ret i1 %.3
 }
 

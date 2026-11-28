@@ -148,7 +148,7 @@ bb.a:
   %81 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 5 uses
   %82 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 5 uses
   %83 = alloca %"class.std::vector.98", align 8   ; 10 uses
-  %84 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 12 uses
+  %84 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 11 uses
   %85 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %86 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %87 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
@@ -162,7 +162,7 @@ bb.a:
   %95 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 5 uses
   %96 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 5 uses
   %97 = alloca %"class.std::vector.98", align 8   ; 10 uses
-  %98 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 12 uses
+  %98 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 11 uses
   %99 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %100 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %101 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
@@ -565,8 +565,7 @@ bb.pg:                                            ; preds = %bb.ej
 .loopexit699.loopexit705:                         ; preds = %bb.ep
   %i.ayr = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %84) #15
-  br label %.loopexit699
+  br label %.loopexit699.sink.split
 
 bb.ph:                                            ; preds = %bb.ev
   %i.ays = landingpad { ptr, i32 }
@@ -618,11 +617,15 @@ bb.pp:                                            ; preds = %bb.po, %bb.ph
   %.pn176.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn176.pn.pn.pn, %bb.pp ], [ %i.sc, %bb.eq ], [ %i.sc, %bb.er ]
   %i.ayx = getelementptr inbounds nuw i8, ptr %84, i64 8
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.ayx) #15
+  br label %.loopexit699.sink.split
+
+.loopexit699.sink.split:                          ; preds = %.body382, %.loopexit699.loopexit705
+  %.pn176.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.ayr, %.loopexit699.loopexit705 ], [ %.pn176.pn.pn.pn.pn, %.body382 ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %84) #15
   br label %.loopexit699
 
-.loopexit699:                                     ; preds = %.loopexit699.loopexit705, %.body382, %.thread682
-  %.pn176.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn176.pn.pn.pn.pn, %.body382 ], [ %i.ri, %.thread682 ], [ %i.ayr, %.loopexit699.loopexit705 ]
+.loopexit699:                                     ; preds = %.loopexit699.sink.split, %.thread682
+  %.pn176.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.ri, %.thread682 ], [ %.pn176.pn.pn.pn.pn.pn.ph, %.loopexit699.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %84) #15
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %82) #15
   br label %bb.pq
@@ -730,8 +733,7 @@ bb.qa:                                            ; preds = %bb.hq
 .loopexit695.loopexit704:                         ; preds = %bb.hw
   %i.azg = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %98) #15
-  br label %.loopexit695
+  br label %.loopexit695.sink.split
 
 bb.qb:                                            ; preds = %bb.ic
   %i.azh = landingpad { ptr, i32 }
@@ -783,11 +785,15 @@ bb.qj:                                            ; preds = %bb.qi, %bb.qb
   %.pn193.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn193.pn.pn.pn, %bb.qj ], [ %i.adv, %bb.hx ], [ %i.adv, %bb.hy ]
   %i.azm = getelementptr inbounds nuw i8, ptr %98, i64 8
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.azm) #15
+  br label %.loopexit695.sink.split
+
+.loopexit695.sink.split:                          ; preds = %.body481, %.loopexit695.loopexit704
+  %.pn193.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.azg, %.loopexit695.loopexit704 ], [ %.pn193.pn.pn.pn.pn, %.body481 ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %98) #15
   br label %.loopexit695
 
-.loopexit695:                                     ; preds = %.loopexit695.loopexit704, %.body481, %.thread689
-  %.pn193.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn193.pn.pn.pn.pn, %.body481 ], [ %i.adb, %.thread689 ], [ %i.azg, %.loopexit695.loopexit704 ]
+.loopexit695:                                     ; preds = %.loopexit695.sink.split, %.thread689
+  %.pn193.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.adb, %.thread689 ], [ %.pn193.pn.pn.pn.pn.pn.ph, %.loopexit695.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %98) #15
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %96) #15
   br label %bb.qk

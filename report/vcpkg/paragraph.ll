@@ -204,7 +204,7 @@ bb.a:
   %7 = alloca %"struct.vcpkg::ExpectedT", align 8 ; 9 uses
   %8 = alloca %"class.std::vector", align 8       ; 8 uses
   %9 = alloca [1 x %"class.std::unordered_map"], align 8 ; 8 uses
-  %10 = alloca [2 x %"struct.std::pair"], align 8 ; 18 uses
+  %10 = alloca [2 x %"struct.std::pair"], align 8 ; 17 uses
   %11 = alloca %"struct.std::hash", align 1       ; 4 uses
   %12 = alloca %"struct.std::equal_to", align 1   ; 4 uses
   %13 = alloca %"class.std::allocator.12", align 1 ; 4 uses
@@ -423,8 +423,7 @@ bb.h:                                             ; preds = %bb.g
 .loopexit.loopexit119:                            ; preds = %bb.b
   %i.bb = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %10) #21
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.i:                                             ; preds = %bb.c
   %i.bc = landingpad { ptr, i32 }
@@ -449,11 +448,15 @@ bb.j:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
   %i.be = getelementptr inbounds nuw i8, ptr %10, i64 64
   call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %i.be) #21
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.loopexit117, %.loopexit.loopexit119
+  %.pn.pn.pn.ph = phi { ptr, i32 } [ %i.bb, %.loopexit.loopexit119 ], [ %.pn.pn, %.loopexit117 ]
   call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %10) #21
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit119, %.loopexit117, %.thread
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.loopexit117 ], [ %i.e, %.thread ], [ %i.bb, %.loopexit.loopexit119 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.e, %.thread ], [ %.pn.pn.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
@@ -856,7 +859,7 @@ bb.a:
   %50 = alloca %"struct.std::hash", align 1       ; 4 uses
   %51 = alloca %"struct.std::equal_to", align 1   ; 4 uses
   %52 = alloca %"class.std::allocator.12", align 1 ; 4 uses
-  %53 = alloca [2 x %"struct.std::pair"], align 8 ; 18 uses
+  %53 = alloca [2 x %"struct.std::pair"], align 8 ; 17 uses
   %54 = alloca %"struct.std::hash", align 1       ; 4 uses
   %55 = alloca %"struct.std::equal_to", align 1   ; 4 uses
   %56 = alloca %"class.std::allocator.12", align 1 ; 4 uses
@@ -873,7 +876,7 @@ bb.a:
   %67 = alloca %"struct.vcpkg::ExpectedT", align 8 ; 8 uses
   %68 = alloca %"class.std::vector", align 8      ; 8 uses
   %69 = alloca [1 x %"class.std::unordered_map"], align 8 ; 8 uses
-  %70 = alloca [2 x %"struct.std::pair"], align 8 ; 18 uses
+  %70 = alloca [2 x %"struct.std::pair"], align 8 ; 17 uses
   %71 = alloca %"struct.std::hash", align 1       ; 4 uses
   %72 = alloca %"struct.std::equal_to", align 1   ; 4 uses
   %73 = alloca %"class.std::allocator.12", align 1 ; 4 uses
@@ -1276,8 +1279,7 @@ bb.co:                                            ; preds = %bb.ca
 .loopexit340.loopexit350:                         ; preds = %bb.cb
   %i.mo = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %53) #21
-  br label %.loopexit340
+  br label %.loopexit340.sink.split
 
 bb.cp:                                            ; preds = %bb.cc
   %i.mp = landingpad { ptr, i32 }
@@ -1305,12 +1307,17 @@ bb.cq:                                            ; preds = %bb.ce
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #21
   %i.ms = getelementptr inbounds nuw i8, ptr %53, i64 64
   call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %i.ms) #21
+  br label %.loopexit340.sink.split
+
+.loopexit340.sink.split:                          ; preds = %.loopexit341, %.loopexit340.loopexit350
+  %.188.ph = phi i1 [ true, %.loopexit340.loopexit350 ], [ %.087, %.loopexit341 ]
+  %.pn118.pn.pn.ph = phi { ptr, i32 } [ %i.mo, %.loopexit340.loopexit350 ], [ %.pn118.pn, %.loopexit341 ]
   call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %53) #21
   br label %.loopexit340
 
-.loopexit340:                                     ; preds = %.loopexit340.loopexit350, %.loopexit341, %.thread327
-  %.188 = phi i1 [ %.087, %.loopexit341 ], [ true, %.thread327 ], [ true, %.loopexit340.loopexit350 ]
-  %.pn118.pn.pn = phi { ptr, i32 } [ %.pn118.pn, %.loopexit341 ], [ %i.ji, %.thread327 ], [ %i.mo, %.loopexit340.loopexit350 ]
+.loopexit340:                                     ; preds = %.loopexit340.sink.split, %.thread327
+  %.188 = phi i1 [ true, %.thread327 ], [ %.188.ph, %.loopexit340.sink.split ]
+  %.pn118.pn.pn = phi { ptr, i32 } [ %i.ji, %.thread327 ], [ %.pn118.pn.pn.ph, %.loopexit340.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %53) #21
   br label %bb.cr
 
@@ -1713,8 +1720,7 @@ bb.eb:                                            ; preds = %bb.ea, %bb.di
 .loopexit.loopexit349:                            ; preds = %bb.dp
   %i.rk = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %70) #21
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.ec:                                            ; preds = %bb.dq
   %i.rl = landingpad { ptr, i32 }
@@ -1739,11 +1745,15 @@ bb.ed:                                            ; preds = %bb.ds
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #21
   %i.rn = getelementptr inbounds nuw i8, ptr %70, i64 64
   call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %i.rn) #21
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.loopexit337, %.loopexit.loopexit349
+  %.pn131.pn.pn.ph = phi { ptr, i32 } [ %i.rk, %.loopexit.loopexit349 ], [ %.pn131.pn, %.loopexit337 ]
   call void @_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %70) #21
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit349, %.loopexit337, %.thread335
-  %.pn131.pn.pn = phi { ptr, i32 } [ %.pn131.pn, %.loopexit337 ], [ %i.pe, %.thread335 ], [ %i.rk, %.loopexit.loopexit349 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread335
+  %.pn131.pn.pn = phi { ptr, i32 } [ %i.pe, %.thread335 ], [ %.pn131.pn.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %70) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %69) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %68) #21

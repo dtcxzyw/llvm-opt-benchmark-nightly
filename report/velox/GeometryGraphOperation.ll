@@ -76,11 +76,11 @@ bb.e:                                             ; preds = %bb.a, %bb.h, %bb.d,
 
 bb.f:                                             ; preds = %bb.d
   %i.q = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4geos9algorithm16BoundaryNodeRule17getBoundaryOGCSFSEv()
-          to label %bb.g unwind label %bb.l
+          to label %bb.g unwind label %3
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_ZN4geos9geomgraph13GeometryGraphC1EhPKNS_4geom8GeometryERKNS_9algorithm16BoundaryNodeRuleE(ptr noundef nonnull align 8 dereferenceable(168) %i.o, i8 noundef zeroext 0, ptr noundef nonnull %1, ptr noundef nonnull align 8 dereferenceable(8) %i.q)
-          to label %bb.h unwind label %bb.l
+          to label %bb.h unwind label %3
 
 bb.h:                                             ; preds = %bb.g
   %i.r = load ptr, ptr %i.e, align 8, !tbaa !25
@@ -90,11 +90,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.t = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4geos9algorithm16BoundaryNodeRule17getBoundaryOGCSFSEv()
-          to label %bb.j unwind label %bb.m
+          to label %bb.j unwind label %bb.l
 
 bb.j:                                             ; preds = %bb.i
   invoke void @_ZN4geos9geomgraph13GeometryGraphC1EhPKNS_4geom8GeometryERKNS_9algorithm16BoundaryNodeRuleE(ptr noundef nonnull align 8 dereferenceable(168) %i.s, i8 noundef zeroext 1, ptr noundef nonnull %2, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
-          to label %bb.k unwind label %bb.m
+          to label %bb.k unwind label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.u = load ptr, ptr %i.e, align 8, !tbaa !25
@@ -102,20 +102,24 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.s, ptr %i.v, align 8, !tbaa !35
   ret void
 
-bb.l:                                             ; preds = %bb.g, %bb.f
+3:                                                ; preds = %bb.g, %bb.f
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.m
+
+bb.l:                                             ; preds = %bb.j, %bb.i
   %i.w = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.o) #9
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.l, %3
+  %.sink = phi ptr [ %i.o, %3 ], [ %i.s, %bb.l ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %4, %3 ], [ %i.w, %bb.l ]
+  tail call void @_ZdlPv(ptr noundef nonnull %.sink) #9
   br label %bb.n
 
-bb.m:                                             ; preds = %bb.j, %bb.i
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.s) #9
-  br label %bb.n
-
-bb.n:                                             ; preds = %bb.e, %bb.l, %bb.m
-  %.pn.pn = phi { ptr, i32 } [ %i.w, %bb.l ], [ %3, %bb.m ], [ %i.p, %bb.e ]
+bb.n:                                             ; preds = %bb.m, %bb.e
+  %.pn.pn = phi { ptr, i32 } [ %i.p, %bb.e ], [ %.pn.pn.ph, %bb.m ]
   %i.x = load ptr, ptr %i.e, align 8, !tbaa !25   ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.x, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPN4geos9geomgraph13GeometryGraphESaIS3_EED2Ev.exit, label %bb.o
@@ -204,7 +208,7 @@ bb.e:                                             ; preds = %bb.a, %bb.g, %bb.d,
 
 bb.f:                                             ; preds = %bb.d
   invoke void @_ZN4geos9geomgraph13GeometryGraphC1EhPKNS_4geom8GeometryERKNS_9algorithm16BoundaryNodeRuleE(ptr noundef nonnull align 8 dereferenceable(168) %i.o, i8 noundef zeroext 0, ptr noundef nonnull %1, ptr noundef nonnull align 8 dereferenceable(8) %3)
-          to label %bb.g unwind label %bb.j
+          to label %bb.g unwind label %4
 
 bb.g:                                             ; preds = %bb.f
   %i.q = load ptr, ptr %i.e, align 8, !tbaa !25
@@ -214,7 +218,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_ZN4geos9geomgraph13GeometryGraphC1EhPKNS_4geom8GeometryERKNS_9algorithm16BoundaryNodeRuleE(ptr noundef nonnull align 8 dereferenceable(168) %i.r, i8 noundef zeroext 1, ptr noundef nonnull %2, ptr noundef nonnull align 8 dereferenceable(8) %3)
-          to label %bb.i unwind label %bb.k
+          to label %bb.i unwind label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.s = load ptr, ptr %i.e, align 8, !tbaa !25
@@ -222,20 +226,24 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.r, ptr %i.t, align 8, !tbaa !35
   ret void
 
-bb.j:                                             ; preds = %bb.f
+4:                                                ; preds = %bb.f
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.k
+
+bb.j:                                             ; preds = %bb.h
   %i.u = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.o) #9
+  br label %bb.k
+
+bb.k:                                             ; preds = %bb.j, %4
+  %.sink = phi ptr [ %i.o, %4 ], [ %i.r, %bb.j ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %5, %4 ], [ %i.u, %bb.j ]
+  tail call void @_ZdlPv(ptr noundef nonnull %.sink) #9
   br label %bb.l
 
-bb.k:                                             ; preds = %bb.h
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.r) #9
-  br label %bb.l
-
-bb.l:                                             ; preds = %bb.e, %bb.j, %bb.k
-  %.pn.pn = phi { ptr, i32 } [ %i.u, %bb.j ], [ %4, %bb.k ], [ %i.p, %bb.e ]
+bb.l:                                             ; preds = %bb.k, %bb.e
+  %.pn.pn = phi { ptr, i32 } [ %i.p, %bb.e ], [ %.pn.pn.ph, %bb.k ]
   %i.v = load ptr, ptr %i.e, align 8, !tbaa !25   ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.v, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPN4geos9geomgraph13GeometryGraphESaIS3_EED2Ev.exit, label %bb.m

@@ -202,8 +202,7 @@ bb.r:                                             ; preds = %_ZN4absl12lts_20250
 bb.s:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #25
-  br label %.body
+  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a
 
 bb.t:                                             ; preds = %_ZN9grpc_core24InterceptionChainBuilder13stack_builderEv.exit.thread, %_ZN9grpc_core24InterceptionChainBuilder13stack_builderEv.exit
   %i.bg = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
@@ -238,8 +237,7 @@ bb.x:                                             ; preds = %_ZN4absl12lts_20250
 bb.y:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit.i21
   %i.bn = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %2) #25
-  br label %.body
+  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a
 
 bb.z:                                             ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
@@ -336,24 +334,24 @@ _ZN4absl12lts_202505126StatusD2Ev.exit.i:         ; preds = %_ZN4absl12lts_20250
   %i.cr = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !115 ; 3 uses
   %.not.i.i31 = icmp eq ptr %i.cs, null
-  br i1 %.not.i.i31, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a, label %_ZNKSt14default_deleteIN9grpc_core23GcpAuthenticationFilterEEclEPS1_.exit.i.i
+  br i1 %.not.i.i31, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit, label %_ZNKSt14default_deleteIN9grpc_core23GcpAuthenticationFilterEEclEPS1_.exit.i.i
 
 _ZNKSt14default_deleteIN9grpc_core23GcpAuthenticationFilterEEclEPS1_.exit.i.i: ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit.i
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !16
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 40
   %i.cv = load ptr, ptr %i.cu, align 8
   call void %i.cv(ptr noundef nonnull align 8 dereferenceable(24) %i.cs) #25, !inline_history !208
-  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a
+  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit
 
 _ZN4absl12lts_202505126StatusaSERKS1_.exit.thread: ; preds = %bb.h, %_ZN4absl12lts_202505126StatusaSERKS1_.exit
   %i.cw = phi i64 [ %.pr, %_ZN4absl12lts_202505126StatusaSERKS1_.exit ], [ %i.y, %bb.h ] ; 2 uses
   %i.cx = trunc i64 %i.cw to i1
-  br i1 %i.cx, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a, label %bb.af
+  br i1 %i.cx, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit, label %bb.af
 
 bb.af:                                            ; preds = %_ZN4absl12lts_202505126StatusaSERKS1_.exit.thread
   %i.cy = inttoptr i64 %i.cw to ptr
   invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) %i.cy)
-          to label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a unwind label %bb.ag
+          to label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit unwind label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   %i.cz = landingpad { ptr, i32 }
@@ -362,12 +360,18 @@ bb.ag:                                            ; preds = %bb.af
   call void @__clang_call_terminate(ptr %i.da) #27
   unreachable
 
-_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a: ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit.i, %_ZNKSt14default_deleteIN9grpc_core23GcpAuthenticationFilterEEclEPS1_.exit.i.i, %_ZN4absl12lts_202505126StatusaSERKS1_.exit.thread, %bb.af
+_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit: ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit.i, %_ZNKSt14default_deleteIN9grpc_core23GcpAuthenticationFilterEEclEPS1_.exit.i.i, %_ZN4absl12lts_202505126StatusaSERKS1_.exit.thread, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   br label %bb.ah
 
-.body:                                            ; preds = %_ZNSt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS1_EED2Ev.exit30.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.s, %bb.y
-  %.pn.pn = phi { ptr, i32 } [ %i.bn, %bb.y ], [ %i.bf, %bb.s ], [ %lpad.loopexit.split-lp50, %_ZNSt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS1_EED2Ev.exit30.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a: ; preds = %bb.y, %bb.s
+  %.sink = phi ptr [ %3, %bb.s ], [ %2, %bb.y ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.bf, %bb.s ], [ %i.bn, %bb.y ]
+  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #25
+  br label %.body
+
+.body:                                            ; preds = %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a, %_ZNSt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS1_EED2Ev.exit30.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp50, %_ZNSt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS1_EED2Ev.exit30.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn.pn.ph, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a ]
   call void @_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %4) #25
   br label %_ZN9grpc_core13RefCountedPtrIKNS_12FilterConfigEED2Ev.exit18
 
@@ -376,7 +380,7 @@ _ZN9grpc_core13RefCountedPtrIKNS_12FilterConfigEED2Ev.exit18: ; preds = %bb.l, %
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   resume { ptr, i32 } %.pn.pn.pn
 
-bb.ah:                                            ; preds = %bb.a, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit.a
+bb.ah:                                            ; preds = %bb.a, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core23GcpAuthenticationFilterESt14default_deleteIS5_EEED2Ev.exit
   ret ptr %0
 }
 

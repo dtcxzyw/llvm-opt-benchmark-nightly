@@ -205,8 +205,7 @@ bb.ab:                                            ; preds = %bb.z
   %i.dm = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
-  call void @_ZdlPvm(ptr noundef nonnull %i.df, i64 noundef 64) #21
-  br label %.loopexit.split-lp
+  br label %.loopexit.split-lp.sink.split
 
 .lr.ph107:                                        ; preds = %bb.aa, %.lr.ph107
   %.0106 = phi i32 [ %i.fc, %.lr.ph107 ], [ 0, %bb.aa ] ; 5 uses
@@ -283,8 +282,7 @@ bb.af:                                            ; preds = %bb.ad
   %i.fg = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
-  call void @_ZdlPvm(ptr noundef nonnull %i.fe, i64 noundef 64) #21
-  br label %.loopexit.split-lp
+  br label %.loopexit.split-lp.sink.split
 
 bb.ag:                                            ; preds = %.loopexit, %bb.ae
   %.057 = phi ptr [ %i.df, %.loopexit ], [ %i.fe, %bb.ae ]
@@ -292,8 +290,14 @@ bb.ag:                                            ; preds = %.loopexit, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br label %bb.ah
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ab, %bb.af
-  %.pn77.pn.pn.pn = phi { ptr, i32 } [ %i.dm, %bb.ab ], [ %i.fg, %bb.af ], [ %lpad.loopexit.split-lp123, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp.sink.split:                    ; preds = %bb.af, %bb.ab
+  %.sink = phi ptr [ %i.df, %bb.ab ], [ %i.fe, %bb.af ]
+  %.pn77.pn.pn.pn.ph = phi { ptr, i32 } [ %i.dm, %bb.ab ], [ %i.fg, %bb.af ]
+  call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 64) #21
+  br label %.loopexit.split-lp
+
+.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.sink.split, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn77.pn.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp123, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn77.pn.pn.pn.ph, %.loopexit.split-lp.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br label %bb.ai
 

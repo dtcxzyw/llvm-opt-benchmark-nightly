@@ -202,7 +202,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_b
 define hidden void @_ZN4lean8read_dirERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 initializes((0, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %3 = alloca %"class.lean::sstream", align 8     ; 12 uses
+  %3 = alloca %"class.lean::sstream", align 8     ; 11 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -273,15 +273,13 @@ bb.d:                                             ; preds = %bb.c
 .thread64:                                        ; preds = %_ZN4lean7sstreamC2Ev.exit, %_ZN4lean7sstreamlsIA26_cEERS0_RKT_.exit, %_ZN4lean7sstreamlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS0_RKT_.exit
   %i.y = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4lean7sstreamD2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %3) #25
-  br label %bb.f
+  br label %.sink.split
 
 .thread67:                                        ; preds = %bb.c, %_ZN4lean7sstreamlsIA3_cEERS0_RKT_.exit
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  call void @_ZN4lean7sstreamD2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %3) #25
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.d
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
@@ -291,8 +289,13 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br label %bb.af
 
-bb.f:                                             ; preds = %.thread67, %.thread64, %.thread
-  %.pn.pn63 = phi { ptr, i32 } [ %i.x, %.thread ], [ %lpad.thr_comm, %.thread67 ], [ %i.y, %.thread64 ]
+.sink.split:                                      ; preds = %.thread64, %.thread67
+  %.pn.pn63.ph = phi { ptr, i32 } [ %i.y, %.thread64 ], [ %lpad.thr_comm, %.thread67 ]
+  call void @_ZN4lean7sstreamD2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %3) #25
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %.thread
+  %.pn.pn63 = phi { ptr, i32 } [ %i.x, %.thread ], [ %.pn.pn63.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   call void @__cxa_free_exception(ptr %i.m) #25
   br label %bb.af

@@ -204,8 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.d
   %i.o = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.l) #15
-  br label %.body
+  br label %.body.sink.split
 
 _ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit: ; preds = %bb.e
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %3) #15
@@ -218,16 +217,21 @@ _ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit: ; preds = %b
 bb.g:                                             ; preds = %bb.b
   %i.s = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.i) #15
-  br label %.body
+  br label %.body.sink.split
 
 bb.h:                                             ; preds = %bb.e
   %i.t = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %bb.h, %bb.f, %bb.g
-  %.pn = phi { ptr, i32 } [ %i.s, %bb.g ], [ %i.t, %bb.h ], [ %i.o, %bb.f ]
+.body.sink.split:                                 ; preds = %bb.g, %bb.f
+  %.lcssa49.sink = phi ptr [ %i.l, %bb.f ], [ %i.i, %bb.g ]
+  %.pn.ph = phi { ptr, i32 } [ %i.o, %bb.f ], [ %i.s, %bb.g ]
+  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %.lcssa49.sink) #15
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.h
+  %.pn = phi { ptr, i32 } [ %i.t, %bb.h ], [ %.pn.ph, %.body.sink.split ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %3) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   resume { ptr, i32 } %.pn
@@ -334,8 +338,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.d
   %i.t = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.q) #15
-  br label %.body
+  br label %.body.sink.split
 
 _ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit: ; preds = %bb.e
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #15
@@ -348,16 +351,21 @@ _ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit: ; preds = %b
 bb.g:                                             ; preds = %bb.b
   %i.x = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.n) #15
-  br label %.body
+  br label %.body.sink.split
 
 bb.h:                                             ; preds = %bb.e
   %i.y = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.body:                                            ; preds = %bb.h, %bb.f, %bb.g
-  %.pn = phi { ptr, i32 } [ %i.x, %bb.g ], [ %i.y, %bb.h ], [ %i.t, %bb.f ]
+.body.sink.split:                                 ; preds = %bb.g, %bb.f
+  %.lcssa55.sink = phi ptr [ %i.q, %bb.f ], [ %i.n, %bb.g ]
+  %.pn.ph = phi { ptr, i32 } [ %i.t, %bb.f ], [ %i.x, %bb.g ]
+  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %.lcssa55.sink) #15
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.h
+  %.pn = phi { ptr, i32 } [ %i.y, %bb.h ], [ %.pn.ph, %.body.sink.split ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15

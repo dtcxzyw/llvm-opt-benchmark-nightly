@@ -82,8 +82,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.f) #7
-  br label %.body
+  br label %.body.sink.split
 
 bb.e:                                             ; preds = %.thread.i.i
   %i.k = load ptr, ptr %i.f, align 8, !tbaa !12
@@ -106,8 +105,14 @@ bb.f:                                             ; preds = %_ZN6icu_788message2
           cleanup
   br label %.body
 
-.body:                                            ; preds = %bb.k, %bb.p, %bb.f, %bb.d
-  %eh.lpad-body = phi { ptr, i32 } [ %i.j, %bb.d ], [ %i.af, %bb.k ], [ %i.p, %bb.f ], [ %i.av, %bb.p ]
+.body.sink.split:                                 ; preds = %bb.d, %bb.p, %bb.k
+  %.sink = phi ptr [ %i.ab, %bb.k ], [ %i.ar, %bb.p ], [ %i.f, %bb.d ]
+  %eh.lpad-body.ph = phi { ptr, i32 } [ %i.af, %bb.k ], [ %i.av, %bb.p ], [ %i.j, %bb.d ]
+  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %.sink) #7
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.f
+  %eh.lpad-body = phi { ptr, i32 } [ %i.p, %bb.f ], [ %eh.lpad-body.ph, %.body.sink.split ]
   %i.q = load ptr, ptr %i.c, align 8, !tbaa !18   ; 3 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %_ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit, label %bb.g
@@ -155,8 +160,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.af = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.ab) #7
-  br label %.body
+  br label %.body.sink.split
 
 bb.l:                                             ; preds = %.thread.i.i20
   %i.ag = load ptr, ptr %i.ab, align 8, !tbaa !12
@@ -210,8 +214,7 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.av = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.ar) #7
-  br label %.body
+  br label %.body.sink.split
 
 bb.q:                                             ; preds = %.thread.i.i30
   %i.aw = load ptr, ptr %i.ar, align 8, !tbaa !12

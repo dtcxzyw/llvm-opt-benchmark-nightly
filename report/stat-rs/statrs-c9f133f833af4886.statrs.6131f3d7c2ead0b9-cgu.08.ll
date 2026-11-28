@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.d
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !78
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !78
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 9 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 7 uses
   store i64 0, ptr %i.ae, align 8
   %.sroa.456.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   store i64 %..i.i, ptr %.sroa.456.0..sroa_idx, align 8
@@ -342,29 +342,32 @@ _RNvMs0_NtNtCsbADZB03g5jP_8nalgebra4base7min_maxINtNtB7_6matrix6MatrixdNtNtB7_9d
 .loopexit:                                        ; preds = %_RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.us.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store i64 %i.au, ptr %i.ae, align 8
-  br label %.loopexit.split-lp
+  br label %.loopexit.split-lp.sink.split
 
 .loopexit.split-lp.loopexit:                      ; preds = %_RNvXs1_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB7_6matrix6MatrixdINtNtB7_9dimension5ConstKj1_ENtB15_3DynINtNtB7_11matrix_view14ViewStorageMutdB12_B1v_B12_B1v_EEINtNtNtCs3oUPovFnLWP_4core3ops5index8IndexMutTjjEE9index_mutCs8lmMd0ZksV9_6statrs.exit.us.i
   %lpad.loopexit58 = landingpad { ptr, i32 }
           cleanup
-  store i64 %i.dd, ptr %i.ae, align 8
-  br label %.loopexit.split-lp
+  br label %.loopexit.split-lp.sink.split
 
 .loopexit.split-lp.loopexit.split-lp.loopexit:    ; preds = %bb.u, %bb.s, %.noexc18, %_RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit, %_RNvMs9_NtNtCsbADZB03g5jP_8nalgebra4base6matrixINtB5_6MatrixdNtNtB7_9dimension3DynINtBY_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdBW_B1h_B1h_BW_EE4swapCs8lmMd0ZksV9_6statrs.exit.i
   %i.by = phi i64 [ %i.dd, %bb.u ], [ %i.au, %bb.s ], [ %i.au, %.noexc18 ], [ %i.dd, %_RNvMs3_NtNtCsbADZB03g5jP_8nalgebra4base7editionINtNtB7_6matrix6MatrixdNtNtB7_9dimension3DynB16_INtNtB7_11matrix_view14ViewStorageMutdB16_B16_INtB18_5ConstKj1_EB16_EE9swap_rowsCs8lmMd0ZksV9_6statrs.exit ], [ %i.dd, %_RNvMs9_NtNtCsbADZB03g5jP_8nalgebra4base6matrixINtB5_6MatrixdNtNtB7_9dimension3DynINtBY_5ConstKj1_EINtNtB7_11matrix_view14ViewStorageMutdBW_B1h_B1h_BW_EE4swapCs8lmMd0ZksV9_6statrs.exit.i ]
   %lpad.loopexit61 = landingpad { ptr, i32 }
           cleanup
-  store i64 %i.by, ptr %i.ae, align 8
-  br label %.loopexit.split-lp
+  br label %.loopexit.split-lp.sink.split
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_RNvXs_NtNtCsbADZB03g5jP_8nalgebra4base3opsINtNtB6_6matrix6MatrixdINtNtB6_9dimension5ConstKj1_ENtB14_3DynINtNtB6_11matrix_view14ViewStorageMutdB11_B1u_B11_B1u_EEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexTjjEE5indexCs8lmMd0ZksV9_6statrs.exit.i.invoke, %.invoke, %bb.w
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit58, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit61, %.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp.sink.split:                    ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp.loopexit, %.loopexit.split-lp.loopexit
+  %.lcssa147.sink = phi i64 [ %i.dd, %.loopexit.split-lp.loopexit ], [ %i.by, %.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %i.au, %.loopexit ]
+  %lpad.phi.ph = phi { ptr, i32 } [ %lpad.loopexit58, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit61, %.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit, %.loopexit ]
+  store i64 %.lcssa147.sink, ptr %i.ae, align 8
+  br label %.loopexit.split-lp
+
+.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.sink.split, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %lpad.phi.ph, %.loopexit.split-lp.sink.split ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsbADZB03g5jP_8nalgebra6linalg20permutation_sequence19PermutationSequenceNtNtNtBI_4base9dimension3DynEECs8lmMd0ZksV9_6statrs(ptr noalias nofree noundef align 8 dereferenceable(40) %i.o) #15
           to label %.body unwind label %bb.aa
 

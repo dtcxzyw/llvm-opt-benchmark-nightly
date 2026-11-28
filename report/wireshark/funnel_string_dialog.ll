@@ -202,41 +202,41 @@ bb.y:                                             ; preds = %.lr.ph, %bb.ah
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
   %i.by = call noundef align 8 dereferenceable(24) ptr @_ZN7QStringaSERKS_(ptr noundef nonnull align 8 dereferenceable_or_null(24) %i.al, ptr noundef nonnull align 8 dereferenceable(24) %i.bx) #20 ; 0 uses
   %i.bz = invoke noalias noundef dereferenceable_or_null(40) ptr @_Znwm(i64 noundef 40) #19
-          to label %bb.z unwind label %bb.aj      ; 3 uses
+          to label %bb.z unwind label %bb.ai      ; 3 uses
 
 bb.z:                                             ; preds = %bb.y
   invoke void @_ZN6QLabelC1ERK7QStringP7QWidget6QFlagsIN2Qt10WindowTypeEE(ptr noundef align 8 dereferenceable_or_null(40) %i.bz, ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef %0, i32 0)
-          to label %bb.aa unwind label %bb.ai
+          to label %bb.aa unwind label %12
 
 bb.aa:                                            ; preds = %bb.z
   %i.ca = load ptr, ptr %i.c, align 8
   %i.cb = getelementptr i8, ptr %i.ca, i64 8
   %i.cc = load ptr, ptr %i.cb, align 8
   invoke void @_ZN11QGridLayout9addWidgetEP7QWidgetii6QFlagsIN2Qt13AlignmentFlagEE(ptr noundef align 8 dereferenceable_or_null(28) %i.cc, ptr noundef %i.bz, i32 noundef %.01559, i32 noundef 0, i32 0)
-          to label %bb.ab unwind label %bb.aj
+          to label %bb.ab unwind label %bb.ai
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cd = invoke noalias noundef dereferenceable_or_null(40) ptr @_Znwm(i64 noundef 40) #19
-          to label %bb.ac unwind label %bb.aj     ; 6 uses
+          to label %bb.ac unwind label %bb.ai     ; 6 uses
 
 bb.ac:                                            ; preds = %bb.ab
   invoke void @_ZN9QLineEditC1EP7QWidget(ptr noundef align 8 dereferenceable_or_null(40) %i.cd, ptr noundef %0)
-          to label %bb.ad unwind label %bb.ak
+          to label %bb.ad unwind label %bb.aj
 
 bb.ad:                                            ; preds = %bb.ac
   invoke void @_ZN9QLineEdit7setTextERK7QString(ptr noundef align 8 dereferenceable_or_null(40) %i.cd, ptr noundef nonnull align 8 dereferenceable(24) %i.al)
-          to label %bb.ae unwind label %bb.aj
+          to label %bb.ae unwind label %bb.ai
 
 bb.ae:                                            ; preds = %bb.ad
   invoke void @_ZN7QWidget15setMinimumWidthEi(ptr noundef align 8 dereferenceable_or_null(40) %i.cd, i32 noundef %i.am)
-          to label %bb.af unwind label %bb.aj
+          to label %bb.af unwind label %bb.ai
 
 bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.cd, ptr %i.a, align 8
   %i.ce = load i64, ptr %i.an, align 8
   invoke void @_ZN9QtPrivate12QPodArrayOpsIP9QLineEditE7emplaceIJRS2_EEEvxDpOT_(ptr noundef nonnull align 8 dereferenceable_or_null(24) %i.h, i64 noundef %i.ce, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
-          to label %.noexc unwind label %bb.aj
+          to label %.noexc unwind label %bb.ai
 
 .noexc:                                           ; preds = %bb.af
   %i.cf = load ptr, ptr %i.h, align 8             ; 2 uses
@@ -250,7 +250,7 @@ _ZNK17QArrayDataPointerIP9QLineEditE11needsDetachEv.exit.i.i.i.i.i.i: ; preds = 
 
 _ZNK17QArrayDataPointerIP9QLineEditE11needsDetachEv.exit.thread.i.i.i.i.i.i: ; preds = %_ZNK17QArrayDataPointerIP9QLineEditE11needsDetachEv.exit.i.i.i.i.i.i, %.noexc
   invoke void @_ZN17QArrayDataPointerIP9QLineEditE17reallocateAndGrowEN10QArrayData14GrowthPositionExPS2_(ptr noundef nonnull align 8 dereferenceable_or_null(24) %i.h, i32 noundef 0, i64 noundef 0, ptr noundef null)
-          to label %bb.ag unwind label %bb.aj
+          to label %bb.ag unwind label %bb.ai
 
 bb.ag:                                            ; preds = %_ZNK17QArrayDataPointerIP9QLineEditE11needsDetachEv.exit.i.i.i.i.i.i, %_ZNK17QArrayDataPointerIP9QLineEditE11needsDetachEv.exit.thread.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -258,7 +258,7 @@ bb.ag:                                            ; preds = %_ZNK17QArrayDataPoi
   %i.cj = getelementptr i8, ptr %i.ci, i64 8
   %i.ck = load ptr, ptr %i.cj, align 8
   invoke void @_ZN11QGridLayout9addWidgetEP7QWidgetii6QFlagsIN2Qt13AlignmentFlagEE(ptr noundef align 8 dereferenceable_or_null(28) %i.ck, ptr noundef %i.cd, i32 noundef %.01559, i32 noundef 1, i32 0)
-          to label %bb.ah unwind label %bb.aj
+          to label %bb.ah unwind label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cl = add i32 %.01559, 1
@@ -269,25 +269,29 @@ bb.ah:                                            ; preds = %bb.ag
   %.not = icmp eq ptr %i.cn, %.sroa.0.0.copyload
   br i1 %.not, label %._crit_edge, label %bb.y, !llvm.loop !14
 
-bb.ai:                                            ; preds = %bb.z
+12:                                               ; preds = %bb.z
+  %13 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.ak
+
+bb.ai:                                            ; preds = %_ZNK17QArrayDataPointerIP9QLineEditE11needsDetachEv.exit.thread.i.i.i.i.i.i, %bb.af, %bb.y, %bb.aa, %bb.ag, %bb.ae, %bb.ad, %bb.ab
   %i.co = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef %i.bz, i64 noundef 40) #21
   br label %bb.al
 
-bb.aj:                                            ; preds = %_ZNK17QArrayDataPointerIP9QLineEditE11needsDetachEv.exit.thread.i.i.i.i.i.i, %bb.af, %bb.y, %bb.aa, %bb.ag, %bb.ae, %bb.ad, %bb.ab
+bb.aj:                                            ; preds = %bb.ac
   %i.cp = landingpad { ptr, i32 }
           cleanup
+  br label %bb.ak
+
+bb.ak:                                            ; preds = %12, %bb.aj
+  %.lcssa79.sink = phi ptr [ %i.cd, %bb.aj ], [ %i.bz, %12 ]
+  %.pn27.pn.ph = phi { ptr, i32 } [ %i.cp, %bb.aj ], [ %13, %12 ]
+  call void @_ZdlPvm(ptr noundef %.lcssa79.sink, i64 noundef 40) #21
   br label %bb.al
 
-bb.ak:                                            ; preds = %bb.ac
-  %12 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZdlPvm(ptr noundef %i.cd, i64 noundef 40) #21
-  br label %bb.al
-
-bb.al:                                            ; preds = %bb.aj, %bb.ak, %bb.ai
-  %.pn27.pn = phi { ptr, i32 } [ %i.co, %bb.ai ], [ %12, %bb.ak ], [ %i.cp, %bb.aj ]
+bb.al:                                            ; preds = %bb.ak, %bb.ai
+  %.pn27.pn = phi { ptr, i32 } [ %i.co, %bb.ai ], [ %.pn27.pn.ph, %bb.ak ]
   call void @_ZN9QtPrivate17QForeachContainerI5QListISt4pairI7QStringS3_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(44) dereferenceable_or_null(44) %11) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #20
   call void @_ZNSt4pairI7QStringS0_ED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable_or_null(48) %10) #20

@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZN4cvc58i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   %i.ab = load ptr, ptr %i.i, align 8, !tbaa !42, !nonnull !43, !align !44
   %i.ac = invoke noundef nonnull align 8 dereferenceable(608) ptr @_ZN4cvc58internal3Env24getTopLevelSubstitutionsEv(ptr noundef nonnull align 8 dereferenceable(696) %i.ab)
-          to label %bb.g unwind label %bb.s
+          to label %bb.g unwind label %6
 
 bb.g:                                             ; preds = %bb.f
   %i.ad = load ptr, ptr %.sroa.09.013, align 8, !tbaa !38 ; 5 uses
@@ -231,11 +231,11 @@ bb.j:                                             ; preds = %bb.i
   %i.ap = or i64 %i.ae, 1152920405095219200
   store i64 %i.ap, ptr %i.ad, align 8
   invoke void @_ZN4cvc58internal4expr9NodeValue20markRefCountMaxedOutEv(ptr noundef nonnull align 8 dereferenceable(24) %i.ad)
-          to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit unwind label %bb.s
+          to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit unwind label %6
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit: ; preds = %bb.i, %bb.h, %bb.j
   invoke void @_ZN4cvc58internal6theory20TrustSubstitutionMap5applyENS0_12NodeTemplateILb1EEEPNS1_8RewriterE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %3, ptr noundef nonnull align 8 dereferenceable(608) %i.ac, ptr noundef nonnull align 8 %4, ptr noundef null)
-          to label %bb.k unwind label %bb.t
+          to label %bb.k unwind label %bb.s
 
 bb.k:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit
   %i.aq = load ptr, ptr %4, align 8, !tbaa !38    ; 3 uses
@@ -268,7 +268,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.k, %bb.l, %bb.m
   %i.ba = load ptr, ptr %3, align 8, !tbaa !38
   store ptr %i.ba, ptr %5, align 8, !tbaa !47
   invoke void @_ZN4cvc58internal6theory13OutputChannel5lemmaENS0_12NodeTemplateILb0EEENS1_11InferenceIdENS1_13LemmaPropertyE(ptr noundef nonnull align 8 dereferenceable(100) %i.j, ptr noundef nonnull align 8 %5, i32 noundef 411, i32 noundef 0)
-          to label %bb.o unwind label %bb.u
+          to label %bb.o unwind label %bb.t
 
 bb.o:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
   %i.bb = load ptr, ptr %3, align 8, !tbaa !38    ; 3 uses
@@ -303,25 +303,29 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit8:  ; preds = %bb.o, %bb.p, %bb.q
   %.not = icmp eq ptr %i.bl, %i.h
   br i1 %.not, label %._crit_edge, label %bb.f
 
-bb.s:                                             ; preds = %bb.j, %bb.f
+6:                                                ; preds = %bb.j, %bb.f
+  %7 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.v
+
+bb.s:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit
   %i.bm = landingpad { ptr, i32 }
           cleanup
-  br label %bb.v
+  br label %bb.u
 
-bb.t:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit
+bb.t:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
   %i.bn = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #13
+  br label %bb.u
+
+bb.u:                                             ; preds = %bb.s, %bb.t
+  %.sink = phi ptr [ %3, %bb.t ], [ %4, %bb.s ]
+  %.pn.ph = phi { ptr, i32 } [ %i.bn, %bb.t ], [ %i.bm, %bb.s ]
+  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #13
   br label %bb.v
 
-bb.u:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #13
-  br label %bb.v
-
-bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
-  %.pn = phi { ptr, i32 } [ %6, %bb.u ], [ %i.bn, %bb.t ], [ %i.bm, %bb.s ]
+bb.v:                                             ; preds = %bb.u, %6
+  %.pn = phi { ptr, i32 } [ %7, %6 ], [ %.pn.ph, %bb.u ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
   call void @_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %2) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #13

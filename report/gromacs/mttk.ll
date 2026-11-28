@@ -202,8 +202,7 @@ _ZNOSt8optionalIPN3gmx8MttkDataEE5valueEv.exit:   ; preds = %_ZN3gmx38ModularSim
 bb.f:                                             ; preds = %.noexc17
   %i.ae = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.ab, i64 noundef 32) #30, !noalias !623
-  br label %.body
+  br label %_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22
 
 bb.g:                                             ; preds = %.noexc17
   store ptr %i.ab, ptr %9, align 8, !tbaa !71, !alias.scope !623
@@ -246,12 +245,14 @@ bb.j:                                             ; preds = %bb.g
   %.not.i21 = icmp eq ptr %i.an, null
   br i1 %.not.i21, label %.body, label %_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22
 
-_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22: ; preds = %bb.j
-  call void @_ZdlPvm(ptr noundef nonnull %i.an, i64 noundef 32) #30
+_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22: ; preds = %bb.j, %bb.f
+  %.sink = phi ptr [ %i.ab, %bb.f ], [ %i.an, %bb.j ]
+  %.pn.ph = phi { ptr, i32 } [ %i.ae, %bb.f ], [ %i.am, %bb.j ]
+  call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 32) #30
   br label %.body
 
-.body:                                            ; preds = %_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22, %bb.j, %bb.i, %bb.f
-  %.pn = phi { ptr, i32 } [ %i.ae, %bb.f ], [ %i.al, %bb.i ], [ %i.am, %bb.j ], [ %i.am, %_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22 ]
+.body:                                            ; preds = %_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22, %bb.j, %bb.i
+  %.pn = phi { ptr, i32 } [ %i.am, %bb.j ], [ %i.al, %bb.i ], [ %.pn.ph, %_ZNKSt14default_deleteIN3gmx14MttkBoxScalingEEclEPS1_.exit.i22 ]
   %i.ao = load ptr, ptr %10, align 8, !tbaa !24   ; 2 uses
   %i.ap = icmp eq ptr %i.ao, %i.t
   br i1 %i.ap, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24

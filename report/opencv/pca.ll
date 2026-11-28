@@ -105,7 +105,7 @@ define hidden noundef i32 @main(i32 noundef %0, ptr noundef %1) local_unnamed_ad
   %20 = alloca %"class.std::vector", align 8      ; 15 uses
   %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %22 = alloca %"class.std::allocator", align 1   ; 4 uses
-  %23 = alloca %"class.cv::Mat", align 8          ; 11 uses
+  %23 = alloca %"class.cv::Mat", align 8          ; 10 uses
   %24 = alloca %"class.cv::PCA", align 8          ; 11 uses
   %25 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %26 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
@@ -508,8 +508,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
 bb.bb:                                            ; preds = %bb.ba, %bb.ax
   %.pn18.pn.pn.i = phi { ptr, i32 } [ %.pn18.pn.i, %bb.ba ], [ %.pn.i119, %bb.ax ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19, !noalias !86
-  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %23) #19
-  br label %.body122
+  br label %bb.cu
 
 .loopexit:                                        ; preds = %bb.au, %.noexc121
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #19
@@ -770,7 +769,7 @@ bb.bu:                                            ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #19
-  br label %bb.cu
+  br label %40
 
 bb.bv:                                            ; preds = %bb.bc
   %i.if = landingpad { ptr, i32 }
@@ -1011,16 +1010,20 @@ bb.ct:                                            ; preds = %bb.cs, %bb.bx
   %.pn61.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn61.pn.pn.pn.pn.pn.pn, %bb.cs ], [ %.pn47.pn, %bb.bx ]
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #19
   call void @_ZN2cv3PCAD2Ev(ptr noundef nonnull align 8 dead_on_return(624) dereferenceable(624) %24) #19
+  br label %40
+
+40:                                               ; preds = %bb.ct, %bb.bu
+  %.pn61.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn61.pn.pn.pn.pn.pn.pn.pn, %bb.ct ], [ %i.ie, %bb.bu ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %24) #19
   br label %bb.cu
 
-bb.cu:                                            ; preds = %bb.ct, %bb.bu
-  %.pn61.pn.pn.pn.pn.pn.pn.pn.pn.a = phi { ptr, i32 } [ %.pn61.pn.pn.pn.pn.pn.pn.pn, %bb.ct ], [ %i.ie, %bb.bu ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %24) #19
+bb.cu:                                            ; preds = %40, %bb.bb
+  %.pn61.pn.pn.pn.pn.pn.pn.pn.pn.a = phi { ptr, i32 } [ %.pn18.pn.pn.i, %bb.bb ], [ %.pn61.pn.pn.pn.pn.pn.pn.pn.pn, %40 ]
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %23) #19
   br label %.body122
 
-.body122:                                         ; preds = %bb.bt, %bb.bb, %bb.cu
-  %.pn61.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn61.pn.pn.pn.pn.pn.pn.pn.pn.a, %bb.cu ], [ %i.id, %bb.bt ], [ %.pn18.pn.pn.i, %bb.bb ]
+.body122:                                         ; preds = %bb.cu, %bb.bt
+  %.pn61.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.id, %bb.bt ], [ %.pn61.pn.pn.pn.pn.pn.pn.pn.pn.a, %bb.cu ]
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #19
   br label %bb.cv
 

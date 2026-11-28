@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %.sroa.0.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 24
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 64 ; 4 uses
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 72 ; 9 uses
-  %.sroa.51.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 80 ; 5 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 72 ; 8 uses
+  %.sroa.51.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 80 ; 4 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 88
   %i.aq = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   br label %bb.e
@@ -400,7 +400,7 @@ bb.ab:                                            ; preds = %bb.aa
           to label %.thread130 unwind label %.thread92.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ac:                                            ; preds = %bb.aa
-  %i.bm = load i32, ptr %i.aq, align 8            ; 4 uses
+  %i.bm = load i32, ptr %i.aq, align 8            ; 3 uses
   invoke void @_RNvMs9_NtCsgFSQ9XOTBNe_3syn5parseNtB5_11ParseBuffer10lookahead1(ptr nonnull sret([56 x i8]) align 8 %i.u, ptr align 8 %1)
           to label %bb.ad unwind label %.thread92.loopexit.thread
 
@@ -527,9 +527,7 @@ bb.av:                                            ; preds = %bb.as
 bb.aw:                                            ; preds = %bb.av
   %i.ce = landingpad { ptr, i32 }
           cleanup
-  store i32 %i.bm, ptr %.sroa.4.0..sroa_idx, align 8
-  store ptr %i.cb, ptr %.sroa.51.0..sroa_idx, align 8
-  br label %.thread109
+  br label %.thread109.sink.split
 
 bb.ax:                                            ; preds = %bb.av
   store i32 %i.bm, ptr %.sroa.4.0..sroa_idx, align 8
@@ -667,9 +665,7 @@ bb.bq:                                            ; preds = %bb.ag
 bb.br:                                            ; preds = %bb.bq
   %i.cq = landingpad { ptr, i32 }
           cleanup
-  store i32 %i.bm, ptr %.sroa.4.0..sroa_idx, align 8
-  store ptr %i.bp, ptr %.sroa.51.0..sroa_idx, align 8
-  br label %.thread109
+  br label %.thread109.sink.split
 
 bb.bs:                                            ; preds = %bb.bq
   store i32 %i.bm, ptr %.sroa.4.0..sroa_idx, align 8
@@ -682,9 +678,16 @@ bb.bt:                                            ; preds = %bb.bs
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsgFSQ9XOTBNe_3syn9lookahead10Lookahead1EBF_(ptr nonnull align 8 %i.u)
           to label %bb.e unwind label %.thread92.loopexit
 
-.thread109:                                       ; preds = %.thread117.loopexit, %.thread117.loopexit.split-lp, %bb.bp, %bb.aw, %bb.bm, %bb.br, %bb.at, %bb.ah
-  %.pn26104 = phi { ptr, i32 } [ %i.cc, %bb.at ], [ %i.cq, %bb.br ], [ %i.bq, %bb.ah ], [ %i.bu, %bb.bp ], [ %i.ce, %bb.aw ], [ %.pn24, %bb.bm ], [ %lpad.loopexit175, %.thread117.loopexit ], [ %lpad.loopexit.split-lp176, %.thread117.loopexit.split-lp ] ; 2 uses
-  %.sroa.014.7102 = phi i1 [ true, %bb.at ], [ true, %bb.br ], [ true, %bb.ah ], [ true, %bb.bp ], [ true, %bb.aw ], [ true, %bb.bm ], [ %.sroa.014.8.ph.ph, %.thread117.loopexit ], [ true, %.thread117.loopexit.split-lp ]
+.thread109.sink.split:                            ; preds = %bb.br, %bb.aw
+  %.sink = phi ptr [ %i.cb, %bb.aw ], [ %i.bp, %bb.br ]
+  %.pn26104.ph = phi { ptr, i32 } [ %i.ce, %bb.aw ], [ %i.cq, %bb.br ]
+  store i32 %i.bm, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr %.sink, ptr %.sroa.51.0..sroa_idx, align 8
+  br label %.thread109
+
+.thread109:                                       ; preds = %.thread109.sink.split, %.thread117.loopexit, %.thread117.loopexit.split-lp, %bb.bp, %bb.bm, %bb.at, %bb.ah
+  %.pn26104 = phi { ptr, i32 } [ %i.cc, %bb.at ], [ %lpad.loopexit175, %.thread117.loopexit ], [ %i.bq, %bb.ah ], [ %i.bu, %bb.bp ], [ %lpad.loopexit.split-lp176, %.thread117.loopexit.split-lp ], [ %.pn24, %bb.bm ], [ %.pn26104.ph, %.thread109.sink.split ] ; 2 uses
+  %.sroa.014.7102 = phi i1 [ true, %bb.at ], [ %.sroa.014.8.ph.ph, %.thread117.loopexit ], [ true, %bb.ah ], [ true, %bb.bp ], [ true, %.thread117.loopexit.split-lp ], [ true, %bb.bm ], [ true, %.thread109.sink.split ]
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsgFSQ9XOTBNe_3syn9lookahead10Lookahead1EBF_(ptr nonnull align 8 %i.u) #15
           to label %.thread149 unwind label %bb.bh
 

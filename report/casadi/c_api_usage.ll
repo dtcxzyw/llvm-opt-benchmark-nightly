@@ -204,14 +204,14 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"class.casadi::Function", align 8  ; 7 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %9 = alloca [2 x %"class.casadi::Matrix"], align 8 ; 17 uses
+  %9 = alloca [2 x %"class.casadi::Matrix"], align 8 ; 16 uses
   %10 = alloca [1 x %"class.casadi::Matrix"], align 8 ; 10 uses
   %11 = alloca %"class.std::map", align 8         ; 12 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %13 = alloca %"class.std::map", align 8         ; 12 uses
   %14 = alloca %"class.casadi::Function", align 8 ; 7 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %16 = alloca [2 x %"class.casadi::Matrix"], align 8 ; 17 uses
+  %16 = alloca [2 x %"class.casadi::Matrix"], align 8 ; 16 uses
   %17 = alloca [2 x %"class.casadi::Matrix"], align 8 ; 19 uses
   %18 = alloca %"class.casadi::Matrix", align 8   ; 12 uses
   %19 = alloca %"class.casadi::Matrix", align 8   ; 11 uses
@@ -228,7 +228,7 @@ bb.a:
   %30 = alloca [1 x %"struct.std::pair"], align 8 ; 9 uses
   %i.a = alloca i8, align 1                       ; 5 uses
   %31 = alloca %"class.std::vector.30", align 8   ; 13 uses
-  %32 = alloca [2 x %"class.casadi::Function"], align 8 ; 13 uses
+  %32 = alloca [2 x %"class.casadi::Function"], align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
@@ -631,8 +631,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit286: ; preds = %.b
 .loopexit335.loopexit340:                         ; preds = %bb.j
   %i.mb = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6casadi6MatrixINS_6SXElemEED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %9) #21
-  br label %.loopexit335
+  br label %.loopexit335.sink.split
 
 bb.bh:                                            ; preds = %bb.k
   %i.mc = landingpad { ptr, i32 }
@@ -652,11 +651,15 @@ bb.bh:                                            ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   %i.me = getelementptr inbounds nuw i8, ptr %9, i64 40
   call void @_ZN6casadi6MatrixINS_6SXElemEED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.me) #21
+  br label %.loopexit335.sink.split
+
+.loopexit335.sink.split:                          ; preds = %.loopexit336, %.loopexit335.loopexit340
+  %.pn74.pn.ph = phi { ptr, i32 } [ %i.mb, %.loopexit335.loopexit340 ], [ %.pn74, %.loopexit336 ]
   call void @_ZN6casadi6MatrixINS_6SXElemEED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %9) #21
   br label %.loopexit335
 
-.loopexit335:                                     ; preds = %.loopexit335.loopexit340, %.loopexit336, %.thread
-  %.pn74.pn = phi { ptr, i32 } [ %.pn74, %.loopexit336 ], [ %i.ac, %.thread ], [ %i.mb, %.loopexit335.loopexit340 ]
+.loopexit335:                                     ; preds = %.loopexit335.sink.split, %.thread
+  %.pn74.pn = phi { ptr, i32 } [ %i.ac, %.thread ], [ %.pn74.pn.ph, %.loopexit335.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
   %i.mf = load ptr, ptr %8, align 8, !tbaa !21    ; 2 uses
   %i.mg = icmp eq ptr %i.mf, %i.z
@@ -694,8 +697,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit292: ; preds = %bb
 .loopexit331.loopexit339:                         ; preds = %bb.u
   %i.mo = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6casadi6MatrixINS_6SXElemEED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %16) #21
-  br label %.loopexit331
+  br label %.loopexit331.sink.split
 
 .thread314:                                       ; preds = %bb.v
   %i.mp = landingpad { ptr, i32 }
@@ -775,11 +777,15 @@ bb.bn:                                            ; preds = %bb.bj, %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #21
   %i.nb = getelementptr inbounds nuw i8, ptr %16, i64 40
   call void @_ZN6casadi6MatrixINS_6SXElemEED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.nb) #21
+  br label %.loopexit331.sink.split
+
+.loopexit331.sink.split:                          ; preds = %.loopexit332, %.loopexit331.loopexit339
+  %.pn80.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.mo, %.loopexit331.loopexit339 ], [ %.pn80.pn.pn.pn.pn319, %.loopexit332 ]
   call void @_ZN6casadi6MatrixINS_6SXElemEED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %16) #21
   br label %.loopexit331
 
-.loopexit331:                                     ; preds = %.loopexit331.loopexit339, %.loopexit332, %.thread312
-  %.pn80.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn80.pn.pn.pn.pn319, %.loopexit332 ], [ %i.cw, %.thread312 ], [ %i.mo, %.loopexit331.loopexit339 ]
+.loopexit331:                                     ; preds = %.loopexit331.sink.split, %.thread312
+  %.pn80.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.cw, %.thread312 ], [ %.pn80.pn.pn.pn.pn.pn.ph, %.loopexit331.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #21
   %i.nc = load ptr, ptr %15, align 8, !tbaa !21   ; 2 uses
   %i.nd = icmp eq ptr %i.nc, %i.ct
@@ -874,8 +880,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit301: ; preds = %.l
 .loopexit.loopexit338:                            ; preds = %_ZN6casadi8FunctionC2ERKS0_.exit
   %i.nt = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6casadi8FunctionD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %32) #21
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.bs:                                            ; preds = %_ZNSt6vectorIN6casadi8FunctionESaIS1_EEC2ESt16initializer_listIS1_ERKS2_.exit
   %i.nu = landingpad { ptr, i32 }
@@ -887,11 +892,15 @@ bb.bs:                                            ; preds = %_ZNSt6vectorIN6casa
   %.pn96 = phi { ptr, i32 } [ %i.nu, %bb.bs ], [ %i.jw, %bb.aw ], [ %i.jw, %bb.ax ]
   %i.nv = getelementptr inbounds nuw i8, ptr %32, i64 8
   call void @_ZN6casadi8FunctionD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.nv) #21
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.body255, %.loopexit.loopexit338
+  %.pn96.pn.ph = phi { ptr, i32 } [ %i.nt, %.loopexit.loopexit338 ], [ %.pn96, %.body255 ]
   call void @_ZN6casadi8FunctionD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %32) #21
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit338, %.body255, %.thread325
-  %.pn96.pn = phi { ptr, i32 } [ %.pn96, %.body255 ], [ %i.js, %.thread325 ], [ %i.nt, %.loopexit.loopexit338 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread325
+  %.pn96.pn = phi { ptr, i32 } [ %i.js, %.thread325 ], [ %.pn96.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #21
   call void @_ZN6casadi14FileSerializerD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %27) #21

@@ -202,8 +202,7 @@ bb.b:                                             ; preds = %.noexc.i
 bb.c:                                             ; preds = %.noexc11
   %i.m = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN8V3NumberD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.e) #21
-  br label %.body
+  br label %.body.sink.split
 
 _ZN8AstConstC2EP8FileLinej.exit:                  ; preds = %bb.b, %.noexc.i
   %i.n = tail call noalias noundef nonnull dereferenceable(208) ptr @_Znwm(i64 noundef 208) #26 ; 10 uses
@@ -243,8 +242,7 @@ bb.d:                                             ; preds = %.noexc.i12
 bb.e:                                             ; preds = %.noexc15
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN8V3NumberD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.s) #21
-  br label %.body
+  br label %.body.sink.split
 
 _ZN8AstConstC2EP8FileLinej.exit18:                ; preds = %bb.d, %.noexc.i12
   tail call void @_ZN7AstNodeC2E6VNTypeP8FileLine(ptr noundef nonnull align 8 dereferenceable(160) %0, i16 304, ptr noundef %1)
@@ -269,9 +267,16 @@ bb.g:                                             ; preds = %.noexc14, %_ZN8AstC
           cleanup
   br label %.body
 
-.body:                                            ; preds = %bb.g, %bb.e, %bb.f, %bb.c
-  %.sink = phi ptr [ %i.a, %bb.f ], [ %i.a, %bb.c ], [ %i.n, %bb.e ], [ %i.n, %bb.g ]
-  %.pn = phi { ptr, i32 } [ %i.ad, %bb.f ], [ %i.m, %bb.c ], [ %i.aa, %bb.e ], [ %i.ae, %bb.g ]
+.body.sink.split:                                 ; preds = %bb.c, %bb.e
+  %.sink20 = phi ptr [ %i.s, %bb.e ], [ %i.e, %bb.c ]
+  %.sink.ph = phi ptr [ %i.n, %bb.e ], [ %i.a, %bb.c ]
+  %.pn.ph = phi { ptr, i32 } [ %i.aa, %bb.e ], [ %i.m, %bb.c ]
+  tail call void @_ZN8V3NumberD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %.sink20) #21
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.g, %bb.f
+  %.sink = phi ptr [ %i.a, %bb.f ], [ %i.n, %bb.g ], [ %.sink.ph, %.body.sink.split ]
+  %.pn = phi { ptr, i32 } [ %i.ad, %bb.f ], [ %i.ae, %bb.g ], [ %.pn.ph, %.body.sink.split ]
   tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 208) #22
   resume { ptr, i32 } %.pn
 }
@@ -565,8 +570,7 @@ bb.b:                                             ; preds = %.noexc.i
 bb.c:                                             ; preds = %.noexc9
   %i.l = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN8V3NumberD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.d) #21
-  br label %.body
+  br label %.body.sink.split
 
 _ZN8AstConstC2EP8FileLinej.exit:                  ; preds = %bb.b, %.noexc.i
   tail call void @_ZN7AstNode7setOp1pEPS_(ptr noundef nonnull align 8 dereferenceable(160) %0, ptr noundef nonnull %i.b)
@@ -604,8 +608,7 @@ bb.d:                                             ; preds = %.noexc.i11
 bb.e:                                             ; preds = %.noexc14
   %i.x = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN8V3NumberD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.p) #21
-  br label %.body
+  br label %.body.sink.split
 
 _ZN8AstConstC2EP8FileLinej.exit17:                ; preds = %bb.d, %.noexc.i11
   tail call void @_ZN7AstNode7setOp2pEPS_(ptr noundef nonnull align 8 dereferenceable(160) %0, ptr noundef nonnull %i.m)
@@ -621,9 +624,16 @@ bb.g:                                             ; preds = %.noexc13, %_ZN8AstC
           cleanup
   br label %.body
 
-.body:                                            ; preds = %bb.g, %bb.e, %bb.f, %bb.c
-  %.sink = phi ptr [ %i.b, %bb.f ], [ %i.b, %bb.c ], [ %i.m, %bb.e ], [ %i.m, %bb.g ]
-  %.pn = phi { ptr, i32 } [ %i.y, %bb.f ], [ %i.l, %bb.c ], [ %i.x, %bb.e ], [ %i.z, %bb.g ]
+.body.sink.split:                                 ; preds = %bb.c, %bb.e
+  %.sink20 = phi ptr [ %i.p, %bb.e ], [ %i.d, %bb.c ]
+  %.sink.ph = phi ptr [ %i.m, %bb.e ], [ %i.b, %bb.c ]
+  %.pn.ph = phi { ptr, i32 } [ %i.x, %bb.e ], [ %i.l, %bb.c ]
+  tail call void @_ZN8V3NumberD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %.sink20) #21
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.g, %bb.f
+  %.sink = phi ptr [ %i.b, %bb.f ], [ %i.m, %bb.g ], [ %.sink.ph, %.body.sink.split ]
+  %.pn = phi { ptr, i32 } [ %i.y, %bb.f ], [ %i.z, %bb.g ], [ %.pn.ph, %.body.sink.split ]
   tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 208) #22
   resume { ptr, i32 } %.pn
 }

@@ -204,34 +204,34 @@ bb.a:
   %3 = alloca %"class.icu_78::UnicodeString", align 8 ; 7 uses
   %4 = alloca %"class.icu_78::UnicodeString", align 8 ; 4 uses
   %5 = alloca %"class.icu_78::UnicodeString", align 8 ; 5 uses
-  %6 = alloca %"class.icu_78::UnicodeString", align 8 ; 4 uses
+  %6 = alloca %"class.icu_78::UnicodeString", align 8 ; 5 uses
   %7 = alloca %"class.icu_78::UnicodeString", align 8 ; 4 uses
   %i.a = tail call i32 @trim(ptr noundef %0, i32 noundef %1, ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   call void @_ZN6icu_7813UnicodeStringC1EPKc(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull @.str.5)
   invoke void @_ZN6icu_7813UnicodeStringC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %4, ptr noundef nonnull align 8 dereferenceable(64) %3)
-          to label %bb.b unwind label %bb.g
+          to label %bb.b unwind label %8
 
 bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %5, align 8, !tbaa !12
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i16 2, ptr %i.b, align 8, !tbaa !13
   %i.c = invoke i32 @removeText(ptr noundef %0, i32 noundef %i.a, ptr noundef nonnull align 8 %4, i32 noundef 8, ptr noundef nonnull align 8 %5, ptr noundef %2)
-          to label %bb.c unwind label %bb.h
+          to label %bb.c unwind label %bb.g
 
 bb.c:                                             ; preds = %bb.b
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %5) #6
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #6
   invoke void @_ZN6icu_7813UnicodeStringC1EPKc(ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull @.str.6)
-          to label %bb.d unwind label %bb.g
+          to label %bb.d unwind label %8
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN6icu_7813UnicodeStringC1EPKc(ptr noundef nonnull align 8 dereferenceable(64) %7, ptr noundef nonnull @.str.7)
-          to label %bb.e unwind label %bb.i
+          to label %bb.e unwind label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   %i.d = invoke i32 @removeText(ptr noundef %0, i32 noundef %i.c, ptr noundef nonnull align 8 %6, i32 noundef 0, ptr noundef nonnull align 8 %7, ptr noundef %2)
-          to label %bb.f unwind label %bb.j
+          to label %bb.f unwind label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #6
@@ -240,36 +240,41 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   ret i32 %i.d
 
-bb.g:                                             ; preds = %bb.c, %bb.a
+8:                                                ; preds = %bb.c, %bb.a
+  %9 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.l
+
+bb.g:                                             ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           cleanup
-  br label %bb.l
+  br label %bb.j
 
-bb.h:                                             ; preds = %bb.b
+bb.h:                                             ; preds = %bb.d
   %i.f = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %5) #6
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %4) #6
-  br label %bb.l
+  br label %bb.k
 
-bb.i:                                             ; preds = %bb.d
+bb.i:                                             ; preds = %bb.e
   %i.g = landingpad { ptr, i32 }
           cleanup
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.g, %bb.i
+  %.sink17 = phi ptr [ %7, %bb.i ], [ %5, %bb.g ]
+  %.sink.ph = phi ptr [ %6, %bb.i ], [ %4, %bb.g ]
+  %.pn14.pn.ph.ph = phi { ptr, i32 } [ %i.g, %bb.i ], [ %i.e, %bb.g ]
+  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.sink17) #6
   br label %bb.k
 
-bb.j:                                             ; preds = %bb.e
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #6
-  br label %bb.k
-
-bb.k:                                             ; preds = %bb.j, %bb.i
-  %.pn14 = phi { ptr, i32 } [ %8, %bb.j ], [ %i.g, %bb.i ]
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %6) #6
+bb.k:                                             ; preds = %bb.j, %bb.h
+  %.sink = phi ptr [ %6, %bb.h ], [ %.sink.ph, %bb.j ]
+  %.pn14 = phi { ptr, i32 } [ %i.f, %bb.h ], [ %.pn14.pn.ph.ph, %bb.j ]
+  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %.sink) #6
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.h, %bb.g
-  %.pn14.pn = phi { ptr, i32 } [ %.pn14, %bb.k ], [ %i.e, %bb.g ], [ %i.f, %bb.h ]
+bb.l:                                             ; preds = %bb.k, %8
+  %.pn14.pn = phi { ptr, i32 } [ %9, %8 ], [ %.pn14, %bb.k ]
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %3) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   resume { ptr, i32 } %.pn14.pn

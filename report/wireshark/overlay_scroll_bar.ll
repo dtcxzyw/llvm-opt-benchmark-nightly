@@ -105,7 +105,7 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTV16OverlayScrollBar, i64 472), ptr %i.i, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 7 uses
   invoke void @_ZN10QScrollBarC1EN2Qt11OrientationEP7QWidget(ptr noundef nonnull align 8 dereferenceable_or_null(40) %i.j, i32 noundef %1, ptr noundef %0)
-          to label %bb.b unwind label %bb.p
+          to label %bb.b unwind label %7
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
@@ -122,7 +122,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = invoke noundef i32 %i.r(ptr noundef nonnull align 8 dereferenceable_or_null(10) %i.i, i32 noundef 12)
-          to label %bb.c unwind label %bb.q, !inline_history !0
+          to label %bb.c unwind label %bb.p, !inline_history !0
 
 bb.c:                                             ; preds = %bb.b
   %i.t = sitofp i32 %i.s to double
@@ -131,43 +131,43 @@ bb.c:                                             ; preds = %bb.b
   %i.w = fptosi double %i.u to i32
   store i32 %i.w, ptr %i.v, align 8
   %i.x = invoke noalias noundef dereferenceable_or_null(16) ptr @_Znwm(i64 noundef 16) #12
-          to label %bb.d unwind label %bb.q       ; 6 uses
+          to label %bb.d unwind label %bb.p       ; 6 uses
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef align 16 dereferenceable(16) %i.x, i8 0, i64 16, i1 false)
   invoke void @_ZN11QProxyStyleC2EP6QStyle(ptr noundef align 8 dereferenceable_or_null(16) %i.x, ptr noundef null)
-          to label %bb.e unwind label %bb.r
+          to label %bb.e unwind label %bb.q
 
 bb.e:                                             ; preds = %bb.d
   store ptr getelementptr inbounds nuw inrange(-16, 280) (i8, ptr @_ZTV13OsbProxyStyle, i64 16), ptr %i.x, align 16
   %i.y = getelementptr i8, ptr %0, i64 40
   store ptr %i.x, ptr %i.y, align 8
   invoke void @_ZN7QWidget8setStyleEP6QStyle(ptr noundef align 8 dereferenceable_or_null(40) %0, ptr noundef %i.x)
-          to label %bb.f unwind label %bb.q
+          to label %bb.f unwind label %bb.p
 
 bb.f:                                             ; preds = %bb.e
   %i.z = invoke noalias noundef dereferenceable_or_null(16) ptr @_Znwm(i64 noundef 16) #12
-          to label %bb.g unwind label %bb.q       ; 5 uses
+          to label %bb.g unwind label %bb.p       ; 5 uses
 
 bb.g:                                             ; preds = %bb.f
   tail call void @llvm.memset.p0.i64(ptr noundef align 16 dereferenceable(16) %i.z, i8 0, i64 16, i1 false)
   invoke void @_ZN11QProxyStyleC2EP6QStyle(ptr noundef align 8 dereferenceable_or_null(16) %i.z, ptr noundef null)
-          to label %bb.h unwind label %bb.s
+          to label %bb.h unwind label %bb.r
 
 bb.h:                                             ; preds = %bb.g
   store ptr getelementptr inbounds nuw inrange(-16, 280) (i8, ptr @_ZTV13OsbProxyStyle, i64 16), ptr %i.z, align 16
   %i.aa = getelementptr i8, ptr %0, i64 48
   store ptr %i.z, ptr %i.aa, align 8
   invoke void @_ZN16OverlayScrollBar16updateChildStyleEv(ptr noundef align 8 dereferenceable_or_null(196) %0)
-          to label %bb.i unwind label %bb.q
+          to label %bb.i unwind label %bb.p
 
 bb.i:                                             ; preds = %bb.h
   invoke void @_ZN7QWidget5raiseEv(ptr noundef nonnull align 8 dereferenceable_or_null(40) %i.j)
-          to label %bb.j unwind label %bb.q
+          to label %bb.j unwind label %bb.p
 
 bb.j:                                             ; preds = %bb.i
   invoke void @_ZN7QObject18installEventFilterEPS_(ptr noundef nonnull align 8 dereferenceable_or_null(16) %i.j, ptr noundef %0)
-          to label %bb.k unwind label %bb.q
+          to label %bb.k unwind label %bb.p
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -179,7 +179,7 @@ bb.k:                                             ; preds = %bb.j
   %.fca.1.gep.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store i64 0, ptr %.fca.1.gep.i, align 8, !noalias !16
   %i.ab = invoke noalias noundef dereferenceable_or_null(32) ptr @_Znwm(i64 noundef 32) #12
-          to label %.noexc unwind label %bb.q, !noalias !16 ; 5 uses
+          to label %.noexc unwind label %bb.p, !noalias !16 ; 5 uses
 
 .noexc:                                           ; preds = %bb.k
   store i32 1, ptr %i.ab, align 4, !noalias !16
@@ -190,7 +190,7 @@ bb.k:                                             ; preds = %bb.j
   %.repack7.i.i = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   store i64 0, ptr %.repack7.i.i, align 8, !noalias !16
   invoke void @_ZN7QObject11connectImplEPKS_PPvS1_S3_PN9QtPrivate15QSlotObjectBaseEN2Qt14ConnectionTypeEPKiPK11QMetaObject(ptr dead_on_unwind nonnull writable sret(%"class.QMetaObject::Connection") align 8 %3, ptr noundef %0, ptr noundef nonnull %i.g, ptr noundef %0, ptr noundef nonnull %i.h, ptr noundef %i.ab, i32 noundef 0, ptr noundef null, ptr noundef @_ZN15QAbstractSlider16staticMetaObjectE)
-          to label %bb.l unwind label %bb.q
+          to label %bb.l unwind label %bb.p
 
 bb.l:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.noexc
   %.fca.1.gep.i32 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store i64 0, ptr %.fca.1.gep.i32, align 8, !noalias !17
   %i.ae = invoke noalias noundef dereferenceable_or_null(32) ptr @_Znwm(i64 noundef 32) #12
-          to label %.noexc34 unwind label %bb.q, !noalias !17 ; 5 uses
+          to label %.noexc34 unwind label %bb.p, !noalias !17 ; 5 uses
 
 .noexc34:                                         ; preds = %bb.l
   store i32 1, ptr %i.ae, align 4, !noalias !17
@@ -216,7 +216,7 @@ bb.l:                                             ; preds = %.noexc
   %.repack7.i.i33 = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
   store i64 0, ptr %.repack7.i.i33, align 8, !noalias !17
   invoke void @_ZN7QObject11connectImplEPKS_PPvS1_S3_PN9QtPrivate15QSlotObjectBaseEN2Qt14ConnectionTypeEPKiPK11QMetaObject(ptr dead_on_unwind nonnull writable sret(%"class.QMetaObject::Connection") align 8 %4, ptr noundef %0, ptr noundef nonnull %i.e, ptr noundef nonnull %i.j, ptr noundef nonnull %i.f, ptr noundef %i.ae, i32 noundef 0, ptr noundef null, ptr noundef @_ZN15QAbstractSlider16staticMetaObjectE)
-          to label %bb.m unwind label %bb.q
+          to label %bb.m unwind label %bb.p
 
 bb.m:                                             ; preds = %.noexc34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -231,7 +231,7 @@ bb.m:                                             ; preds = %.noexc34
   %.fca.1.gep.i40 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 0, ptr %.fca.1.gep.i40, align 8, !noalias !18
   %i.ah = invoke noalias noundef dereferenceable_or_null(32) ptr @_Znwm(i64 noundef 32) #12
-          to label %.noexc42 unwind label %bb.q, !noalias !18 ; 5 uses
+          to label %.noexc42 unwind label %bb.p, !noalias !18 ; 5 uses
 
 .noexc42:                                         ; preds = %bb.m
   store i32 1, ptr %i.ah, align 4, !noalias !18
@@ -242,7 +242,7 @@ bb.m:                                             ; preds = %.noexc34
   %.repack7.i.i41 = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
   store i64 0, ptr %.repack7.i.i41, align 8, !noalias !18
   invoke void @_ZN7QObject11connectImplEPKS_PPvS1_S3_PN9QtPrivate15QSlotObjectBaseEN2Qt14ConnectionTypeEPKiPK11QMetaObject(ptr dead_on_unwind nonnull writable sret(%"class.QMetaObject::Connection") align 8 %5, ptr noundef nonnull %i.j, ptr noundef nonnull %i.c, ptr noundef %0, ptr noundef nonnull %i.d, ptr noundef %i.ah, i32 noundef 0, ptr noundef null, ptr noundef @_ZN15QAbstractSlider16staticMetaObjectE)
-          to label %bb.n unwind label %bb.q
+          to label %bb.n unwind label %bb.p
 
 bb.n:                                             ; preds = %.noexc42
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -257,7 +257,7 @@ bb.n:                                             ; preds = %.noexc42
   %.fca.1.gep.i49 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 0, ptr %.fca.1.gep.i49, align 8, !noalias !19
   %i.ak = invoke noalias noundef dereferenceable_or_null(32) ptr @_Znwm(i64 noundef 32) #12
-          to label %.noexc51 unwind label %bb.q, !noalias !19 ; 5 uses
+          to label %.noexc51 unwind label %bb.p, !noalias !19 ; 5 uses
 
 .noexc51:                                         ; preds = %bb.n
   store i32 1, ptr %i.ak, align 4, !noalias !19
@@ -268,7 +268,7 @@ bb.n:                                             ; preds = %.noexc42
   %.repack7.i.i50 = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   store i64 0, ptr %.repack7.i.i50, align 8, !noalias !19
   invoke void @_ZN7QObject11connectImplEPKS_PPvS1_S3_PN9QtPrivate15QSlotObjectBaseEN2Qt14ConnectionTypeEPKiPK11QMetaObject(ptr dead_on_unwind nonnull writable sret(%"class.QMetaObject::Connection") align 8 %6, ptr noundef nonnull %i.j, ptr noundef nonnull %i.a, ptr noundef %0, ptr noundef nonnull %i.b, ptr noundef %i.ak, i32 noundef 0, ptr noundef null, ptr noundef @_ZN15QAbstractSlider16staticMetaObjectE)
-          to label %bb.o unwind label %bb.q
+          to label %bb.o unwind label %bb.p
 
 bb.o:                                             ; preds = %.noexc51
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -276,38 +276,42 @@ bb.o:                                             ; preds = %.noexc51
   call void @_ZN11QMetaObject10ConnectionD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable_or_null(8) %6) #11
   ret void
 
-bb.p:                                             ; preds = %bb.a
-  %i.an = landingpad { ptr, i32 }
+7:                                                ; preds = %bb.a
+  %8 = landingpad { ptr, i32 }
           cleanup
   br label %bb.u
 
-bb.q:                                             ; preds = %.noexc51, %bb.n, %.noexc42, %bb.m, %.noexc34, %bb.l, %.noexc, %bb.k, %bb.b, %bb.j, %bb.i, %bb.h, %bb.f, %bb.e, %bb.c
+bb.p:                                             ; preds = %.noexc51, %bb.n, %.noexc42, %bb.m, %.noexc34, %bb.l, %.noexc, %bb.k, %bb.b, %bb.j, %bb.i, %bb.h, %bb.f, %bb.e, %bb.c
+  %i.an = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.t
+
+bb.q:                                             ; preds = %bb.d
   %i.ao = landingpad { ptr, i32 }
           cleanup
-  br label %bb.t
+  br label %bb.s
 
-bb.r:                                             ; preds = %bb.d
+bb.r:                                             ; preds = %bb.g
   %i.ap = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef %i.x, i64 noundef 16) #13
+  br label %bb.s
+
+bb.s:                                             ; preds = %bb.q, %bb.r
+  %.sink = phi ptr [ %i.z, %bb.r ], [ %i.x, %bb.q ]
+  %.pn.ph = phi { ptr, i32 } [ %i.ap, %bb.r ], [ %i.ao, %bb.q ]
+  tail call void @_ZdlPvm(ptr noundef %.sink, i64 noundef 16) #13
   br label %bb.t
 
-bb.s:                                             ; preds = %bb.g
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPvm(ptr noundef %i.z, i64 noundef 16) #13
-  br label %bb.t
-
-bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
-  %.pn = phi { ptr, i32 } [ %i.ao, %bb.q ], [ %7, %bb.s ], [ %i.ap, %bb.r ]
+bb.t:                                             ; preds = %bb.s, %bb.p
+  %.pn = phi { ptr, i32 } [ %i.an, %bb.p ], [ %.pn.ph, %bb.s ]
   call void @_ZN5QListIiED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %i.o) #11
   call void @_ZN6QImageD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %i.l) #11
   call void @_ZN6QImageD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable_or_null(24) %i.k) #11
   call void @_ZN10QScrollBarD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable_or_null(40) %i.j) #11
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %bb.p
-  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.t ], [ %i.an, %bb.p ]
+bb.u:                                             ; preds = %bb.t, %7
+  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.t ], [ %8, %7 ]
   call void @_ZN10QScrollBarD2Ev(ptr noundef align 8 dead_on_return(40) dereferenceable_or_null(40) %0) #11
   resume { ptr, i32 } %.pn.pn
 }

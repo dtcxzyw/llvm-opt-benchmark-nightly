@@ -202,7 +202,7 @@ bb.a:
   %.sroa.19 = alloca [7 x i8], align 1            ; 5 uses
   %i.fd = alloca [8 x i8], align 8                ; 10 uses
   %i.fe = alloca [8 x i8], align 8                ; 12 uses
-  %i.ff = alloca [32 x i8], align 8               ; 24 uses
+  %i.ff = alloca [32 x i8], align 8               ; 23 uses
   %i.fg = alloca [24 x i8], align 8               ; 6 uses
   %i.fh = alloca [24 x i8], align 8               ; 4 uses
   %i.fi = load i64, ptr %1, align 8, !range !26, !noundef !13
@@ -605,8 +605,14 @@ bb.xk:                                            ; preds = %bb.abl, %.body238, 
   %.pn113.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn113.pn.pn.pn.pn.pn.pn.pn315, %bb.abl ], [ %.pn111, %.body238 ], [ %.pn101, %.body195 ]
   resume { ptr, i32 } %.pn113.pn.pn.pn.pn.pn.pn.pn.pn
 
-.body201:                                         ; preds = %.loopexit.split-lp352.loopexit.split-lp.loopexit.split-lp, %bb.zt, %bb.zm, %bb.ze, %bb.yz, %bb.yw, %bb.yr
-  %.pn104 = phi { ptr, i32 } [ %i.ow, %bb.zt ], [ %i.nv, %bb.yr ], [ %i.oc, %bb.ze ], [ %i.nz, %bb.yz ], [ %i.ny, %bb.yw ], [ %i.ol, %bb.zm ], [ %lpad.loopexit.split-lp958, %.loopexit.split-lp352.loopexit.split-lp.loopexit.split-lp ]
+.body201.sink.split:                              ; preds = %bb.yw, %bb.ze
+  %.sink = phi ptr [ %i.et, %bb.ze ], [ %i.er, %bb.yw ]
+  %.pn104.ph = phi { ptr, i32 } [ %i.oc, %bb.ze ], [ %i.ny, %bb.yw ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ff, ptr noundef nonnull align 8 dereferenceable(32) %.sink, i64 32, i1 false)
+  br label %.body201
+
+.body201:                                         ; preds = %.loopexit.split-lp352.loopexit.split-lp.loopexit.split-lp, %.body201.sink.split, %bb.zt, %bb.zm, %bb.yz, %bb.yr
+  %.pn104 = phi { ptr, i32 } [ %i.ow, %bb.zt ], [ %i.nv, %bb.yr ], [ %.pn104.ph, %.body201.sink.split ], [ %i.nz, %bb.yz ], [ %i.ol, %bb.zm ], [ %lpad.loopexit.split-lp958, %.loopexit.split-lp352.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsbiVIOMxcYgN_3syn4attr9AttributeECsgPZq453g1IG_13yara_x_macros(ptr noalias nofree noundef align 8 dereferenceable(248) %i.ez) #13
           to label %.loopexit356 unwind label %bb.bp
 
@@ -800,8 +806,7 @@ bb.yv:                                            ; preds = %bb.yu
 bb.yw:                                            ; preds = %bb.yv
   %i.ny = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ff, ptr noundef nonnull align 8 dereferenceable(32) %i.er, i64 32, i1 false)
-  br label %.body201
+  br label %.body201.sink.split
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs4G72gg52fHF_11proc_macro211TokenStreamEECsgPZq453g1IG_13yara_x_macros.exit198: ; preds = %bb.yu, %bb.yv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ff, ptr noundef nonnull align 8 dereferenceable(32) %i.er, i64 32, i1 false)
@@ -845,8 +850,7 @@ bb.zd:                                            ; preds = %bb.zc
 bb.ze:                                            ; preds = %bb.zd
   %i.oc = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ff, ptr noundef nonnull align 8 dereferenceable(32) %i.et, i64 32, i1 false)
-  br label %.body201
+  br label %.body201.sink.split
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs4G72gg52fHF_11proc_macro211TokenStreamEECsgPZq453g1IG_13yara_x_macros.exit200: ; preds = %bb.zc, %bb.zd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ff, ptr noundef nonnull align 8 dereferenceable(32) %i.et, i64 32, i1 false)

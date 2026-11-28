@@ -74,8 +74,8 @@ bb.a:
   %6 = alloca [5 x %"class.std::__cxx11::basic_string"], align 8 ; 30 uses
   %7 = alloca %"class.std::allocator.13", align 1 ; 5 uses
   %8 = alloca %"class.std::allocator.13", align 1 ; 5 uses
-  %9 = alloca %"class.std::allocator.13", align 1 ; 7 uses
-  %10 = alloca %"class.std::allocator.13", align 1 ; 6 uses
+  %9 = alloca %"class.std::allocator.13", align 1 ; 5 uses
+  %10 = alloca %"class.std::allocator.13", align 1 ; 5 uses
   %11 = alloca %"class.std::allocator.13", align 1 ; 5 uses
   %12 = alloca %"class.std::allocator.9", align 1 ; 4 uses
   %i.b = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #18 ; 19 uses
@@ -270,7 +270,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bf = getelementptr inbounds nuw i8, ptr %6, i64 128 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %i.bf, ptr noundef nonnull @.str.15, ptr noundef nonnull align 1 dereferenceable(1) %11)
-          to label %bb.r unwind label %bb.w
+          to label %bb.r unwind label %13
 
 bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #19
@@ -380,15 +380,12 @@ bb.u:                                             ; preds = %_ZStlsISt11char_tra
 .thread284:                                       ; preds = %bb.o
   %i.cs = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #19
-  br label %.preheader.preheader
+  br label %bb.w
 
 .thread288:                                       ; preds = %bb.p
   %i.ct = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #19
-  br label %.preheader.preheader
+  br label %.preheader.preheader.sink.split.sink.split
 
 bb.v:                                             ; preds = %bb.r
   %i.cu = landingpad { ptr, i32 }
@@ -464,17 +461,27 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i15
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   br label %.loopexit.sink.split
 
-bb.w:                                             ; preds = %bb.q
-  %13 = landingpad { ptr, i32 }
+13:                                               ; preds = %bb.q
+  %14 = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
+  br label %.preheader.preheader.sink.split.sink.split
+
+.preheader.preheader.sink.split.sink.split:       ; preds = %13, %.thread288
+  %.211283.ph.ph = phi ptr [ %i.bf, %13 ], [ %i.be, %.thread288 ]
+  %.pn38.pn.pn.pn282.ph.ph = phi { ptr, i32 } [ %14, %13 ], [ %i.ct, %.thread288 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #19
+  br label %bb.w
+
+bb.w:                                             ; preds = %.preheader.preheader.sink.split.sink.split, %.thread284
+  %.211283.ph = phi ptr [ %i.bd, %.thread284 ], [ %.211283.ph.ph, %.preheader.preheader.sink.split.sink.split ]
+  %.pn38.pn.pn.pn282.ph = phi { ptr, i32 } [ %i.cs, %.thread284 ], [ %.pn38.pn.pn.pn282.ph.ph, %.preheader.preheader.sink.split.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #19
   br label %.preheader.preheader
 
-.preheader.preheader:                             ; preds = %bb.w, %.thread288, %.thread284, %.thread278
-  %.211283 = phi ptr [ %i.bc, %.thread278 ], [ %i.bf, %bb.w ], [ %i.bd, %.thread284 ], [ %i.be, %.thread288 ]
-  %.pn38.pn.pn.pn282 = phi { ptr, i32 } [ %i.cr, %.thread278 ], [ %13, %bb.w ], [ %i.cs, %.thread284 ], [ %i.ct, %.thread288 ]
+.preheader.preheader:                             ; preds = %bb.w, %.thread278
+  %.211283 = phi ptr [ %i.bc, %.thread278 ], [ %.211283.ph, %bb.w ]
+  %.pn38.pn.pn.pn282 = phi { ptr, i32 } [ %i.cr, %.thread278 ], [ %.pn38.pn.pn.pn282.ph, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
   br label %.preheader
