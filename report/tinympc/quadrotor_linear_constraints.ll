@@ -205,7 +205,7 @@ _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i349: ; preds = %_ZN5Ei
   call void @free(ptr noundef %i.by) #15
   %i.bz = load ptr, ptr %9, align 8, !tbaa !18
   call void @free(ptr noundef %i.bz) #15
-  %calloc746 = call dereferenceable_or_null(96) ptr @calloc(i64 1, i64 96) ; 5 uses
+  %calloc746 = call dereferenceable_or_null(96) ptr @calloc(i64 1, i64 96) ; 6 uses
   %i.ca = icmp eq ptr %calloc746, null
   br i1 %i.ca, label %.invoke753, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i356
 
@@ -458,8 +458,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ab
 bb.ag:                                            ; preds = %.body156, %bb.aa
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %.body156 ], [ %i.ev, %bb.aa ]
   %i.fd = load ptr, ptr %9, align 8, !tbaa !18
-  call void @free(ptr noundef %i.fd) #15
-  br label %.body152
+  br label %.body163
 
 bb.ah:                                            ; preds = %bb.s
   %i.fe = landingpad { ptr, i32 }
@@ -862,13 +861,14 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bf
   call void @free(ptr noundef %calloc) #15
   br label %.body163
 
-.body163:                                         ; preds = %bb.r, %.body177
-  %.pn125.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.ce, %bb.r ], [ %.pn125.pn.pn.pn.pn.pn, %.body177 ]
-  call void @free(ptr noundef %calloc746) #15
+.body163:                                         ; preds = %.body177, %bb.r, %bb.ag
+  %calloc746.sink = phi ptr [ %i.fd, %bb.ag ], [ %calloc746, %bb.r ], [ %calloc746, %.body177 ]
+  %.pn125.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %.pn.pn.pn.pn, %bb.ag ], [ %i.ce, %bb.r ], [ %.pn125.pn.pn.pn.pn.pn, %.body177 ]
+  call void @free(ptr noundef %calloc746.sink) #15
   br label %.body152
 
-.body152:                                         ; preds = %bb.z, %bb.ag, %.body163
-  %.pn125.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn125.pn.pn.pn.pn.pn.pn.pn.pn.pn, %.body163 ], [ %i.eu, %bb.z ], [ %.pn.pn.pn.pn, %bb.ag ]
+.body152:                                         ; preds = %bb.z, %.body163
+  %.pn125.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn125.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.ph, %.body163 ], [ %i.eu, %bb.z ]
   %i.td = load ptr, ptr %8, align 8, !tbaa !25
   call void @free(ptr noundef %i.td) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15
