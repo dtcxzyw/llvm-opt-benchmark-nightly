@@ -205,7 +205,7 @@ declare void @_ZNSt6locale5facetD2Ev(ptr noundef nonnull align 8 dead_on_return(
 define linkonce_odr hidden noundef i32 @_ZNK5boost6locale8impl_icu12collate_implIwE18do_ustring_compareENS0_13collate_levelEPKwS6_S6_S6_R10UErrorCode(ptr noundef nonnull align 8 dereferenceable(281) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef nonnull align 4 dereferenceable(4) %6) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %7 = alloca %"class.icu_74::UnicodeString", align 8 ; 9 uses
-  %8 = alloca %"class.icu_74::UnicodeString", align 8 ; 9 uses
+  %8 = alloca %"class.icu_74::UnicodeString", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   %i.a = ptrtoint ptr %3 to i64
   %i.b = ptrtoint ptr %2 to i64
@@ -255,18 +255,12 @@ _ZNK5boost6locale8impl_icu17icu_std_converterIwLi4EE3icuEPKwS5_.exit: ; preds = 
   %.09.i12 = phi ptr [ %i.q, %bb.d ], [ %4, %.noexc ] ; 2 uses
   %i.o = load i32, ptr %.09.i12, align 4, !tbaa !105, !noalias !214
   %i.p = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7413UnicodeString6appendEi(ptr noundef nonnull align 8 dereferenceable(64) %8, i32 noundef %i.o)
-          to label %bb.d unwind label %9          ; 0 uses
+          to label %bb.d unwind label %bb.h       ; 0 uses
 
 bb.d:                                             ; preds = %.lr.ph.i11
   %i.q = getelementptr inbounds nuw i8, ptr %.09.i12, i64 4 ; 2 uses
   %.not.i13 = icmp eq ptr %i.q, %5
   br i1 %.not.i13, label %_ZNK5boost6locale8impl_icu17icu_std_converterIwLi4EE3icuEPKwS5_.exit14, label %.lr.ph.i11, !llvm.loop !7
-
-9:                                                ; preds = %.lr.ph.i11
-  %10 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN6icu_7413UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %8) #22
-  br label %.body
 
 _ZNK5boost6locale8impl_icu17icu_std_converterIwLi4EE3icuEPKwS5_.exit14: ; preds = %bb.d, %.noexc
   %i.r = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5boost6locale8impl_icu12collate_implIwE12get_collatorENS0_13collate_levelE(ptr noundef nonnull align 8 dereferenceable(281) %0, i32 noundef %1)
@@ -291,14 +285,14 @@ bb.g:                                             ; preds = %_ZNK5boost6locale8i
           cleanup
   br label %.body
 
-bb.h:                                             ; preds = %bb.e, %_ZNK5boost6locale8impl_icu17icu_std_converterIwLi4EE3icuEPKwS5_.exit14
+bb.h:                                             ; preds = %.lr.ph.i11, %bb.e, %_ZNK5boost6locale8impl_icu17icu_std_converterIwLi4EE3icuEPKwS5_.exit14
   %i.x = landingpad { ptr, i32 }
           cleanup
   call void @_ZN6icu_7413UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %8) #22
   br label %.body
 
-.body:                                            ; preds = %bb.g, %9, %bb.h
-  %.pn = phi { ptr, i32 } [ %i.x, %bb.h ], [ %i.w, %bb.g ], [ %10, %9 ]
+.body:                                            ; preds = %bb.h, %bb.g
+  %.pn = phi { ptr, i32 } [ %i.w, %bb.g ], [ %i.x, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #22
   call void @_ZN6icu_7413UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22

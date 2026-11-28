@@ -202,7 +202,7 @@ bb.a:
   %i.d = alloca ptr, align 8                      ; 7 uses
   %7 = alloca %class.QByteArray, align 8          ; 9 uses
   %8 = alloca %class.QString, align 16            ; 10 uses
-  %9 = alloca %class.QString, align 8             ; 12 uses
+  %9 = alloca %class.QString, align 8             ; 11 uses
   %10 = alloca %class.QString, align 8            ; 9 uses
   %11 = alloca %class.QString, align 16           ; 10 uses
   %12 = alloca %class.QString, align 16           ; 10 uses
@@ -314,12 +314,7 @@ bb.h:                                             ; preds = %.noexc
 _ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130:   ; preds = %bb.h
   %i.an = atomicrmw add ptr %i.am, i32 -1 acq_rel, align 4
   %.not.i.i131 = icmp eq i32 %i.an, 1
-  br i1 %.not.i.i131, label %16, label %.body
-
-16:                                               ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130
-  %17 = load ptr, ptr %9, align 8
-  call void @_ZN10QArrayData10deallocateEPS_xx(ptr noundef %17, i64 noundef 2, i64 noundef 8) #19
-  br label %.body
+  br i1 %.not.i.i131, label %bb.u, label %.body
 
 _Zpl5QCharRK7QString.exit:                        ; preds = %.noexc
   invoke void @_ZN15IOConsoleDialog11setHintTextERK7QString(ptr noundef align 8 dereferenceable_or_null(112) %0, ptr noundef nonnull align 8 dereferenceable(24) %9)
@@ -435,13 +430,14 @@ _ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54:    ; preds = %bb.t
   %.not.i.i55 = icmp eq i32 %i.bi, 1
   br i1 %.not.i.i55, label %bb.u, label %.body
 
-bb.u:                                             ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54
+bb.u:                                             ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130
+  %.pn26.ph = phi { ptr, i32 } [ %i.al, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130 ], [ %i.bg, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54 ]
   %i.bj = load ptr, ptr %9, align 8
   call void @_ZN10QArrayData10deallocateEPS_xx(ptr noundef %i.bj, i64 noundef 2, i64 noundef 8) #19
   br label %.body
 
-.body:                                            ; preds = %bb.u, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54, %bb.t, %bb.s, %bb.h, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130, %16
-  %.pn26 = phi { ptr, i32 } [ %i.al, %16 ], [ %i.bf, %bb.s ], [ %i.al, %bb.h ], [ %i.al, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130 ], [ %i.bg, %bb.t ], [ %i.bg, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54 ], [ %i.bg, %bb.u ] ; 3 uses
+.body:                                            ; preds = %bb.u, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54, %bb.t, %bb.s, %bb.h, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130
+  %.pn26 = phi { ptr, i32 } [ %i.bg, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i54 ], [ %i.bf, %bb.s ], [ %i.al, %bb.h ], [ %i.al, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i130 ], [ %i.bg, %bb.t ], [ %.pn26.ph, %bb.u ] ; 3 uses
   %i.bk = load ptr, ptr %10, align 8              ; 2 uses
   %.not.i.i.i57 = icmp eq ptr %i.bk, null
   br i1 %.not.i.i.i57, label %_ZN7QStringD2Ev.exit60, label %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i58

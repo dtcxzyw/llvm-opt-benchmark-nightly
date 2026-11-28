@@ -202,22 +202,14 @@ bb.ad:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !130 ; 2 uses
   %.not.i.i73 = icmp eq ptr %i.ef, null
-  br i1 %.not.i.i73, label %_ZN7rocksdb6StatusD2Ev.exit75, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i74
-
-_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i74: ; preds = %bb.ad
-  call void @_ZdaPv(ptr noundef nonnull %i.ef) #14
-  br label %_ZN7rocksdb6StatusD2Ev.exit75
+  br i1 %.not.i.i73, label %_ZN7rocksdb6StatusD2Ev.exit75, label %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a
 
 bb.ae:                                            ; preds = %bb.ac
   %i.eg = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.eh = load ptr, ptr %i.dn, align 8, !tbaa !130 ; 2 uses
   %.not.i.i76 = icmp eq ptr %i.eh, null
-  br i1 %.not.i.i76, label %_ZN7rocksdb6StatusD2Ev.exit75, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i77
-
-_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i77: ; preds = %bb.ae
-  call void @_ZdaPv(ptr noundef nonnull %i.eh) #14
-  br label %_ZN7rocksdb6StatusD2Ev.exit75
+  br i1 %.not.i.i76, label %_ZN7rocksdb6StatusD2Ev.exit75, label %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a
 
 .critedge:                                        ; preds = %bb.aa
   %i.ei = load ptr, ptr %i.dn, align 8, !tbaa !130 ; 2 uses
@@ -282,24 +274,30 @@ bb.ai:                                            ; preds = %_ZN7rocksdb10Record
 .critedge39:                                      ; preds = %bb.ac, %bb.ab, %bb.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZN7rocksdb16CacheHandleGuardINS_14BlobFileReaderEED2Ev.exit90
   %i.fa = load ptr, ptr %8, align 8, !tbaa !127   ; 3 uses
   %.not.i91 = icmp eq ptr %i.fa, null
-  br i1 %.not.i91, label %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a, label %_ZNKSt14default_deleteIN7rocksdb14BlobFileReaderEEclEPS1_.exit.i
+  br i1 %.not.i91, label %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit, label %_ZNKSt14default_deleteIN7rocksdb14BlobFileReaderEEclEPS1_.exit.i
 
 _ZNKSt14default_deleteIN7rocksdb14BlobFileReaderEEclEPS1_.exit.i: ; preds = %.critedge39
   call void @_ZN7rocksdb14BlobFileReaderD1Ev(ptr noundef nonnull align 8 dead_on_return(57) dereferenceable(57) %i.fa) #13
   call void @_ZdlPvm(ptr noundef nonnull %i.fa, i64 noundef 64) #14
-  br label %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a
+  br label %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit
 
-_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a: ; preds = %.critedge39, %_ZNKSt14default_deleteIN7rocksdb14BlobFileReaderEEclEPS1_.exit.i
+_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit: ; preds = %.critedge39, %_ZNKSt14default_deleteIN7rocksdb14BlobFileReaderEEclEPS1_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
   br label %bb.aj
 
-_ZN7rocksdb6StatusD2Ev.exit75:                    ; preds = %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i77, %bb.ae, %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i74, %bb.ad, %bb.ai
-  %.pn33 = phi { ptr, i32 } [ %i.eg, %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i77 ], [ %i.ez, %bb.ai ], [ %.pn29, %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i74 ], [ %.pn29, %bb.ad ], [ %i.eg, %bb.ae ]
+_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a: ; preds = %bb.ae, %bb.ad
+  %.sink = phi ptr [ %i.ef, %bb.ad ], [ %i.eh, %bb.ae ]
+  %.pn33.ph = phi { ptr, i32 } [ %.pn29, %bb.ad ], [ %i.eg, %bb.ae ]
+  call void @_ZdaPv(ptr noundef nonnull %.sink) #14
+  br label %_ZN7rocksdb6StatusD2Ev.exit75
+
+_ZN7rocksdb6StatusD2Ev.exit75:                    ; preds = %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a, %bb.ae, %bb.ad, %bb.ai
+  %.pn33 = phi { ptr, i32 } [ %.pn29, %bb.ad ], [ %i.ez, %bb.ai ], [ %i.eg, %bb.ae ], [ %.pn33.ph, %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a ]
   call void @_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %8) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
   br label %bb.al
 
-bb.aj:                                            ; preds = %_ZN7rocksdb16CacheHandleGuardINS_14BlobFileReaderEED2Ev.exit54, %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit.a
+bb.aj:                                            ; preds = %_ZN7rocksdb16CacheHandleGuardINS_14BlobFileReaderEED2Ev.exit54, %_ZNSt10unique_ptrIN7rocksdb14BlobFileReaderESt14default_deleteIS1_EED2Ev.exit
   invoke void @_ZN7rocksdb4port5Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(40) %i.ag)
           to label %_ZN7rocksdb9MutexLockD2Ev.exit unwind label %bb.ak
 

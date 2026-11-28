@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 3 uses
   %3 = alloca %"class.std::vector.103", align 8   ; 7 uses
-  %4 = alloca %"class.std::vector", align 8       ; 10 uses
+  %4 = alloca %"class.std::vector", align 8       ; 9 uses
   %5 = alloca %"struct.v8::internal::torque::QualifiedName", align 8 ; 14 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
@@ -332,18 +332,9 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.al = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.am = load ptr, ptr %4, align 8, !alias.scope !149 ; 3 uses
+  %i.am = load ptr, ptr %4, align 8, !alias.scope !149 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.am, null
-  br i1 %.not.i.i.i.i, label %.body, label %7
-
-7:                                                ; preds = %bb.k
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %9 = load ptr, ptr %8, align 8, !alias.scope !149
-  %10 = ptrtoint ptr %9 to i64
-  %11 = ptrtoint ptr %i.am to i64
-  %12 = sub i64 %10, %11
-  call void @_ZdlPvm(ptr noundef nonnull %i.am, i64 noundef %12) #25
-  br label %.body
+  br i1 %.not.i.i.i.i, label %.body, label %bb.t
 
 _ZN2v88internal6torque12Declarations6LookupERKNS1_13QualifiedNameE.exit: ; preds = %.noexc
   invoke void @_ZN2v88internal6torque17FilterDeclarablesINS1_15GenericCallableEEESt6vectorIPT_SaIS6_EES4_IPNS1_10DeclarableESaISA_EE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.103") align 8 %3, ptr noundef nonnull align 8 %4)
@@ -486,21 +477,23 @@ bb.s:                                             ; preds = %bb.r
 
 _ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15: ; preds = %bb.s, %bb.r, %bb.q
   %.pn = phi { ptr, i32 } [ %i.bz, %bb.q ], [ %i.ca, %bb.r ], [ %i.ca, %bb.s ] ; 2 uses
-  %i.ch = load ptr, ptr %4, align 8               ; 3 uses
+  %i.ch = load ptr, ptr %4, align 8               ; 2 uses
   %.not.i.i.i16 = icmp eq ptr %i.ch, null
   br i1 %.not.i.i.i16, label %.body, label %bb.t
 
-bb.t:                                             ; preds = %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15
+bb.t:                                             ; preds = %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15, %bb.k
+  %.sink47 = phi ptr [ %i.am, %bb.k ], [ %i.ch, %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15 ] ; 2 uses
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.al, %bb.k ], [ %.pn, %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15 ]
   %i.ci = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.cj = load ptr, ptr %i.ci, align 8
   %i.ck = ptrtoint ptr %i.cj to i64
-  %i.cl = ptrtoint ptr %i.ch to i64
+  %i.cl = ptrtoint ptr %.sink47 to i64
   %i.cm = sub i64 %i.ck, %i.cl
-  call void @_ZdlPvm(ptr noundef nonnull %i.ch, i64 noundef %i.cm) #25
+  call void @_ZdlPvm(ptr noundef nonnull %.sink47, i64 noundef %i.cm) #25
   br label %.body
 
-.body:                                            ; preds = %bb.t, %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15, %bb.p, %7, %bb.k
-  %.pn.pn = phi { ptr, i32 } [ %i.al, %bb.k ], [ %i.by, %bb.p ], [ %i.al, %7 ], [ %.pn, %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15 ], [ %.pn, %bb.t ]
+.body:                                            ; preds = %bb.t, %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15, %bb.p, %bb.k
+  %.pn.pn = phi { ptr, i32 } [ %i.al, %bb.k ], [ %i.by, %bb.p ], [ %.pn, %_ZNSt6vectorIPN2v88internal6torque15GenericCallableESaIS4_EED2Ev.exit15 ], [ %.pn.pn.ph, %bb.t ]
   call void @_ZN2v88internal6torque13QualifiedNameD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %5) #23
   %i.cn = load ptr, ptr %6, align 8               ; 2 uses
   %i.co = icmp eq ptr %i.cn, %i.b

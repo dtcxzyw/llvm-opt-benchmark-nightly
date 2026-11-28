@@ -204,7 +204,7 @@ declare void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 deref
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(8) ptr @_ZN5Eigen8internal12print_matrixINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEERSoS4_RKT_RKNS_8IOFormatE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(236) %2) local_unnamed_addr #5 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 40 uses
+  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 38 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 228
   %i.b = load i32, ptr %i.a, align 4, !tbaa !49   ; 3 uses
@@ -244,10 +244,10 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 352
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 353
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 360
-  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 5 uses
-  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 4 uses
-  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 4 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 4 uses
+  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 3 uses
+  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
   %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 32), align 8 ; 2 uses
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 40), align 8
@@ -294,7 +294,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ax = load i64, ptr %i.aw, align 8
   %i.ay = getelementptr inbounds i8, ptr %3, i64 %i.ax
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.ay, ptr noundef null)
-          to label %.noexc.i unwind label %bb.e
+          to label %.noexc.i unwind label %5
 
 .noexc.i:                                         ; preds = %.preheader
   store ptr %i.w, ptr %i.v, align 8, !tbaa !16
@@ -311,12 +311,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.noexc.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.r, ptr %3, align 8, !tbaa !16
-  %5 = load i64, ptr %i.t, align 8
-  %6 = getelementptr inbounds i8, ptr %3, i64 %5
-  store ptr %i.s, ptr %6, align 8, !tbaa !16
-  store i64 0, ptr %i.u, align 8, !tbaa !56
-  br label %.body.i
+  br label %bb.f
 
 bb.d:                                             ; preds = %.noexc.i
   store ptr %i.z, ptr %3, align 8, !tbaa !16
@@ -339,17 +334,21 @@ bb.d:                                             ; preds = %.noexc.i
   %i.bk = load i64, ptr %i.bj, align 8
   %i.bl = getelementptr inbounds i8, ptr %3, i64 %i.bk
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.bl, ptr noundef nonnull %i.ac)
-          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.f
+          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.e
 
-bb.e:                                             ; preds = %.preheader
-  %i.bm = landingpad { ptr, i32 }
+5:                                                ; preds = %.preheader
+  %6 = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-bb.f:                                             ; preds = %bb.d
-  %7 = landingpad { ptr, i32 }
+bb.e:                                             ; preds = %bb.d
+  %i.bm = landingpad { ptr, i32 }
           cleanup
   call void @_ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %i.ac) #18
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %bb.c
+  %.pn.pn.ph.i = phi { ptr, i32 } [ %i.bf, %bb.c ], [ %i.bm, %bb.e ]
   store ptr %i.r, ptr %3, align 8, !tbaa !16
   %i.bn = load i64, ptr %i.t, align 8
   %i.bo = getelementptr inbounds i8, ptr %3, i64 %i.bn
@@ -361,8 +360,8 @@ common.resume:                                    ; preds = %bb.l, %.body.i
   %common.resume.op = phi { ptr, i32 } [ %.pn.pn.i, %.body.i ], [ %.pn, %bb.l ]
   resume { ptr, i32 } %common.resume.op
 
-.body.i:                                          ; preds = %bb.f, %bb.e, %bb.c
-  %.pn.pn.i = phi { ptr, i32 } [ %7, %bb.f ], [ %i.bm, %bb.e ], [ %i.bf, %bb.c ]
+.body.i:                                          ; preds = %bb.f, %5
+  %.pn.pn.i = phi { ptr, i32 } [ %6, %5 ], [ %.pn.pn.ph.i, %bb.f ]
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.m) #18
   br label %common.resume
 
@@ -765,7 +764,7 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmm
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(8) ptr @_ZN5Eigen8internal12print_matrixINS_6MatrixIdLi1ELi4ELi1ELi1ELi4EEEEERSoS4_RKT_RKNS_8IOFormatE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 16 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(236) %2) local_unnamed_addr #5 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 40 uses
+  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 38 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 228
   %i.b = load i32, ptr %i.a, align 4, !tbaa !49   ; 3 uses
@@ -805,10 +804,10 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 352
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 353
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 360
-  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 5 uses
-  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 4 uses
-  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 4 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 4 uses
+  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 3 uses
+  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
   %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 32), align 8 ; 2 uses
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 40), align 8
@@ -855,7 +854,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ax = load i64, ptr %i.aw, align 8
   %i.ay = getelementptr inbounds i8, ptr %3, i64 %i.ax
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.ay, ptr noundef null)
-          to label %.noexc.i unwind label %bb.e
+          to label %.noexc.i unwind label %5
 
 .noexc.i:                                         ; preds = %.preheader
   store ptr %i.w, ptr %i.v, align 8, !tbaa !16
@@ -872,12 +871,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.noexc.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.r, ptr %3, align 8, !tbaa !16
-  %5 = load i64, ptr %i.t, align 8
-  %6 = getelementptr inbounds i8, ptr %3, i64 %5
-  store ptr %i.s, ptr %6, align 8, !tbaa !16
-  store i64 0, ptr %i.u, align 8, !tbaa !56
-  br label %.body.i
+  br label %bb.f
 
 bb.d:                                             ; preds = %.noexc.i
   store ptr %i.z, ptr %3, align 8, !tbaa !16
@@ -900,17 +894,21 @@ bb.d:                                             ; preds = %.noexc.i
   %i.bk = load i64, ptr %i.bj, align 8
   %i.bl = getelementptr inbounds i8, ptr %3, i64 %i.bk
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.bl, ptr noundef nonnull %i.ac)
-          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.f
+          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.e
 
-bb.e:                                             ; preds = %.preheader
-  %i.bm = landingpad { ptr, i32 }
+5:                                                ; preds = %.preheader
+  %6 = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-bb.f:                                             ; preds = %bb.d
-  %7 = landingpad { ptr, i32 }
+bb.e:                                             ; preds = %bb.d
+  %i.bm = landingpad { ptr, i32 }
           cleanup
   call void @_ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %i.ac) #18
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %bb.c
+  %.pn.pn.ph.i = phi { ptr, i32 } [ %i.bf, %bb.c ], [ %i.bm, %bb.e ]
   store ptr %i.r, ptr %3, align 8, !tbaa !16
   %i.bn = load i64, ptr %i.t, align 8
   %i.bo = getelementptr inbounds i8, ptr %3, i64 %i.bn
@@ -922,8 +920,8 @@ common.resume:                                    ; preds = %bb.l, %.body.i
   %common.resume.op = phi { ptr, i32 } [ %.pn.pn.i, %.body.i ], [ %.pn, %bb.l ]
   resume { ptr, i32 } %common.resume.op
 
-.body.i:                                          ; preds = %bb.f, %bb.e, %bb.c
-  %.pn.pn.i = phi { ptr, i32 } [ %7, %bb.f ], [ %i.bm, %bb.e ], [ %i.bf, %bb.c ]
+.body.i:                                          ; preds = %bb.f, %5
+  %.pn.pn.i = phi { ptr, i32 } [ %6, %5 ], [ %.pn.pn.ph.i, %bb.f ]
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.m) #18
   br label %common.resume
 
@@ -1326,7 +1324,7 @@ bb.ah:                                            ; preds = %bb.ac, %_ZNSt9basic
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(8) ptr @_ZN5Eigen8internal12print_matrixINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEEERSoS4_RKT_RKNS_8IOFormatE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(236) %2) local_unnamed_addr #5 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 39 uses
+  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 37 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 228
   %i.b = load i32, ptr %i.a, align 4, !tbaa !49   ; 3 uses
@@ -1366,10 +1364,10 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 352
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 353
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 360
-  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 5 uses
-  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 4 uses
-  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 4 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 4 uses
+  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 3 uses
+  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
   %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 32), align 8 ; 2 uses
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 40), align 8
@@ -1427,7 +1425,7 @@ bb.d:                                             ; preds = %.preheader, %_ZNSt7
   %i.ax = load i64, ptr %i.aw, align 8
   %i.ay = getelementptr inbounds i8, ptr %3, i64 %i.ax
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.ay, ptr noundef null)
-          to label %.noexc.i unwind label %bb.g
+          to label %.noexc.i unwind label %5
 
 .noexc.i:                                         ; preds = %bb.d
   store ptr %i.w, ptr %i.v, align 8, !tbaa !16
@@ -1444,12 +1442,7 @@ bb.d:                                             ; preds = %.preheader, %_ZNSt7
 bb.e:                                             ; preds = %.noexc.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.r, ptr %3, align 8, !tbaa !16
-  %5 = load i64, ptr %i.t, align 8
-  %6 = getelementptr inbounds i8, ptr %3, i64 %5
-  store ptr %i.s, ptr %6, align 8, !tbaa !16
-  store i64 0, ptr %i.u, align 8, !tbaa !56
-  br label %.body.i
+  br label %bb.h
 
 bb.f:                                             ; preds = %.noexc.i
   %i.bg = load i64, ptr %i.ab, align 8
@@ -1470,17 +1463,21 @@ bb.f:                                             ; preds = %.noexc.i
   %i.bk = load i64, ptr %i.bj, align 8
   %i.bl = getelementptr inbounds i8, ptr %3, i64 %i.bk
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.bl, ptr noundef nonnull %i.ac)
-          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.h
+          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.g
 
-bb.g:                                             ; preds = %bb.d
-  %i.bm = landingpad { ptr, i32 }
+5:                                                ; preds = %bb.d
+  %6 = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-bb.h:                                             ; preds = %bb.f
-  %7 = landingpad { ptr, i32 }
+bb.g:                                             ; preds = %bb.f
+  %i.bm = landingpad { ptr, i32 }
           cleanup
   call void @_ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %i.ac) #18
+  br label %bb.h
+
+bb.h:                                             ; preds = %bb.g, %bb.e
+  %.pn.pn.ph.i = phi { ptr, i32 } [ %i.bf, %bb.e ], [ %i.bm, %bb.g ]
   store ptr %i.r, ptr %3, align 8, !tbaa !16
   %i.bn = load i64, ptr %i.t, align 8
   %i.bo = getelementptr inbounds i8, ptr %3, i64 %i.bn
@@ -1492,8 +1489,8 @@ common.resume:                                    ; preds = %bb.n, %.body.i
   %common.resume.op = phi { ptr, i32 } [ %.pn.pn.i, %.body.i ], [ %.pn, %bb.n ]
   resume { ptr, i32 } %common.resume.op
 
-.body.i:                                          ; preds = %bb.h, %bb.g, %bb.e
-  %.pn.pn.i = phi { ptr, i32 } [ %7, %bb.h ], [ %i.bm, %bb.g ], [ %i.bf, %bb.e ]
+.body.i:                                          ; preds = %bb.h, %5
+  %.pn.pn.i = phi { ptr, i32 } [ %6, %5 ], [ %.pn.pn.ph.i, %bb.h ]
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.m) #18
   br label %common.resume
 
@@ -1896,7 +1893,7 @@ bb.am:                                            ; preds = %bb.ah, %_ZNSt9basic
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(8) ptr @_ZN5Eigen8internal12print_matrixINS_6MatrixIdLi3ELi4ELi0ELi3ELi4EEEEERSoS4_RKT_RKNS_8IOFormatE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 16 dereferenceable(96) %1, ptr noundef nonnull align 8 dereferenceable(236) %2) local_unnamed_addr #5 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 39 uses
+  %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 37 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 228
   %i.b = load i32, ptr %i.a, align 4, !tbaa !49   ; 3 uses
@@ -1936,10 +1933,10 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 352
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 353
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 360
-  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 5 uses
-  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 4 uses
-  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 4 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  %i.r = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 16), align 8 ; 4 uses
+  %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 24), align 8 ; 3 uses
+  %i.t = getelementptr i8, ptr %i.r, i64 -24      ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
   %i.w = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 32), align 8 ; 2 uses
   %i.x = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTTNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEE, i64 40), align 8
@@ -1997,7 +1994,7 @@ bb.d:                                             ; preds = %.preheader, %_ZNSt7
   %i.ax = load i64, ptr %i.aw, align 8
   %i.ay = getelementptr inbounds i8, ptr %3, i64 %i.ax
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.ay, ptr noundef null)
-          to label %.noexc.i unwind label %bb.g
+          to label %.noexc.i unwind label %5
 
 .noexc.i:                                         ; preds = %bb.d
   store ptr %i.w, ptr %i.v, align 8, !tbaa !16
@@ -2014,12 +2011,7 @@ bb.d:                                             ; preds = %.preheader, %_ZNSt7
 bb.e:                                             ; preds = %.noexc.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.r, ptr %3, align 8, !tbaa !16
-  %5 = load i64, ptr %i.t, align 8
-  %6 = getelementptr inbounds i8, ptr %3, i64 %5
-  store ptr %i.s, ptr %6, align 8, !tbaa !16
-  store i64 0, ptr %i.u, align 8, !tbaa !56
-  br label %.body.i
+  br label %bb.h
 
 bb.f:                                             ; preds = %.noexc.i
   %i.bg = load i64, ptr %i.ab, align 8
@@ -2040,17 +2032,21 @@ bb.f:                                             ; preds = %.noexc.i
   %i.bk = load i64, ptr %i.bj, align 8
   %i.bl = getelementptr inbounds i8, ptr %3, i64 %i.bk
   invoke void @_ZNSt9basic_iosIcSt11char_traitsIcEE4initEPSt15basic_streambufIcS1_E(ptr noundef nonnull align 8 dereferenceable(264) %i.bl, ptr noundef nonnull %i.ac)
-          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.h
+          to label %_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev.exit unwind label %bb.g
 
-bb.g:                                             ; preds = %bb.d
-  %i.bm = landingpad { ptr, i32 }
+5:                                                ; preds = %bb.d
+  %6 = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-bb.h:                                             ; preds = %bb.f
-  %7 = landingpad { ptr, i32 }
+bb.g:                                             ; preds = %bb.f
+  %i.bm = landingpad { ptr, i32 }
           cleanup
   call void @_ZNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %i.ac) #18
+  br label %bb.h
+
+bb.h:                                             ; preds = %bb.g, %bb.e
+  %.pn.pn.ph.i = phi { ptr, i32 } [ %i.bf, %bb.e ], [ %i.bm, %bb.g ]
   store ptr %i.r, ptr %3, align 8, !tbaa !16
   %i.bn = load i64, ptr %i.t, align 8
   %i.bo = getelementptr inbounds i8, ptr %3, i64 %i.bn
@@ -2062,8 +2058,8 @@ common.resume:                                    ; preds = %bb.n, %.body.i
   %common.resume.op = phi { ptr, i32 } [ %.pn.pn.i, %.body.i ], [ %.pn, %bb.n ]
   resume { ptr, i32 } %common.resume.op
 
-.body.i:                                          ; preds = %bb.h, %bb.g, %bb.e
-  %.pn.pn.i = phi { ptr, i32 } [ %7, %bb.h ], [ %i.bm, %bb.g ], [ %i.bf, %bb.e ]
+.body.i:                                          ; preds = %bb.h, %5
+  %.pn.pn.i = phi { ptr, i32 } [ %6, %5 ], [ %.pn.pn.ph.i, %bb.h ]
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.m) #18
   br label %common.resume
 

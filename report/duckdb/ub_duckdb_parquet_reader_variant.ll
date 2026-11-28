@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.i
           to label %bb.af unwind label %bb.j
 
 bb.n:                                             ; preds = %bb.i
-  %i.f = tail call ptr @__cxa_allocate_exception(i64 16) #21 ; 3 uses
+  %i.f = tail call ptr @__cxa_allocate_exception(i64 16) #21 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #21
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %9, ptr noundef nonnull @.str.6, ptr noundef nonnull align 1 dereferenceable(1) %10)
@@ -263,23 +263,18 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i15
   call void @_ZdlPv(ptr noundef %i.l) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
-  br i1 %.0135, label %15, label %bb.ah
+  br i1 %.0135, label %.sink.split198, label %bb.ah
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
-  br i1 %.0135, label %15, label %bb.ah
+  br i1 %.0135, label %.sink.split198, label %bb.ah
 
 .sink.split:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154.thread
   %.pn.pn165.ph = phi { ptr, i32 } [ %i.o, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154.thread ], [ %i.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156.thread ], [ %i.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
-  br label %15
-
-15:                                               ; preds = %.sink.split, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156
-  %.pn.pn165 = phi { ptr, i32 } [ %i.h, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154 ], [ %i.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156 ], [ %.pn.pn165.ph, %.sink.split ]
-  call void @__cxa_free_exception(ptr %i.f) #21
-  br label %bb.ah
+  br label %.sink.split198
 
 bb.s:                                             ; preds = %bb.a
   invoke void @_ZN6duckdb18ConvertTypedValuesINS_6date_tENS_20ConvertShreddedValueIS1_EELNS_13LogicalTypeIdE15EEENS_6vectorINS_12VariantValueELb1ESaIS6_EEERNS_6VectorESA_SA_mmmb(ptr dead_on_unwind writable sret(%"class.duckdb::vector.9") align 8 %0, ptr noundef nonnull align 8 dereferenceable(104) %3, ptr noundef nonnull align 8 dereferenceable(104) %1, ptr noundef nonnull align 8 dereferenceable(104) %2, i64 noundef %4, i64 noundef %5, i64 noundef %6, i1 noundef zeroext %7)
@@ -314,7 +309,7 @@ bb.z:                                             ; preds = %bb.a
           to label %bb.af unwind label %bb.j
 
 bb.aa:                                            ; preds = %bb.a
-  %i.s = tail call ptr @__cxa_allocate_exception(i64 16) #21 ; 3 uses
+  %i.s = tail call ptr @__cxa_allocate_exception(i64 16) #21 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #21
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %12, ptr noundef nonnull @.str.7, ptr noundef nonnull align 1 dereferenceable(1) %13)
@@ -375,23 +370,18 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i16
   call void @_ZdlPv(ptr noundef %i.y) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #21
-  br i1 %.0, label %16, label %bb.ah
+  br i1 %.0, label %.sink.split198, label %bb.ah
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit159
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #21
-  br i1 %.0, label %16, label %bb.ah
+  br i1 %.0, label %.sink.split198, label %bb.ah
 
 .sink.split197:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit159.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160.thread
   %.pn150.pn177.ph = phi { ptr, i32 } [ %i.ab, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160.thread ], [ %i.t, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162.thread ], [ %i.ab, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit159.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #21
-  br label %16
-
-16:                                               ; preds = %.sink.split197, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162
-  %.pn150.pn177 = phi { ptr, i32 } [ %i.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160 ], [ %i.u, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ], [ %.pn150.pn177.ph, %.sink.split197 ]
-  call void @__cxa_free_exception(ptr %i.s) #21
-  br label %bb.ah
+  br label %.sink.split198
 
 bb.af:                                            ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.k, %bb.l, %bb.m, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN6duckdb12VariantValueEEEvT_S5_(ptr noundef null, ptr noundef null)
@@ -408,8 +398,14 @@ _ZNSt6vectorIN6duckdb12VariantValueESaIS1_EED2Ev.exit: ; preds = %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   ret void
 
-bb.ah:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154, %bb.j, %15, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162, %16
-  %.pn150.pn.pn = phi { ptr, i32 } [ %.pn150.pn177, %16 ], [ %i.u, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ], [ %i.e, %bb.j ], [ %.pn.pn165, %15 ], [ %i.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156 ], [ %i.h, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154 ], [ %i.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160 ]
+.sink.split198:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160, %.sink.split197, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154, %.sink.split
+  %.sink = phi ptr [ %i.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156 ], [ %i.f, %.sink.split ], [ %i.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154 ], [ %i.s, %.sink.split197 ], [ %i.s, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160 ], [ %i.s, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ]
+  %.pn150.pn.pn.ph = phi { ptr, i32 } [ %i.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156 ], [ %.pn.pn165.ph, %.sink.split ], [ %i.h, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154 ], [ %.pn150.pn177.ph, %.sink.split197 ], [ %i.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160 ], [ %i.u, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ]
+  call void @__cxa_free_exception(ptr %.sink) #21
+  br label %bb.ah
+
+bb.ah:                                            ; preds = %.sink.split198, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162
+  %.pn150.pn.pn = phi { ptr, i32 } [ %i.h, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i154 ], [ %i.u, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit162 ], [ %i.e, %bb.j ], [ %i.u, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i160 ], [ %i.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit156 ], [ %.pn150.pn.pn.ph, %.sink.split198 ]
   call void @_ZNSt6vectorIN6duckdb12VariantValueESaIS1_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %8) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #21
   resume { ptr, i32 } %.pn150.pn.pn

@@ -202,7 +202,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %_ZN5vcpkg
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store i32 3, ptr %.sroa.6.0..sroa_idx, align 4
   %i.h = invoke noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #19
-          to label %bb.a unwind label %bb.d       ; 4 uses
+          to label %bb.a unwind label %bb.d       ; 3 uses
 
 bb.a:                                             ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.h, ptr noundef nonnull align 4 dereferenceable(12) %i.f, i64 12, i1 false)
@@ -254,7 +254,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i.i.i.i.i
   %i.t = landingpad { ptr, i32 }
           cleanup
-  br label %_ZNSt6vectorIiSaIiEED2Ev.exit53
+  br label %bb.bc
 
 bb.e:                                             ; preds = %bb.a
   %i.u = landingpad { ptr, i32 }
@@ -368,7 +368,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
 bb.p:                                             ; preds = %bb.o, %bb.e
   %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.o ], [ %i.u, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
-  br label %bb.bc
+  br label %bb.bb
 
 bb.q:                                             ; preds = %_ZN5Catch16AssertionHandlerD2Ev.exit
   %i.au = landingpad { ptr, i32 }
@@ -485,7 +485,7 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
 bb.ac:                                            ; preds = %bb.ab, %bb.q
   %.pn20.pn = phi { ptr, i32 } [ %.pn20, %bb.ab ], [ %i.au, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
-  br label %bb.bc
+  br label %bb.bb
 
 bb.ad:                                            ; preds = %_ZN5vcpkg8OptionalISt6vectorIiSaIiEEEC2EOS4_.exit
   %i.bu = landingpad { ptr, i32 }
@@ -697,23 +697,18 @@ bb.ba:                                            ; preds = %bb.az, %bb.ap
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #17
   br label %bb.bb
 
-bb.bb:                                            ; preds = %bb.ao, %bb.ba
-  %.pn27.pn.pn = phi { ptr, i32 } [ %.pn27.pn, %bb.ba ], [ %.pn23.pn, %bb.ao ]
+bb.bb:                                            ; preds = %bb.p, %bb.ac, %bb.ba, %bb.ao
+  %.pn27.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %.pn23.pn, %bb.ao ], [ %.pn27.pn, %bb.ba ], [ %.pn.pn, %bb.p ], [ %.pn20.pn, %bb.ac ]
   call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 12) #20
-  br label %_ZNSt6vectorIiSaIiEED2Ev.exit53
+  br label %bb.bc
 
-bb.bc:                                            ; preds = %bb.ac, %bb.p
-  %.pn27.pn.pn.pn.ph = phi { ptr, i32 } [ %.pn.pn, %bb.p ], [ %.pn20.pn, %bb.ac ]
-  call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 12) #20
-  br label %_ZNSt6vectorIiSaIiEED2Ev.exit53
-
-_ZNSt6vectorIiSaIiEED2Ev.exit53:                  ; preds = %bb.bc, %bb.bb, %bb.d
-  %.pn27.pn.pn.pn.pn = phi { ptr, i32 } [ %i.t, %bb.d ], [ %.pn27.pn.pn, %bb.bb ], [ %.pn27.pn.pn.pn.ph, %bb.bc ]
+bb.bc:                                            ; preds = %bb.bb, %bb.d
+  %.pn27.pn.pn.pn.ph = phi { ptr, i32 } [ %i.t, %bb.d ], [ %.pn27.pn.pn.pn.pn.ph, %bb.bb ]
   call void @_ZdlPvm(ptr noundef nonnull %i.f, i64 noundef 12) #20
   br label %.body
 
-.body:                                            ; preds = %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i, %_ZNSt6vectorIiSaIiEED2Ev.exit53
-  %.pn27.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn27.pn.pn.pn.pn, %_ZNSt6vectorIiSaIiEED2Ev.exit53 ], [ %i.g, %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i ]
+.body:                                            ; preds = %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i, %bb.bc
+  %.pn27.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn27.pn.pn.pn.ph, %bb.bc ], [ %i.g, %_ZNSt12_Vector_baseIiSaIiEED2Ev.exit.i ]
   %i.dr = load i8, ptr %5, align 8, !tbaa !46, !range !35, !noundef !36
   %i.ds = trunc nuw i8 %i.dr to i1
   br i1 %i.ds, label %bb.bd, label %_ZN5vcpkg7details19OptionalStorageDtorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EED2Ev.exit56

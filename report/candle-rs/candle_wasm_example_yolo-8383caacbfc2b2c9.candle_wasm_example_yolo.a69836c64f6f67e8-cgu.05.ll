@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca [32 x i8], align 8                ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 10 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 8 uses
   %i.f = load i64, ptr %i.e, align 8, !noundef !6
   %.not47 = icmp eq i64 %i.f, 0
   br i1 %.not47, label %bb.b, label %bb.c, !prof !16
@@ -214,19 +214,11 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   invoke void @_RNvMNtCsbDKHzkXHCUM_9hashbrown11rustc_entryINtNtB4_3map7HashMapNtNtCsf3Ta7LF998c_4core3any6TypeIdINtNtCsgCecv3eZDcN_5alloc3vec3VecIB1y_hEENtNtNtCs5Xr050g3D4S_3std4hash6random11RandomStateE11rustc_entryCseiMiKruFR5A_24candle_wasm_example_yolo(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(16) %i.d)
-          to label %bb.d unwind label %3
+          to label %bb.d unwind label %.thread45
 
 bb.c:                                             ; preds = %bb.a
   invoke void @_RNvNtCsf3Ta7LF998c_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @22) #22
           to label %bb.p unwind label %bb.m
-
-3:                                                ; preds = %bb.b
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  %5 = load i64, ptr %i.e, align 8, !noundef !6
-  %6 = add i64 %5, 1
-  store i64 %6, ptr %i.e, align 8
-  br label %.thread
 
 bb.d:                                             ; preds = %bb.b
   %i.h = load ptr, ptr %i.b, align 8, !noundef !6 ; 2 uses
@@ -251,7 +243,7 @@ bb.f:                                             ; preds = %bb.e
   invoke void @_RNvNtCsgCecv3eZDcN_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 24) #22
           to label %.noexc unwind label %.thread45
 
-.thread45:                                        ; preds = %bb.f
+.thread45:                                        ; preds = %bb.b, %bb.f
   %i.m = landingpad { ptr, i32 }
           cleanup
   %i.n = load i64, ptr %i.e, align 8, !noundef !6
@@ -356,8 +348,8 @@ bb.r:                                             ; preds = %.sink.split, %.thre
   %.pn3339 = phi { ptr, i32 } [ %.pn3340, %.thread ], [ %.pn3339.ph, %.sink.split ]
   resume { ptr, i32 } %.pn3339
 
-.thread:                                          ; preds = %3, %bb.m, %.thread45
-  %.pn3340 = phi { ptr, i32 } [ %i.m, %.thread45 ], [ %4, %3 ], [ %i.ad, %bb.m ]
+.thread:                                          ; preds = %.thread45, %bb.m
+  %.pn3340 = phi { ptr, i32 } [ %i.ad, %bb.m ], [ %i.m, %.thread45 ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECseiMiKruFR5A_24candle_wasm_example_yolo(ptr noalias nofree noundef align 8 dereferenceable(24) %1) #19
           to label %bb.r unwind label %bb.o
 }

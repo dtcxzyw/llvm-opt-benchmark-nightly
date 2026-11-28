@@ -202,19 +202,13 @@ bb.k:                                             ; preds = %.lr.ph, %_ZNSt10uni
 
 bb.l:                                             ; preds = %bb.k
   %i.ai = invoke noalias noundef nonnull dereferenceable(51200) ptr @_Znwm(i64 noundef 51200) #26
-          to label %.noexc74 unwind label %bb.y, !noalias !116 ; 6 uses
+          to label %.noexc74 unwind label %bb.y, !noalias !116 ; 5 uses
 
 .noexc74:                                         ; preds = %bb.l
   %i.aj = add nuw nsw i64 %indvars.iv, 1234
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(51200) %i.ai, i8 0, i64 51200, i1 false)
   invoke void @_ZN5faiss19rand_smooth_vectorsEmmPfl(i64 noundef 200, i64 noundef 64, ptr noundef nonnull %i.ai, i64 noundef %i.aj)
-          to label %_Z18get_random_vectorsmi.exit77 unwind label %10, !noalias !116
-
-10:                                               ; preds = %.noexc74
-  %11 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef 51200) #25, !noalias !116
-  br label %.body75
+          to label %_Z18get_random_vectorsmi.exit77 unwind label %.loopexit.split-lp.loopexit.split-lp, !noalias !116
 
 _Z18get_random_vectorsmi.exit77:                  ; preds = %.noexc74
   %i.ak = load i32, ptr %i.b, align 4, !tbaa !15  ; 2 uses
@@ -250,8 +244,8 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %_Z18get_rand
   br label %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i.i
 
 _ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i.i: ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i, %.noexc80
-  %.sroa.0183.0 = phi ptr [ %i.aq, %.noexc80 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 11 uses
-  %.sroa.9187.0 = phi i64 [ %i.at, %.noexc80 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 3 uses
+  %.sroa.0183.0 = phi ptr [ %i.aq, %.noexc80 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 9 uses
+  %.sroa.9187.0 = phi i64 [ %i.at, %.noexc80 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ] ; 2 uses
   invoke void @_ZN5faiss19rand_smooth_vectorsEmmPfl(i64 noundef %i.al, i64 noundef 64, ptr noundef %.sroa.0183.0, i64 noundef %i.am)
           to label %_Z18get_random_vectorsmi.exit83 unwind label %bb.m, !noalias !117
 
@@ -259,13 +253,7 @@ bb.m:                                             ; preds = %_ZNSt12_Vector_base
   %i.au = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %.not.i.i.i.i78 = icmp eq ptr %.sroa.0183.0, null
-  br i1 %.not.i.i.i.i78, label %_ZNSt6vectorIfSaIfEED2Ev.exit104, label %12
-
-12:                                               ; preds = %bb.m
-  %13 = ptrtoint ptr %.sroa.0183.0 to i64
-  %14 = sub i64 %.sroa.9187.0, %13
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0183.0, i64 noundef %14) #25, !noalias !117
-  br label %_ZNSt6vectorIfSaIfEED2Ev.exit104
+  br i1 %.not.i.i.i.i78, label %_ZNSt6vectorIfSaIfEED2Ev.exit104, label %bb.ac
 
 _Z18get_random_vectorsmi.exit83:                  ; preds = %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i.i
   %i.av = load ptr, ptr %i.ah, align 8, !tbaa !20
@@ -431,7 +419,7 @@ bb.y:                                             ; preds = %bb.l
           cleanup
   br label %.body75
 
-.loopexit.split-lp.loopexit.split-lp:             ; preds = %.noexc8.i, %.noexc.i
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %.noexc8.i, %.noexc74, %.noexc.i
   %lpad.loopexit.split-lp480 = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit104
@@ -479,19 +467,20 @@ _ZNSt6vectorIfSaIfEED2Ev.exit100:                 ; preds = %.loopexit.split-lp2
   %.not.i.i.i101 = icmp eq ptr %.sroa.0183.0, null
   br i1 %.not.i.i.i101, label %_ZNSt6vectorIfSaIfEED2Ev.exit104, label %bb.ac
 
-bb.ac:                                            ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit100
+bb.ac:                                            ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit100, %bb.m
+  %.pn60.pn.pn.pn.ph = phi { ptr, i32 } [ %i.au, %bb.m ], [ %.pn60.pn.pn, %_ZNSt6vectorIfSaIfEED2Ev.exit100 ]
   %i.dg = ptrtoint ptr %.sroa.0183.0 to i64
   %i.dh = sub i64 %.sroa.9187.0, %i.dg
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0183.0, i64 noundef %i.dh) #25
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit104
 
-_ZNSt6vectorIfSaIfEED2Ev.exit104:                 ; preds = %.loopexit.split-lp.loopexit.split-lp, %bb.ac, %_ZNSt6vectorIfSaIfEED2Ev.exit100, %12, %bb.m
-  %.pn60.pn.pn.pn = phi { ptr, i32 } [ %i.au, %bb.m ], [ %.pn60.pn.pn, %bb.ac ], [ %i.au, %12 ], [ %.pn60.pn.pn, %_ZNSt6vectorIfSaIfEED2Ev.exit100 ], [ %lpad.loopexit.split-lp480, %.loopexit.split-lp.loopexit.split-lp ]
+_ZNSt6vectorIfSaIfEED2Ev.exit104:                 ; preds = %bb.m, %_ZNSt6vectorIfSaIfEED2Ev.exit100, %.loopexit.split-lp.loopexit.split-lp, %bb.ac
+  %.pn60.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %.pn60.pn.pn.pn.ph, %bb.ac ], [ %i.au, %bb.m ], [ %.pn60.pn.pn, %_ZNSt6vectorIfSaIfEED2Ev.exit100 ], [ %lpad.loopexit.split-lp480, %.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef 51200) #25
   br label %.body75
 
-.body75:                                          ; preds = %bb.y, %10, %_ZNSt6vectorIfSaIfEED2Ev.exit104
-  %.pn60.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn60.pn.pn.pn, %_ZNSt6vectorIfSaIfEED2Ev.exit104 ], [ %i.cw, %bb.y ], [ %11, %10 ] ; 2 uses
+.body75:                                          ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit104, %bb.y
+  %.pn60.pn.pn.pn.pn = phi { ptr, i32 } [ %i.cw, %bb.y ], [ %.pn60.pn.pn.pn.pn.ph, %_ZNSt6vectorIfSaIfEED2Ev.exit104 ] ; 2 uses
   %.not.i105 = icmp eq ptr %i.ah, null
   br i1 %.not.i105, label %_ZNSt10unique_ptrIN5faiss5IndexESt14default_deleteIS1_EED2Ev.exit107, label %_ZNKSt14default_deleteIN5faiss5IndexEEclEPS1_.exit.i106
 

@@ -205,7 +205,7 @@ bb.a:
   %16 = alloca %"class.nla::lemma_builder", align 8 ; 9 uses
   %17 = alloca %"class.nla::ineq", align 8        ; 7 uses
   %18 = alloca %"class.nla::ineq", align 8        ; 7 uses
-  %19 = alloca %class.rational, align 8           ; 16 uses
+  %19 = alloca %class.rational, align 8           ; 15 uses
   %i.a = icmp eq i32 %3, 1
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -608,13 +608,7 @@ bb.cn:                                            ; preds = %_ZN11mpq_managerILb
 _ZN8rationalC2ERKS_.exit.i:                       ; preds = %bb.cn, %bb.cm
   %i.jr = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !239, !noalias !363
   invoke void @_ZN11mpz_managerILb1EE3negER3mpz(ptr noundef nonnull align 8 dereferenceable(728) %i.jr, ptr noundef nonnull align 8 dereferenceable(32) %19)
-          to label %_ZngRK8rational.exit unwind label %20
-
-20:                                               ; preds = %_ZN8rationalC2ERKS_.exit.i
-  %21 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %19) #17
-  br label %.body133
+          to label %_ZngRK8rational.exit unwind label %bb.dc
 
 _ZngRK8rational.exit:                             ; preds = %_ZN8rationalC2ERKS_.exit.i
   invoke void @_ZN3nla4ineqC2EjN2lp16lconstraint_kindERK8rational(ptr noundef nonnull align 8 dereferenceable(72) %18, i32 noundef %2, i32 noundef %i.ht, ptr noundef nonnull align 8 dereferenceable(32) %19)
@@ -703,7 +697,7 @@ bb.db:                                            ; preds = %bb.cn, %bb.cl
           cleanup
   br label %.body133
 
-bb.dc:                                            ; preds = %_ZngRK8rational.exit
+bb.dc:                                            ; preds = %_ZN8rationalC2ERKS_.exit.i, %_ZngRK8rational.exit
   %i.kf = landingpad { ptr, i32 }
           cleanup
   br label %bb.de
@@ -714,13 +708,13 @@ bb.dd:                                            ; preds = %bb.co
   call void @_ZN3nla4ineqD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %18) #17
   br label %bb.de
 
-bb.de:                                            ; preds = %bb.dd, %bb.dc
-  %.pn96 = phi { ptr, i32 } [ %i.kg, %bb.dd ], [ %i.kf, %bb.dc ]
+bb.de:                                            ; preds = %bb.dc, %bb.dd
+  %.pn96 = phi { ptr, i32 } [ %i.kf, %bb.dc ], [ %i.kg, %bb.dd ]
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %19) #17
   br label %.body133
 
-.body133:                                         ; preds = %bb.db, %20, %bb.de
-  %.pn96.pn = phi { ptr, i32 } [ %.pn96, %bb.de ], [ %i.ke, %bb.db ], [ %21, %20 ]
+.body133:                                         ; preds = %bb.de, %bb.db
+  %.pn96.pn = phi { ptr, i32 } [ %i.ke, %bb.db ], [ %.pn96, %bb.de ]
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #17
   br label %bb.dk
@@ -1123,7 +1117,7 @@ bb.a:
   %4 = alloca %"struct.lp::equality", align 8     ; 12 uses
   %5 = alloca %class.vector.101, align 8          ; 10 uses
   %6 = alloca %"struct.std::pair", align 8        ; 13 uses
-  %7 = alloca %class.rational, align 8            ; 17 uses
+  %7 = alloca %class.rational, align 8            ; 16 uses
   %8 = alloca %"struct.std::pair", align 8        ; 15 uses
   %9 = alloca %class.rational, align 8            ; 12 uses
   %10 = alloca %"class.lp::explanation", align 8  ; 13 uses
@@ -1192,8 +1186,7 @@ _ZN8rationalC2ERKS_.exit.i:                       ; preds = %bb.e, %bb.d
 bb.f:                                             ; preds = %_ZN8rationalC2ERKS_.exit.i
   %i.y = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %7) #17
-  br label %.body
+  br label %.body.sink.split
 
 _ZngRK8rational.exit:                             ; preds = %_ZN8rationalC2ERKS_.exit.i
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 2 uses
@@ -1570,11 +1563,15 @@ bb.af:                                            ; preds = %_ZngRK8rational.exi
   %i.fe = landingpad { ptr, i32 }
           cleanup
   call void @_ZNSt4pairI8rationaljED2Ev(ptr noundef nonnull align 8 dead_on_return(36) dereferenceable(36) %6) #17
+  br label %.body.sink.split
+
+.body.sink.split:                                 ; preds = %bb.af, %bb.f
+  %.pn.ph = phi { ptr, i32 } [ %i.y, %bb.f ], [ %i.fe, %bb.af ]
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %7) #17
   br label %.body
 
-.body:                                            ; preds = %bb.ae, %bb.f, %bb.af
-  %.pn = phi { ptr, i32 } [ %i.fe, %bb.af ], [ %i.fd, %bb.ae ], [ %i.y, %bb.f ]
+.body:                                            ; preds = %.body.sink.split, %bb.ae
+  %.pn = phi { ptr, i32 } [ %i.fd, %bb.ae ], [ %.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
   br label %bb.aq
@@ -1977,7 +1974,7 @@ bb.a:
   %6 = alloca %class._scoped_interval, align 8    ; 14 uses
   %7 = alloca %class._scoped_interval, align 8    ; 14 uses
   %8 = alloca %class._scoped_interval, align 8    ; 13 uses
-  %9 = alloca %class.rational, align 8            ; 16 uses
+  %9 = alloca %class.rational, align 8            ; 15 uses
   %10 = alloca %class._scoped_interval, align 8   ; 14 uses
   %11 = alloca %class._scoped_interval, align 8   ; 14 uses
   %12 = alloca %class.rational, align 8           ; 9 uses
@@ -2341,13 +2338,7 @@ bb.ad:                                            ; preds = %_ZN11mpq_managerILb
 _ZN8rationalC2ERKS_.exit.i:                       ; preds = %bb.ad, %bb.ac
   %i.fb = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !239, !noalias !400
   invoke void @_ZN11mpz_managerILb1EE3negER3mpz(ptr noundef nonnull align 8 dereferenceable(728) %i.fb, ptr noundef nonnull align 8 dereferenceable(32) %9)
-          to label %_ZngRK8rational.exit unwind label %13
-
-13:                                               ; preds = %_ZN8rationalC2ERKS_.exit.i
-  %14 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %9) #17
-  br label %.body
+          to label %_ZngRK8rational.exit unwind label %bb.ax
 
 _ZngRK8rational.exit:                             ; preds = %_ZN8rationalC2ERKS_.exit.i
   invoke void @_ZNK13dep_intervals9set_valueERNS_9im_config8intervalERK8rational(ptr noundef nonnull align 8 dereferenceable(1424) %i.eg, ptr noundef nonnull align 8 dereferenceable(88) %i.bm, ptr noundef nonnull align 8 dereferenceable(32) %9)
@@ -2555,14 +2546,14 @@ bb.aw:                                            ; preds = %bb.ad, %bb.ab
           cleanup
   br label %.body
 
-bb.ax:                                            ; preds = %_ZngRK8rational.exit
+bb.ax:                                            ; preds = %_ZN8rationalC2ERKS_.exit.i, %_ZngRK8rational.exit
   %i.hd = landingpad { ptr, i32 }
           cleanup
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %9) #17
   br label %.body
 
-.body:                                            ; preds = %bb.aw, %13, %bb.ax
-  %.pn = phi { ptr, i32 } [ %i.hd, %bb.ax ], [ %i.hc, %bb.aw ], [ %14, %13 ]
+.body:                                            ; preds = %bb.ax, %bb.aw
+  %.pn = phi { ptr, i32 } [ %i.hc, %bb.aw ], [ %i.hd, %bb.ax ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #17
   br label %bb.bg
 

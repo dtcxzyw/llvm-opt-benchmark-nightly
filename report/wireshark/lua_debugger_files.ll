@@ -202,7 +202,7 @@ bb.a:
   %25 = alloca %class.QString, align 16           ; 11 uses
   %26 = alloca %class.QString, align 8            ; 10 uses
   %27 = alloca %class.QString, align 8            ; 11 uses
-  %28 = alloca %class.QString, align 8            ; 12 uses
+  %28 = alloca %class.QString, align 8            ; 11 uses
   %29 = alloca %"struct.std::pair", align 8       ; 12 uses
   %30 = alloca %class.QString, align 16           ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #17
@@ -605,12 +605,7 @@ bb.cr:                                            ; preds = %.noexc316
 _ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370:   ; preds = %bb.cr
   %i.lj = atomicrmw add ptr %i.li, i32 -1 acq_rel, align 4
   %.not.i.i371 = icmp eq i32 %i.lj, 1
-  br i1 %.not.i.i371, label %31, label %.body
-
-31:                                               ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370
-  %32 = load ptr, ptr %28, align 8
-  call void @_ZN10QArrayData10deallocateEPS_xx(ptr noundef %32, i64 noundef 2, i64 noundef 8) #17
-  br label %.body
+  br i1 %.not.i.i371, label %bb.cv, label %.body
 
 _ZplPKcRK7QString.exit:                           ; preds = %.noexc316
   %i.lk = invoke noundef align 8 dereferenceable(24) ptr @_ZN7QString6appendERKS_(ptr noundef nonnull align 8 dereferenceable_or_null(24) %11, ptr noundef nonnull align 8 dereferenceable(24) %28)
@@ -652,13 +647,14 @@ _ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323:   ; preds = %bb.cu
   %.not.i.i324 = icmp eq i32 %i.lr, 1
   br i1 %.not.i.i324, label %bb.cv, label %.body
 
-bb.cv:                                            ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323
+bb.cv:                                            ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370
+  %.pn77.ph = phi { ptr, i32 } [ %i.lh, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370 ], [ %i.lp, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323 ]
   %i.ls = load ptr, ptr %28, align 8
   call void @_ZN10QArrayData10deallocateEPS_xx(ptr noundef %i.ls, i64 noundef 2, i64 noundef 8) #17
   br label %.body
 
-.body:                                            ; preds = %bb.cv, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323, %bb.cu, %bb.ct, %bb.cr, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370, %31
-  %.pn77 = phi { ptr, i32 } [ %i.lh, %31 ], [ %i.lo, %bb.ct ], [ %i.lh, %bb.cr ], [ %i.lh, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370 ], [ %i.lp, %bb.cu ], [ %i.lp, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323 ], [ %i.lp, %bb.cv ]
+.body:                                            ; preds = %bb.cv, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323, %bb.cu, %bb.ct, %bb.cr, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370
+  %.pn77 = phi { ptr, i32 } [ %i.lp, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i323 ], [ %i.lo, %bb.ct ], [ %i.lh, %bb.cr ], [ %i.lh, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i370 ], [ %i.lp, %bb.cu ], [ %.pn77.ph, %bb.cv ]
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #17
   br label %bb.dk
 

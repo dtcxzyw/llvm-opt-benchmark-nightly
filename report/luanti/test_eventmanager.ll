@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_ZNSt3mapIN7MtEvent
   br i1 %i.ad, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %.loopexit66
-  %i.ae = call ptr @__cxa_allocate_exception(i64 72) #21 ; 3 uses
+  %i.ae = call ptr @__cxa_allocate_exception(i64 72) #21 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.4, ptr noundef nonnull align 1 dereferenceable(1) %3)
           to label %bb.f unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread
@@ -229,7 +229,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread: ; preds =
   %i.ag = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
-  br label %6
+  br label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split
 
 bb.i:                                             ; preds = %bb.g, %bb.f
   %.03 = phi i1 [ false, %bb.g ], [ true, %bb.f ] ; 2 uses
@@ -245,16 +245,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   %i.am = add i64 %i.al, 1
   call void @_ZdlPvm(ptr noundef %i.ai, i64 noundef %i.am) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
-  br i1 %.03, label %6, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
+  br i1 %.03, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
-  br i1 %.03, label %6, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
-
-6:                                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.pn58 = phi { ptr, i32 } [ %i.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ], [ %i.ah, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ah, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
-  call void @__cxa_free_exception(ptr %i.ae) #21
-  br label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
+  br i1 %.03, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
 
 bb.j:                                             ; preds = %.loopexit66
   store i64 0, ptr %i.k, align 8, !tbaa !59
@@ -400,7 +395,7 @@ bb.n:                                             ; preds = %_ZNSt3mapIN7MtEvent
   br i1 %i.bw, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit, label %bb.o
 
 bb.o:                                             ; preds = %.loopexit62
-  %i.bx = call ptr @__cxa_allocate_exception(i64 72) #21 ; 3 uses
+  %i.bx = call ptr @__cxa_allocate_exception(i64 72) #21 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull @.str.6, ptr noundef nonnull align 1 dereferenceable(1) %5)
           to label %bb.p unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39.thread
@@ -417,7 +412,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39.thread: ; preds
   %i.by = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
-  br label %7
+  br label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.0 = phi i1 [ false, %bb.q ], [ true, %bb.p ]  ; 2 uses
@@ -433,16 +428,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37
   %i.ce = add i64 %i.cd, 1
   call void @_ZdlPvm(ptr noundef %i.ca, i64 noundef %i.ce) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
-  br i1 %.0, label %7, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
+  br i1 %.0, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39: ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
-  br i1 %.0, label %7, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
-
-7:                                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39.thread, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39
-  %.pn1261 = phi { ptr, i32 } [ %i.by, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39.thread ], [ %i.bz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39 ], [ %i.bz, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37 ]
-  call void @__cxa_free_exception(ptr %i.bx) #21
-  br label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
+  br i1 %.0, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split, label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
 
 _ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit: ; preds = %.loopexit62
   %i.cf = load ptr, ptr %i.f, align 16, !tbaa !14
@@ -465,8 +455,14 @@ _ZN12EventManagerD2Ev.exit:                       ; preds = %_ZNSt10unique_ptrI1
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #21
   ret void
 
-_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43: ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39, %7, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %6
-  %.pn12.pn = phi { ptr, i32 } [ %.pn1261, %7 ], [ %i.bz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39 ], [ %i.bz, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37 ], [ %.pn58, %6 ], [ %i.ah, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ah, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %lpad.loopexit.split-lp162, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  %.sink = phi ptr [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ae, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %i.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ], [ %i.bx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37 ], [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39.thread ], [ %i.bx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39 ]
+  %.pn12.pn.ph = phi { ptr, i32 } [ %i.ah, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ah, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %i.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ], [ %i.bz, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37 ], [ %i.by, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39.thread ], [ %i.bz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39 ]
+  call void @__cxa_free_exception(ptr %.sink) #21
+  br label %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43
+
+_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43: ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %.pn12.pn = phi { ptr, i32 } [ %i.ah, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %i.bz, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit39 ], [ %i.bz, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37 ], [ %.pn12.pn.ph, %_ZNSt10unique_ptrI16EventManagerTestSt14default_deleteIS0_EED2Ev.exit43.sink.split ], [ %i.ah, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %lpad.loopexit.split-lp162, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %i.cl = load ptr, ptr %i.f, align 16, !tbaa !14
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
   %i.cn = load ptr, ptr %i.cm, align 8

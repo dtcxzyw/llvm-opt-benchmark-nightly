@@ -202,13 +202,7 @@ bb.c:                                             ; preds = %bb.d, %bb.b
           catch ptr null                          ; 2 uses
   %i.t = load ptr, ptr %1, align 8, !tbaa !100, !alias.scope !585 ; 2 uses
   %i.u = icmp eq ptr %i.t, %i.f
-  br i1 %i.u, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.c
-  %7 = load i64, ptr %i.f, align 8, !tbaa !63, !alias.scope !585
-  %8 = add i64 %7, 1
-  call void @_ZdlPvm(ptr noundef %i.t, i64 noundef %8) #24
-  br label %.body
+  br i1 %i.u, label %.body, label %.body.sink.split
 
 bb.d:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 96
@@ -274,13 +268,7 @@ bb.g:                                             ; preds = %bb.h, %bb.f
           catch ptr null                          ; 2 uses
   %i.av = load ptr, ptr %2, align 8, !tbaa !100, !alias.scope !588 ; 2 uses
   %i.aw = icmp eq ptr %i.av, %i.ah
-  br i1 %i.aw, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i5
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i5: ; preds = %bb.g
-  %9 = load i64, ptr %i.ah, align 8, !tbaa !63, !alias.scope !588
-  %10 = add i64 %9, 1
-  call void @_ZdlPvm(ptr noundef %i.av, i64 noundef %10) #24
-  br label %.body
+  br i1 %i.aw, label %.body, label %.body.sink.split
 
 bb.h:                                             ; preds = %bb.e
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ag, i64 96
@@ -360,13 +348,7 @@ bb.l:                                             ; preds = %bb.m, %bb.k
           catch ptr null                          ; 2 uses
   %i.ce = load ptr, ptr %3, align 8, !tbaa !100, !alias.scope !591 ; 2 uses
   %i.cf = icmp eq ptr %i.ce, %i.bq
-  br i1 %i.cf, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i19
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i19: ; preds = %bb.l
-  %11 = load i64, ptr %i.bq, align 8, !tbaa !63, !alias.scope !591
-  %12 = add i64 %11, 1
-  call void @_ZdlPvm(ptr noundef %i.ce, i64 noundef %12) #24
-  br label %.body
+  br i1 %i.cf, label %.body, label %.body.sink.split
 
 bb.m:                                             ; preds = %bb.j
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bp, i64 96
@@ -436,13 +418,7 @@ bb.p:                                             ; preds = %bb.q, %bb.o
           catch ptr null                          ; 2 uses
   %i.df = load ptr, ptr %5, align 8, !tbaa !100, !alias.scope !595 ; 2 uses
   %i.dg = icmp eq ptr %i.df, %i.cr
-  br i1 %i.dg, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i35
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i35: ; preds = %bb.p
-  %13 = load i64, ptr %i.cr, align 8, !tbaa !63, !alias.scope !595
-  %14 = add i64 %13, 1
-  call void @_ZdlPvm(ptr noundef %i.df, i64 noundef %14) #24
-  br label %.body
+  br i1 %i.dg, label %.body, label %.body.sink.split
 
 bb.q:                                             ; preds = %bb.n
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cq, i64 96
@@ -484,13 +460,7 @@ bb.s:                                             ; preds = %bb.t, %bb.r
           catch ptr null                          ; 2 uses
   %i.dx = load ptr, ptr %6, align 8, !tbaa !100, !alias.scope !598 ; 2 uses
   %i.dy = icmp eq ptr %i.dx, %i.dj
-  br i1 %i.dy, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i45
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i45: ; preds = %bb.s
-  %15 = load i64, ptr %i.dj, align 8, !tbaa !63, !alias.scope !598
-  %16 = add i64 %15, 1
-  call void @_ZdlPvm(ptr noundef %i.dx, i64 noundef %16) #24
-  br label %.body
+  br i1 %i.dy, label %.body, label %.body.sink.split
 
 bb.t:                                             ; preds = %_ZNKSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEE3strEv.exit40
   %i.dz = getelementptr inbounds nuw i8, ptr %i.di, i64 96
@@ -678,8 +648,17 @@ bb.ab:                                            ; preds = %_ZNSt7__cxx1112basi
           catch ptr null
   br label %.body
 
-.body:                                            ; preds = %bb.s, %bb.p, %bb.l, %bb.g, %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i5, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i35, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i45, %bb.ab, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i19, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-  %eh.lpad-body = phi { ptr, i32 } [ %i.de, %bb.p ], [ %i.s, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.s, %bb.c ], [ %i.au, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i5 ], [ %i.au, %bb.g ], [ %i.cd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i19 ], [ %i.cd, %bb.l ], [ %i.de, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i35 ], [ %i.ge, %bb.ab ], [ %i.dw, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i45 ], [ %i.dw, %bb.s ]
+.body.sink.split:                                 ; preds = %bb.s, %bb.p, %bb.l, %bb.g, %bb.c
+  %.sink96 = phi ptr [ %i.f, %bb.c ], [ %i.bq, %bb.l ], [ %i.cr, %bb.p ], [ %i.ah, %bb.g ], [ %i.dj, %bb.s ]
+  %.sink = phi ptr [ %i.t, %bb.c ], [ %i.ce, %bb.l ], [ %i.df, %bb.p ], [ %i.av, %bb.g ], [ %i.dx, %bb.s ]
+  %eh.lpad-body.ph = phi { ptr, i32 } [ %i.s, %bb.c ], [ %i.cd, %bb.l ], [ %i.de, %bb.p ], [ %i.au, %bb.g ], [ %i.dw, %bb.s ]
+  %7 = load i64, ptr %.sink96, align 8, !tbaa !63
+  %8 = add i64 %7, 1
+  call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %8) #24
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.s, %bb.p, %bb.l, %bb.g, %bb.c, %bb.ab
+  %eh.lpad-body = phi { ptr, i32 } [ %i.de, %bb.p ], [ %i.cd, %bb.l ], [ %i.s, %bb.c ], [ %i.dw, %bb.s ], [ %i.au, %bb.g ], [ %i.ge, %bb.ab ], [ %eh.lpad-body.ph, %.body.sink.split ]
   %i.gf = extractvalue { ptr, i32 } %eh.lpad-body, 0
   call void @__clang_call_terminate(ptr %i.gf) #22
   unreachable

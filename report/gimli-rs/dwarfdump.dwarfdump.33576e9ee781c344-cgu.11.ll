@@ -205,15 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   invoke fastcc void @_RNvMs1_CsfER1pEaRVit_11typed_arenaINtB5_9ChunkListINtNtCsexYYUdYSQU6_5alloc6borrow3CowShEE7reserveCs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef align 8 dereferenceable(48) %i.i, i64 noundef 1)
-          to label %bb.p unwind label %.split.thread.i, !noalias !277
-
-.split.thread.i:                                  ; preds = %bb.d
-  %2 = landingpad { ptr, i32 }
-          cleanup
-  %3 = load i64, ptr %0, align 8, !noalias !277, !noundef !6
-  %4 = add i64 %3, 1
-  store i64 %4, ptr %0, align 8, !noalias !277
-  br label %bb.r
+          to label %bb.p unwind label %.thread56.i, !noalias !277
 
 bb.e:                                             ; preds = %.preheader.i
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -266,13 +258,10 @@ bb.l:                                             ; preds = %bb.k
   invoke fastcc void @_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtB7_6borrow3CowShEE8push_mutCs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef align 8 dereferenceable(24) %i.i, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.b)
           to label %bb.m unwind label %.thread56.i
 
-.thread56.i:                                      ; preds = %bb.l
+.thread56.i:                                      ; preds = %bb.l, %bb.d
   %lpad.thr_comm.split-lp58.i = landingpad { ptr, i32 }
           cleanup
-  %5 = load i64, ptr %0, align 8, !noalias !277, !noundef !6
-  %6 = add i64 %5, 1
-  store i64 %6, ptr %0, align 8, !noalias !277
-  br label %bb.r
+  br label %.sink.split.i
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !277
@@ -285,13 +274,7 @@ bb.n:                                             ; preds = %bb.k, %bb.i, %bb.h,
   %lpad.thr_comm.i = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CowShEECs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #21
-          to label %.thread36.i unwind label %bb.o, !noalias !277
-
-.thread36.i:                                      ; preds = %bb.n
-  %7 = load i64, ptr %0, align 8, !noalias !277, !noundef !6
-  %8 = add i64 %7, 1
-  store i64 %8, ptr %0, align 8, !noalias !277
-  br label %bb.r
+          to label %.sink.split.i unwind label %bb.o, !noalias !277
 
 bb.o:                                             ; preds = %bb.r, %bb.n
   %i.ab = landingpad { ptr, i32 }
@@ -361,8 +344,15 @@ common.resume.i:                                  ; preds = %bb.r, %common.resum
   %common.resume.op.i = phi { ptr, i32 } [ %.pn1635.i, %bb.r ], [ %lpad.thr_comm.split-lp.i, %common.resume.sink.split.i ]
   resume { ptr, i32 } %common.resume.op.i
 
-bb.r:                                             ; preds = %.thread.i, %.thread36.i, %.thread56.i, %.split.thread.i
-  %.pn1635.i = phi { ptr, i32 } [ %i.aj, %.thread.i ], [ %lpad.thr_comm.split-lp58.i, %.thread56.i ], [ %lpad.thr_comm.i, %.thread36.i ], [ %2, %.split.thread.i ]
+.sink.split.i:                                    ; preds = %bb.n, %.thread56.i
+  %.pn1635.ph.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp58.i, %.thread56.i ], [ %lpad.thr_comm.i, %bb.n ]
+  %2 = load i64, ptr %0, align 8, !noalias !277, !noundef !6
+  %3 = add i64 %2, 1
+  store i64 %3, ptr %0, align 8, !noalias !277
+  br label %bb.r
+
+bb.r:                                             ; preds = %.sink.split.i, %.thread.i
+  %.pn1635.i = phi { ptr, i32 } [ %i.aj, %.thread.i ], [ %.pn1635.ph.i, %.sink.split.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceINtNtCsexYYUdYSQU6_5alloc6borrow3CowShEEECs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #21
           to label %common.resume.i unwind label %bb.o, !noalias !277
 
@@ -441,12 +431,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCskKLDkoKarTP_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #24
-          to label %bb.j unwind label %bb.r, !noalias !298
+          to label %bb.j unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a, !noalias !298
 
 bb.c:                                             ; preds = %bb.a
   store i64 -1, ptr %0, align 8, !noalias !298
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
-  %.val.i = load ptr, ptr %i.f, align 8, !noalias !298, !noundef !6 ; 2 uses
+  %.val.i = load ptr, ptr %i.f, align 8, !noalias !298, !noundef !6 ; 3 uses
   %i.j = icmp ne ptr %.val.i, null                ; 2 uses
   %i.k = load i64, ptr %i.i, align 8, !range !13, !noalias !298, !noundef !6
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
@@ -462,15 +452,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   invoke fastcc void @_RNvMs1_CsfER1pEaRVit_11typed_arenaINtB5_9ChunkListNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE7reserveBO_(ptr noalias nofree noundef align 8 dereferenceable(48) %i.i, i64 noundef 1)
-          to label %bb.p unwind label %.thread3, !noalias !298
-
-.thread3:                                         ; preds = %bb.d
-  %2 = landingpad { ptr, i32 }
-          cleanup
-  %3 = load i64, ptr %0, align 8, !noalias !298, !noundef !6
-  %4 = add i64 %3, 1
-  store i64 %4, ptr %0, align 8, !noalias !298
-  br label %bb.s
+          to label %bb.p unwind label %.thread57.i, !noalias !298
 
 bb.e:                                             ; preds = %.preheader.i
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -521,14 +503,20 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !298
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.d, i64 48, i1 false), !noalias !298
   invoke fastcc void @_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE8push_mutBH_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.i, ptr noalias nofree noundef align 8 captures(address) dereferenceable(48) %i.b)
-          to label %bb.m unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a
+          to label %bb.m unwind label %.thread57.i
+
+.thread57.i:                                      ; preds = %bb.l, %bb.d
+  %2 = phi ptr [ null, %bb.l ], [ %.val.i, %bb.d ]
+  %lpad.thr_comm.split-lp59.i = landingpad { ptr, i32 }
+          cleanup
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !298
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !298
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.a, ptr noundef nonnull align 8 dereferenceable(48) %i.f, i64 48, i1 false), !noalias !298
   invoke void @_RNvXs_NtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB6_3VecNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEINtB4_10SpecExtendBT_INtNtNtNtCskKLDkoKarTP_4core4iter7sources4once4OnceBT_EE11spec_extendBV_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.a)
-          to label %bb.q unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a, !noalias !298
+          to label %bb.q unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i, !noalias !298
 
 bb.n:                                             ; preds = %bb.k, %bb.i, %bb.h, %bb.f
   %lpad.thr_comm.i = landingpad { ptr, i32 }
@@ -546,7 +534,7 @@ bb.p:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !298
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.e, ptr noundef nonnull readonly align 8 dereferenceable(48) %1, i64 48, i1 false)
   invoke void @_RNvXs_NtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB6_3VecNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEINtB4_10SpecExtendBT_INtNtNtNtCskKLDkoKarTP_4core4iter7sources4once4OnceBT_EE11spec_extendBV_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.e)
-          to label %.thread40.i unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a, !noalias !298
+          to label %.thread40.i unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i, !noalias !298
 
 .thread40.i:                                      ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !298
@@ -558,10 +546,19 @@ bb.p:                                             ; preds = %bb.d
   %i.ag = add i64 %i.af, 1
   br label %_RINvMCsfER1pEaRVit_11typed_arenaINtB3_5ArenaNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE12alloc_extendINtNtNtNtCskKLDkoKarTP_4core4iter7sources4once4OnceBG_EEBI_.exit
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a: ; preds = %bb.l, %bb.p, %bb.m
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i: ; preds = %bb.p, %bb.m
+  %lpad.thr_comm.split-lp.i = landingpad { ptr, i32 }
+          cleanup
+  %3 = load i64, ptr %0, align 8, !noalias !298, !noundef !6
+  %4 = add i64 %3, 1
+  store i64 %4, ptr %0, align 8, !noalias !298
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a: ; preds = %bb.b
   %lpad.thr_comm.split-lp.i.a = landingpad { ptr, i32 }
           cleanup
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split
+  %.pre = load ptr, ptr %i.f, align 8, !alias.scope !300, !noalias !298
+  br label %bb.r
 
 bb.q:                                             ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !298
@@ -574,11 +571,11 @@ bb.q:                                             ; preds = %bb.m
   br label %_RINvMCsfER1pEaRVit_11typed_arenaINtB3_5ArenaNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE12alloc_extendINtNtNtNtCskKLDkoKarTP_4core4iter7sources4once4OnceBG_EEBI_.exit
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.e
-  %i.al = load ptr, ptr %i.r, align 8, !alias.scope !300, !noalias !298, !nonnull !6, !noundef !6
+  %i.al = load ptr, ptr %i.r, align 8, !alias.scope !301, !noalias !298, !nonnull !6, !noundef !6
   %i.am = getelementptr inbounds nuw [48 x i8], ptr %i.al, i64 %i.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.am, ptr noundef nonnull align 8 dereferenceable(48) %i.d, i64 48, i1 false), !noalias !298
   %i.an = add nuw nsw i64 %i.m, 1                 ; 2 uses
-  store i64 %i.an, ptr %i.l, align 8, !alias.scope !300, !noalias !298
+  store i64 %i.an, ptr %i.l, align 8, !alias.scope !301, !noalias !298
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !298
   %.pre.i = load i64, ptr %0, align 8, !noalias !298
   %i.ao = add i64 %.pre.i, 1
@@ -592,26 +589,25 @@ bb.q:                                             ; preds = %bb.m
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_RINvMCsfER1pEaRVit_11typed_arenaINtB3_5ArenaNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE12alloc_extendINtNtNtNtCskKLDkoKarTP_4core4iter7sources4once4OnceBG_EEBI_.exit
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split: ; preds = %bb.n, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a
-  %.pn1635.i.ph = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a ], [ %lpad.thr_comm.i, %bb.n ]
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i: ; preds = %bb.s, %bb.r, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i
+  %.pn1635.i = phi { ptr, i32 } [ %.pn1636.i, %bb.r ], [ %.pn1636.i, %bb.s ], [ %lpad.thr_comm.split-lp.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i ]
+  resume { ptr, i32 } %.pn1635.i
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split: ; preds = %bb.n, %.thread57.i
+  %5 = phi ptr [ %2, %.thread57.i ], [ null, %bb.n ]
+  %.pn1635.i.ph = phi { ptr, i32 } [ %lpad.thr_comm.split-lp59.i, %.thread57.i ], [ %lpad.thr_comm.i, %bb.n ]
   %i.at = load i64, ptr %0, align 8, !noalias !298, !noundef !6
   %i.au = add i64 %i.at, 1
   store i64 %i.au, ptr %0, align 8, !noalias !298
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i
+  br label %bb.r
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split, %bb.s, %bb.r
-  %.pn1635.i = phi { ptr, i32 } [ %5, %bb.r ], [ %.pn1636.i5, %bb.s ], [ %.pn1635.i.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split ]
-  resume { ptr, i32 } %.pn1635.i
-
-bb.r:                                             ; preds = %bb.b
-  %5 = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  %.pre = load ptr, ptr %i.f, align 8, !alias.scope !301, !noalias !298
-  %i.av = icmp eq ptr %.pre, null
+bb.r:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a
+  %6 = phi ptr [ %.pre, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a ], [ %5, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split ]
+  %.pn1636.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.sink.split.i.a ], [ %.pn1635.i.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i.sink.split ] ; 2 uses
+  %i.av = icmp eq ptr %6, null
   br i1 %i.av, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i, label %bb.s
 
-bb.s:                                             ; preds = %.thread3, %bb.r
-  %.pn1636.i5 = phi { ptr, i32 } [ %2, %.thread3 ], [ %5, %bb.r ]
+bb.s:                                             ; preds = %bb.r
   invoke void @_RNvXsg_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTyNtNtCs9Jn0q30Ea0B_6object4read18RelocationMapEntryEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.f)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_.exit20.i unwind label %bb.o, !noalias !298
 
@@ -705,15 +701,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   invoke fastcc void @_RNvMs1_CsfER1pEaRVit_11typed_arenaINtB5_9ChunkListNtCsgQ7e0lqRvgo_7memmap24MmapE7reserveCs4phXRVW1pDQ_9dwarfdump(ptr noalias nofree noundef align 8 dereferenceable(48) %i.e, i64 noundef 1)
-          to label %bb.g unwind label %.split.thread.i, !noalias !312
-
-.split.thread.i:                                  ; preds = %bb.d
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  %4 = load i64, ptr %0, align 8, !noalias !312, !noundef !6
-  %5 = add i64 %4, 1
-  store i64 %5, ptr %0, align 8, !noalias !312
-  br label %bb.h
+          to label %bb.g unwind label %.sink.split.i, !noalias !312
 
 bb.e:                                             ; preds = %bb.b
   unreachable
@@ -770,8 +758,16 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCsg
   %.pn1533.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCsgQ7e0lqRvgo_7memmap24MmapEECs4phXRVW1pDQ_9dwarfdump.exit19.sink.split.i ], [ %.pn1534.i, %bb.h ]
   resume { ptr, i32 } %.pn1533.i
 
-bb.h:                                             ; preds = %.split.thread.i, %.thread.i
-  %.pn1534.i = phi { ptr, i32 } [ %i.n, %.thread.i ], [ %3, %.split.thread.i ]
+.sink.split.i:                                    ; preds = %bb.d
+  %lpad.thr_comm.split-lp53.i = landingpad { ptr, i32 }
+          cleanup
+  %.pre = load i64, ptr %0, align 8, !noalias !312
+  %3 = add i64 %.pre, 1
+  store i64 %3, ptr %0, align 8, !noalias !312
+  br label %bb.h
+
+bb.h:                                             ; preds = %.thread.i, %.sink.split.i
+  %.pn1534.i = phi { ptr, i32 } [ %i.n, %.thread.i ], [ %lpad.thr_comm.split-lp53.i, %.sink.split.i ]
   invoke void @_RNvXs_NtCsgQ7e0lqRvgo_7memmap22osNtB4_9MmapInnerNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCsgQ7e0lqRvgo_7memmap24MmapEECs4phXRVW1pDQ_9dwarfdump.exit19.i unwind label %bb.f, !noalias !312
 
@@ -1174,20 +1170,20 @@ begin_hunk_1_@llvm.umax.i64
 !285 = distinct !{!285, i1 true, !"_RNvXNtNtNtCskKLDkoKarTP_4core4iter6traits7collectINtNtNtB6_7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapENtB2_12IntoIterator9into_iterB1f_"}
 !286 = distinct !{!286, !285, !"_RNvXNtNtNtCskKLDkoKarTP_4core4iter6traits7collectINtNtNtB6_7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapENtB2_12IntoIterator9into_iterB1f_: argument 1"}
 !287 = distinct !{!287, !285, !"_RNvXNtNtNtCskKLDkoKarTP_4core4iter6traits7collectINtNtNtB6_7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapENtB2_12IntoIterator9into_iterB1f_: argument 0"}
-!288 = distinct !{!288, i1 true, !"_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE8push_mutBH_"}
-!289 = distinct !{!289, !288, !"_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE8push_mutBH_: argument 0"}
-!290 = distinct !{!290, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_"}
-!291 = distinct !{!291, !290, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_: argument 0"}
-!292 = distinct !{!292, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB11_"}
-!293 = distinct !{!293, !292, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB11_: argument 0"}
-!294 = distinct !{!294, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option4ItemNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBX_"}
-!295 = distinct !{!295, !294, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option4ItemNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBX_: argument 0"}
-!296 = distinct !{!296, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBZ_"}
-!297 = distinct !{!297, !296, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBZ_: argument 0"}
+!288 = distinct !{!288, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_"}
+!289 = distinct !{!289, !288, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtB4_4iter7sources4once4OnceNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB1c_: argument 0"}
+!290 = distinct !{!290, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB11_"}
+!291 = distinct !{!291, !290, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option8IntoIterNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEB11_: argument 0"}
+!292 = distinct !{!292, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option4ItemNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBX_"}
+!293 = distinct !{!293, !292, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option4ItemNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBX_: argument 0"}
+!294 = distinct !{!294, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBZ_"}
+!295 = distinct !{!295, !294, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapEEBZ_: argument 0"}
+!296 = distinct !{!296, i1 true, !"_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE8push_mutBH_"}
+!297 = distinct !{!297, !296, !"_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE8push_mutBH_: argument 0"}
 !298 = !{!284}
 !299 = !{!287, !286}
-!300 = !{!289}
-!301 = !{!297, !295, !293, !291}
+!300 = !{!295, !293, !291, !289}
+!301 = !{!297}
 !302 = distinct !{!302, i1 true, !"_RNvMCsfER1pEaRVit_11typed_arenaINtB2_5ArenaNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE13with_capacityBH_"}
 !303 = distinct !{!303, !302, !"_RNvMCsfER1pEaRVit_11typed_arenaINtB2_5ArenaNtCs4phXRVW1pDQ_9dwarfdump13RelocationMapE13with_capacityBH_: argument 0"}
 !304 = !{!303}
