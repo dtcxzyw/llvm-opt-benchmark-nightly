@@ -1,0 +1,60 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index 19a302cb953d50..6d0ad32fb0a829 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -2248,6 +2248,12 @@ static bool replacingOperandWithVariableIsCheap(const Instruction *I,
+   return !isa<IntrinsicInst>(I);
+ }
+ 
++static bool shouldAvoidSinkingInstruction(Instruction *I) {
++  // These instructions may change or break semantics if moved.
++  return isa<PHINode>(I) || I->isEHPad() || isa<AllocaInst>(I) ||
++         I->getType()->isTokenTy();
++}
++
+ // All instructions in Insts belong to different blocks that all unconditionally
+ // branch to a common successor. Analyze each instruction and return true if it
+ // would be possible to sink them into their successor, creating one common
+@@ -2260,9 +2266,7 @@ static bool canSinkInstructions(
+   // the same number of uses, and we check later that the uses are consistent.
+   std::optional<unsigned> NumUses;
+   for (auto *I : Insts) {
+-    // These instructions may change or break semantics if moved.
+-    if (isa<PHINode>(I) || I->isEHPad() || isa<AllocaInst>(I) ||
+-        I->getType()->isTokenTy())
++    if (shouldAvoidSinkingInstruction(I))
+       return false;
+ 
+     // Do not try to sink an instruction in an infinite loop - it can cause
+@@ -2504,13 +2508,17 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+   //         [ end ]
+   //
+   SmallVector<BasicBlock*,4> UnconditionalPreds;
+-  bool HaveNonUnconditionalPredecessors = false;
++  bool NeedSplittingEdge = false;
+   for (auto *PredBB : predecessors(BB)) {
+     auto *PredBr = dyn_cast<UncondBrInst>(PredBB->getTerminator());
+-    if (PredBr)
+-      UnconditionalPreds.push_back(PredBB);
+-    else
+-      HaveNonUnconditionalPredecessors = true;
++    if (PredBr) {
++      Instruction *Prev = PredBr->getPrevNode();
++      if (!shouldAvoidSinkingInstruction(Prev)) {
++        UnconditionalPreds.push_back(PredBB);
++        continue;
++      }
++    }
++    NeedSplittingEdge = true;
+   }
+   if (UnconditionalPreds.size() < 2)
+     return false;
+@@ -2656,7 +2664,7 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+ 
+   bool Changed = false;
+ 
+-  if (HaveNonUnconditionalPredecessors) {
++  if (NeedSplittingEdge) {
+     if (!followedByDeoptOrUnreachable) {
+       // It is always legal to sink common instructions from unconditional
+       // predecessors. However, if not all predecessors are unconditional,
