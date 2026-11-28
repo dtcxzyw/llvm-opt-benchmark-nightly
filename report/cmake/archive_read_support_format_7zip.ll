@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cmake/original/archive_read_support_format_7zip?download=true
 inline.NumInlined: 90
 inline.NumDeleted: 29
-loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@Bcj2_Decode:bb.a
   %i.i = sub i64 0, %i.c
   %i.j = getelementptr inbounds i8, ptr %i.h, i64 %i.i ; 2 uses
@@ -205,14 +205,14 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.dv = getelementptr i8, ptr %0, i64 20008
   br label %.outer
 
-.outer:                                           ; preds = %bb.ad, %.preheader291
-  %.0214.ph = phi i64 [ %i.eq, %bb.ad ], [ 0, %.preheader291 ]
-  %.1207.ph = phi i64 [ %.lcssa481, %bb.ad ], [ %.0206.lcssa367, %.preheader291 ]
-  %.0201.ph = phi ptr [ %.1202, %bb.ad ], [ %i.s, %.preheader291 ] ; 3 uses
-  %.0196.ph = phi ptr [ %.1197, %bb.ad ], [ %i.ab, %.preheader291 ] ; 3 uses
-  %.0191.ph = phi i64 [ %.1192, %bb.ad ], [ %i.l, %.preheader291 ] ; 5 uses
-  %.0186.ph = phi i64 [ %.1187, %bb.ad ], [ %i.u, %.preheader291 ] ; 5 uses
-  %.2184.ph = phi ptr [ %.4, %bb.ad ], [ %.1183, %.preheader291 ]
+.outer:                                           ; preds = %.lr.ph316.3, %.preheader291
+  %.0214.ph = phi i64 [ %i.eq, %.lr.ph316.3 ], [ 0, %.preheader291 ]
+  %.1207.ph = phi i64 [ %i.gw, %.lr.ph316.3 ], [ %.0206.lcssa367, %.preheader291 ]
+  %.0201.ph = phi ptr [ %.1202, %.lr.ph316.3 ], [ %i.s, %.preheader291 ] ; 3 uses
+  %.0196.ph = phi ptr [ %.1197, %.lr.ph316.3 ], [ %i.ab, %.preheader291 ] ; 3 uses
+  %.0191.ph = phi i64 [ %.1192, %.lr.ph316.3 ], [ %i.l, %.preheader291 ] ; 5 uses
+  %.0186.ph = phi i64 [ %.1187, %.lr.ph316.3 ], [ %i.u, %.preheader291 ] ; 5 uses
+  %.2184.ph = phi ptr [ %.4, %.lr.ph316.3 ], [ %.1183, %.preheader291 ]
   br label %bb.h
 
 bb.h:                                             ; preds = %.outer, %bb.t
@@ -263,7 +263,7 @@ bb.k:                                             ; preds = %.preheader, %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.h
   %.3217 = phi i64 [ %.0214, %bb.h ], [ %.1215, %bb.k ] ; 3 uses
-  %.3209 = phi i64 [ %.1207, %bb.h ], [ %i.ef, %bb.k ] ; 12 uses
+  %.3209 = phi i64 [ %.1207, %bb.h ], [ %i.ef, %bb.k ] ; 9 uses
   %.3 = phi i64 [ %spec.select, %bb.h ], [ 1, %bb.k ]
   %i.eo = icmp eq i64 %.3, 0
   %i.ep = icmp eq i64 %.3209, %2
@@ -405,40 +405,24 @@ bb.ac:                                            ; preds = %bb.ab, %bb.z
   %scevgep = getelementptr i8, ptr %1, i64 %.3209
   %i.gt = xor i64 %.3209, -1
   %i.gu = add i64 %2, %i.gt
-  %umin = tail call i64 @llvm.umin.i64(i64 %i.gu, i64 3)
-  %i.gv = add nuw nsw i64 %umin, 1
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.gu, i64 3) ; 2 uses
+  %i.gv = add nuw nsw i64 %umin, 1                ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, ptr noundef nonnull align 4 dereferenceable(1) %i.a, i64 range(i64 0, 5) %i.gv, i1 false), !tbaa !41
-  %i.gw = add nuw i64 %.3209, 1                   ; 2 uses
-  %3 = icmp ult i64 %i.gw, %2
-  br i1 %3, label %.lr.ph316.1, label %._crit_edge317
+  %i.gw = add i64 %.3209, %i.gv                   ; 2 uses
+  %3 = extractelement <4 x i1> <i1 true, i1 true, i1 true, i1 false>, i64 %umin
+  br i1 %3, label %bb.ad, label %.lr.ph316.3
 
-.lr.ph316.1:                                      ; preds = %.lr.ph316.preheader
-  %4 = add nuw i64 %.3209, 2                      ; 2 uses
-  %5 = icmp ult i64 %4, %2
-  br i1 %5, label %.lr.ph316.2, label %._crit_edge317
-
-.lr.ph316.2:                                      ; preds = %.lr.ph316.1
-  %6 = add nuw i64 %.3209, 3                      ; 2 uses
-  %7 = icmp ult i64 %6, %2
-  br i1 %7, label %.lr.ph316.3, label %._crit_edge317
-
-.lr.ph316.3:                                      ; preds = %.lr.ph316.2
-  %8 = add nuw i64 %.3209, 4
-  br label %._crit_edge317
-
-._crit_edge317:                                   ; preds = %.lr.ph316.3, %.lr.ph316.2, %.lr.ph316.1, %.lr.ph316.preheader
-  %.lcssa481 = phi i64 [ %i.gw, %.lr.ph316.preheader ], [ %4, %.lr.ph316.1 ], [ %6, %.lr.ph316.2 ], [ %8, %.lr.ph316.3 ] ; 2 uses
-  %indvars.iv.next345.lcssa = phi i32 [ 1, %.lr.ph316.preheader ], [ 2, %.lr.ph316.1 ], [ 3, %.lr.ph316.2 ], [ 4, %.lr.ph316.3 ]
-  %.lcssa480 = phi i1 [ true, %.lr.ph316.preheader ], [ true, %.lr.ph316.1 ], [ true, %.lr.ph316.2 ], [ false, %.lr.ph316.3 ]
-  br i1 %.lcssa480, label %._crit_edge317.thread, label %bb.ad
-
-bb.ad:                                            ; preds = %._crit_edge317
+.lr.ph316.3:                                      ; preds = %.lr.ph316.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   br label %.outer
 
-._crit_edge317.thread:                            ; preds = %bb.ac, %._crit_edge317
-  %.2180.lcssa372 = phi i32 [ %indvars.iv.next345.lcssa, %._crit_edge317 ], [ 0, %bb.ac ] ; 3 uses
-  %.4210.lcssa371 = phi i64 [ %.lcssa481, %._crit_edge317 ], [ %.3209, %bb.ac ]
+bb.ad:                                            ; preds = %.lr.ph316.preheader
+  %4 = trunc nuw nsw i64 %i.gv to i32
+  br label %._crit_edge317.thread
+
+._crit_edge317.thread:                            ; preds = %bb.ac, %bb.ad
+  %.2180.lcssa372 = phi i32 [ %4, %bb.ad ], [ 0, %bb.ac ] ; 3 uses
+  %.4210.lcssa371 = phi i64 [ %i.gw, %bb.ad ], [ %.3209, %bb.ac ]
   %i.gx = sub nuw nsw i32 4, %.2180.lcssa372
   %i.gy = zext nneg i32 %i.gx to i64
   store i64 %i.gy, ptr %i.da, align 8, !tbaa !138

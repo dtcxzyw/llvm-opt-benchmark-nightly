@@ -45,15 +45,15 @@ declare void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dea
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost7archive6detail18utf8_codecvt_facetD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) unnamed_addr #3 align 2 {
 bb.a:
-  tail call void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #11
+  tail call void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #10
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost7archive6detail18utf8_codecvt_facetD0Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #3 align 2 {
 bb.a:
-  tail call void @_ZN5boost7archive6detail18utf8_codecvt_facetD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #11
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #12
+  tail call void @_ZN5boost7archive6detail18utf8_codecvt_facetD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #10
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #11
   ret void
 }
 
@@ -251,8 +251,10 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   br i1 %i.w, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
+  %8 = sub i64 %i.f, %.0486197
   %i.x = add nsw i32 %.0.i.i, -1
   %i.y = zext i32 %i.x to i64                     ; 2 uses
+  %9 = tail call i64 @llvm.umin.i64(i64 %8, i64 %i.y) ; 5 uses
   %i.z = sub i64 %i.e, %.0486197
   %i.aa = tail call i64 @llvm.umin.i64(i64 %i.z, i64 %i.y)
   %i.ab = getelementptr i8, ptr %.04861, i64 %i.aa
@@ -266,8 +268,6 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   br i1 %found.conflict, label %.lr.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %8 = sub i64 %i.f, %.0486197
-  %9 = tail call i64 @llvm.umin.i64(i64 %8, i64 %i.y) ; 4 uses
   %n.rnd.up = add nuw nsw i64 %9, 4
   %n.vec = and i64 %n.rnd.up, 8589934588
   %i.ag = getelementptr i8, ptr %.14955, i64 %9
@@ -279,7 +279,7 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert100 = insertelement <4 x i32> poison, i32 %i.m, i64 0
   %broadcast.splat101 = shufflevector <4 x i32> %broadcast.splatinsert100, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.aj = icmp samesign uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 6 uses
+  %i.aj = icmp samesign uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 5 uses
   %next.gep104 = getelementptr i8, ptr %.04861, i64 2
   %next.gep105 = getelementptr i8, ptr %.04861, i64 3
   %next.gep106 = getelementptr i8, ptr %.04861, i64 4
@@ -329,7 +329,7 @@ pred.store.continue114:                           ; preds = %pred.store.if113, %
   br i1 %i.ay, label %middle.block, label %vector.body.1
 
 vector.body.1:                                    ; preds = %pred.store.continue114
-  %i.az = icmp samesign ugt <4 x i64> %broadcast.splat, <i64 3, i64 4, i64 5, i64 6> ; 7 uses
+  %i.az = icmp samesign ugt <4 x i64> %broadcast.splat, <i64 3, i64 4, i64 5, i64 6> ; 5 uses
   %next.gep104.1 = getelementptr i8, ptr %.04861, i64 6
   %next.gep105.1 = getelementptr i8, ptr %.04861, i64 7
   %next.gep106.1 = getelementptr i8, ptr %.04861, i64 8
@@ -376,11 +376,9 @@ pred.store.if113.1:                               ; preds = %pred.store.continue
   br label %middle.block
 
 middle.block:                                     ; preds = %pred.store.continue112.1, %pred.store.if113.1, %pred.store.continue114
+  %index.lcssa.neg = phi i64 [ 0, %pred.store.continue114 ], [ -4, %pred.store.if113.1 ], [ -4, %pred.store.continue112.1 ]
   %vec.ind.lcssa = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %pred.store.continue114 ], [ <i32 4, i32 5, i32 6, i32 7>, %pred.store.if113.1 ], [ <i32 4, i32 5, i32 6, i32 7>, %pred.store.continue112.1 ]
-  %.lcssa118 = phi <4 x i1> [ %i.aj, %pred.store.continue114 ], [ %i.az, %pred.store.if113.1 ], [ %i.az, %pred.store.continue112.1 ]
-  %10 = xor <4 x i1> %.lcssa118, splat (i1 true)
-  %first.inactive.lane = tail call i64 @llvm.experimental.cttz.elts.i64.v4i1(<4 x i1> %10, i1 false)
-  %last.active.lane = add i64 %first.inactive.lane, -1
+  %last.active.lane = add nsw i64 %index.lcssa.neg, %9
   %i.bo = extractelement <4 x i32> %vec.ind.lcssa, i64 %last.active.lane
   %i.bp = add nuw nsw i32 %i.bo, 1
   %i.bq = icmp ne i32 %i.bp, %.0.i.i
@@ -695,9 +693,6 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <4 x i32> @llvm.masked.sdiv.v4i32(<4 x i32>, <4 x i32>, <4 x i1>) #9
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.experimental.cttz.elts.i64.v4i1(<4 x i1>, i1 immarg) #10
-
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -708,9 +703,8 @@ attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nounwind }
-attributes #12 = { builtin nounwind }
+attributes #10 = { nounwind }
+attributes #11 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
