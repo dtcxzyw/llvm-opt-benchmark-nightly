@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZN2cv10ThreadPoolC2Ev(ptr noundef nonnull align 8 dereferenceable(176) %i.e)
-          to label %bb.f unwind label %bb.g
+          to label %bb.f unwind label %1
 
 bb.f:                                             ; preds = %bb.e
   store ptr %i.e, ptr @_ZZN2cv10ThreadPool8instanceEvE8instance, align 8, !tbaa !89
@@ -210,14 +210,19 @@ bb.f:                                             ; preds = %bb.e
   tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN2cv10ThreadPool8instanceEvE8instance) #3
   br label %_ZN2cv10ThreadPool8instanceEv.exit
 
-bb.g:                                             ; preds = %bb.e
-  %1 = landingpad { ptr, i32 }
+1:                                                ; preds = %bb.e
+  %2 = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef 176) #22
+  br label %bb.g
+
+bb.g:                                             ; preds = %1, %bb.o
+  %.sink = phi ptr [ %i.j, %bb.o ], [ %i.e, %1 ]
+  %common.resume.op.ph = phi { ptr, i32 } [ %i.m, %bb.o ], [ %2, %1 ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 176) #22
   br label %common.resume
 
-common.resume:                                    ; preds = %bb.n, %bb.o, %bb.g
-  %common.resume.op = phi { ptr, i32 } [ %i.l, %bb.n ], [ %1, %bb.g ], [ %i.m, %bb.o ]
+common.resume:                                    ; preds = %bb.g, %bb.n
+  %common.resume.op = phi { ptr, i32 } [ %i.l, %bb.n ], [ %common.resume.op.ph, %bb.g ]
   tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN2cv10ThreadPool8instanceEvE8instance) #3
   resume { ptr, i32 } %common.resume.op
 
@@ -261,8 +266,7 @@ bb.n:                                             ; preds = %bb.d, %bb.k
 bb.o:                                             ; preds = %bb.l
   %i.m = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef 176) #22
-  br label %common.resume
+  br label %bb.g
 
 _ZN2cv10ThreadPool8instanceEv.exit5:              ; preds = %bb.i, %bb.j, %bb.m
   %i.n = load ptr, ptr @_ZZN2cv10ThreadPool8instanceEvE8instance, align 8, !tbaa !89 ; 7 uses

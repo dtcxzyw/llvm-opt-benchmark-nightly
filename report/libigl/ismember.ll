@@ -204,8 +204,7 @@ middle.block295:                                  ; preds = %vector.body290
           cleanup
   %i.ff = load ptr, ptr %5, align 8, !tbaa !20
   call void @free(ptr noundef %i.ff) #12
-  call void @free(ptr noundef %.sroa.0170.1198) #12
-  br label %.body121
+  br label %.body121.sink.split
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i129, %middle.block295, %.loopexit202.thread, %._crit_edge.i.i.i.i.i.i.i128, %.loopexit202
   %.sroa.0170.0275 = phi ptr [ null, %.loopexit202.thread ], [ %.sroa.0170.1198, %.loopexit202 ], [ %.sroa.0170.1198, %._crit_edge.i.i.i.i.i.i.i128 ], [ %.sroa.0170.1198, %middle.block295 ], [ %.sroa.0170.1198, %.lr.ph.i.i.i.i.i.i.i.i129 ]
@@ -541,11 +540,16 @@ bb.ah:                                            ; preds = %.body137, %bb.aa
   call void @free(ptr noundef %i.iw) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   %i.ix = load ptr, ptr %5, align 8, !tbaa !20
-  call void @free(ptr noundef %i.ix) #12
+  br label %.body121.sink.split
+
+.body121.sink.split:                              ; preds = %bb.ah, %.body134
+  %.sroa.0170.1198.sink = phi ptr [ %.sroa.0170.1198, %.body134 ], [ %i.ix, %bb.ah ]
+  %.pn77.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.fe, %.body134 ], [ %.pn77.pn.pn.pn.pn.pn.pn.pn.pn, %bb.ah ]
+  call void @free(ptr noundef %.sroa.0170.1198.sink) #12
   br label %.body121
 
-.body121:                                         ; preds = %.body134, %bb.r, %bb.ah
-  %.pn77.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn77.pn.pn.pn.pn.pn.pn.pn.pn, %bb.ah ], [ %i.fe, %.body134 ], [ %i.eh, %bb.r ]
+.body121:                                         ; preds = %.body121.sink.split, %bb.r
+  %.pn77.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.eh, %bb.r ], [ %.pn77.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.pn.ph, %.body121.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   %i.iy = load ptr, ptr %4, align 8, !tbaa !20
   br label %common.resume

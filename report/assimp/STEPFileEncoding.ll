@@ -202,8 +202,7 @@ bb.ax:                                            ; preds = %._crit_edge404
 _ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221: ; preds = %bb.au, %bb.aw, %bb.av
   %i.kh = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdaPv(ptr noundef nonnull %i.ip) #14
-  br label %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224
+  br label %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224.sink.split
 
 bb.ay:                                            ; preds = %bb.ae
   %i.ki = sub nuw i64 %.0157.lcssa, %i.h          ; 3 uses
@@ -481,17 +480,23 @@ bb.cd:                                            ; preds = %._crit_edge399
 _ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph.i273, %bb.cc, %_ZN4utf88utf32to8IPhPKjEET_T0_S5_S4_.exit277
   %lpad.loopexit.split-lp632 = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdaPv(ptr noundef nonnull %i.kq) #14
-  br label %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224
+  br label %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224.sink.split
 
 bb.ce:                                            ; preds = %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EED2Ev.exit, %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit192
   %i.nw = load i64, ptr %i.b, align 8             ; 2 uses
   %.not420 = icmp ult i64 %.0164.ph611, %i.nw
   br i1 %.not420, label %bb.b, label %.critedge
 
-_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224: ; preds = %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp, %bb.cd, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221, %bb.ax
-  %.sink = phi ptr [ %i.cu, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221 ], [ %i.cu, %bb.ax ], [ %i.km, %bb.cd ], [ %i.km, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp ]
-  %.pn185.pn = phi { ptr, i32 } [ %i.kh, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221 ], [ %i.kg, %bb.ax ], [ %i.nv, %bb.cd ], [ %lpad.loopexit.split-lp632, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp ]
+_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224.sink.split: ; preds = %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221
+  %.sink554 = phi ptr [ %i.ip, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221 ], [ %i.kq, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp ]
+  %.sink.ph = phi ptr [ %i.cu, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221 ], [ %i.km, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp ]
+  %.pn185.pn.ph = phi { ptr, i32 } [ %i.kh, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit221 ], [ %lpad.loopexit.split-lp632, %_ZNSt10unique_ptrIA_hSt14default_deleteIS0_EED2Ev.exit284.loopexit.split-lp.loopexit.split-lp ]
+  call void @_ZdaPv(ptr noundef nonnull %.sink554) #14
+  br label %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224
+
+_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224: ; preds = %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224.sink.split, %bb.cd, %bb.ax
+  %.sink = phi ptr [ %i.km, %bb.cd ], [ %i.cu, %bb.ax ], [ %.sink.ph, %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224.sink.split ]
+  %.pn185.pn = phi { ptr, i32 } [ %i.nv, %bb.cd ], [ %i.kg, %bb.ax ], [ %.pn185.pn.ph, %_ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit224.sink.split ]
   call void @_ZdaPv(ptr noundef nonnull %.sink) #14
   resume { ptr, i32 } %.pn185.pn
 

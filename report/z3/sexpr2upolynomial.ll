@@ -189,7 +189,7 @@ bb.a:
   %7 = alloca %"class.upolynomial::scoped_numeral_vector", align 8 ; 12 uses
   %8 = alloca %class.rational, align 8            ; 14 uses
   %9 = alloca %class.symbol, align 8              ; 4 uses
-  %10 = alloca [2 x %class.rational], align 16    ; 23 uses
+  %10 = alloca [2 x %class.rational], align 16    ; 22 uses
   %i.a = icmp ugt i32 %3, 65536
   br i1 %i.a, label %bb.b, label %bb.e
 
@@ -592,19 +592,22 @@ _ZN8rationalD2Ev.exit169.1:                       ; preds = %.noexc.i168.1
 .loopexit.loopexit181:                            ; preds = %bb.cr
   %i.hq = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %10) #15
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .loopexit.loopexit:                               ; preds = %bb.cs
   %i.hr = landingpad { ptr, i32 }
           cleanup
   %i.hs = getelementptr inbounds nuw i8, ptr %10, i64 32
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.hs) #15
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.loopexit.loopexit, %.loopexit.loopexit181
+  %.pn.ph = phi { ptr, i32 } [ %i.hq, %.loopexit.loopexit181 ], [ %i.hr, %.loopexit.loopexit ]
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %10) #15
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit181, %.loopexit.loopexit, %.thread
-  %.pn = phi { ptr, i32 } [ %i.hr, %.loopexit.loopexit ], [ %i.gt, %.thread ], [ %i.hq, %.loopexit.loopexit181 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn = phi { ptr, i32 } [ %i.gt, %.thread ], [ %.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #15
   br label %bb.cz
 

@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 3 uses
   %3 = alloca %class.svector.21, align 8          ; 11 uses
   %4 = alloca %class.rational, align 8            ; 14 uses
-  %5 = alloca %class.rational, align 8            ; 16 uses
+  %5 = alloca %class.rational, align 8            ; 15 uses
   %6 = alloca %class.rational, align 8            ; 12 uses
   %7 = alloca %class.ref_vector, align 8          ; 7 uses
   %8 = alloca %class.rational, align 8            ; 12 uses
@@ -454,13 +454,7 @@ bb.p:                                             ; preds = %_ZN11mpq_managerILb
 _ZN8rationalC2ERKS_.exit.i:                       ; preds = %bb.p, %bb.o
   %i.da = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !133, !noalias !238
   invoke void @_ZN11mpz_managerILb1EE3negER3mpz(ptr noundef nonnull align 8 dereferenceable(728) %i.da, ptr noundef nonnull align 8 dereferenceable(32) %5)
-          to label %_ZngRK8rational.exit unwind label %9
-
-9:                                                ; preds = %_ZN8rationalC2ERKS_.exit.i
-  %10 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %5) #16
-  br label %.body
+          to label %_ZngRK8rational.exit unwind label %bb.aa
 
 _ZngRK8rational.exit:                             ; preds = %_ZN8rationalC2ERKS_.exit.i
   %i.db = load ptr, ptr %i.bz, align 8, !tbaa !36 ; 3 uses
@@ -555,14 +549,14 @@ bb.z:                                             ; preds = %bb.p, %bb.n
           cleanup
   br label %.body
 
-bb.aa:                                            ; preds = %bb.r, %_ZNK10arith_util10mk_numeralERK8rationalb.exit.i, %bb.v
+bb.aa:                                            ; preds = %_ZN8rationalC2ERKS_.exit.i, %bb.r, %_ZNK10arith_util10mk_numeralERK8rationalb.exit.i, %bb.v
   %i.ec = landingpad { ptr, i32 }
           cleanup
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %5) #16
   br label %.body
 
-.body:                                            ; preds = %bb.z, %9, %bb.aa
-  %.pn76.pn = phi { ptr, i32 } [ %i.ec, %bb.aa ], [ %i.eb, %bb.z ], [ %10, %9 ]
+.body:                                            ; preds = %bb.aa, %bb.z
+  %.pn76.pn = phi { ptr, i32 } [ %i.eb, %bb.z ], [ %i.ec, %bb.aa ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br label %bb.ao
 

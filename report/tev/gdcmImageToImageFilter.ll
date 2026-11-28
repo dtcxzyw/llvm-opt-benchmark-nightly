@@ -105,51 +105,55 @@ define dso_local void @_ZN4gdcm18ImageToImageFilterC2Ev(ptr noundef nonnull alig
 bb.a:
   tail call void @_ZN4gdcm20PixmapToPixmapFilterC2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0)
   %i.a = invoke noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #18
-          to label %bb.b unwind label %bb.h       ; 3 uses
+          to label %bb.b unwind label %1          ; 3 uses
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZN4gdcm5ImageC2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.a)
-          to label %bb.c unwind label %bb.i
+          to label %bb.c unwind label %bb.h
 
 bb.c:                                             ; preds = %bb.b
   %i.b = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4gdcm12SmartPointerINS_6BitmapEEaSEPS1_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a)
-          to label %bb.d unwind label %bb.h       ; 0 uses
+          to label %bb.d unwind label %1          ; 0 uses
 
 bb.d:                                             ; preds = %bb.c
   %i.c = invoke noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #18
-          to label %bb.e unwind label %bb.h       ; 3 uses
+          to label %bb.e unwind label %1          ; 3 uses
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZN4gdcm5ImageC2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.c)
-          to label %bb.f unwind label %bb.j
+          to label %bb.f unwind label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN4gdcm12SmartPointerINS_6BitmapEEaSEPS1_(ptr noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull %i.c)
-          to label %bb.g unwind label %bb.h       ; 0 uses
+          to label %bb.g unwind label %1          ; 0 uses
 
 bb.g:                                             ; preds = %bb.f
   ret void
 
-bb.h:                                             ; preds = %bb.f, %bb.d, %bb.c, %bb.a
+1:                                                ; preds = %bb.f, %bb.d, %bb.c, %bb.a
+  %2 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.k
+
+bb.h:                                             ; preds = %bb.b
   %i.f = landingpad { ptr, i32 }
           cleanup
-  br label %bb.k
+  br label %bb.j
 
-bb.i:                                             ; preds = %bb.b
+bb.i:                                             ; preds = %bb.e
   %i.g = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 264) #19
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.h, %bb.i
+  %.sink = phi ptr [ %i.c, %bb.i ], [ %i.a, %bb.h ]
+  %.pn.ph = phi { ptr, i32 } [ %i.g, %bb.i ], [ %i.f, %bb.h ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 264) #19
   br label %bb.k
 
-bb.j:                                             ; preds = %bb.e
-  %1 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 264) #19
-  br label %bb.k
-
-bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
-  %.pn = phi { ptr, i32 } [ %i.f, %bb.h ], [ %1, %bb.j ], [ %i.g, %bb.i ]
+bb.k:                                             ; preds = %bb.j, %1
+  %.pn = phi { ptr, i32 } [ %2, %1 ], [ %.pn.ph, %bb.j ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_ZN4gdcm12SmartPointerINS_6BitmapEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.h) #20
   tail call void @_ZN4gdcm12SmartPointerINS_6BitmapEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(16) %0) #20

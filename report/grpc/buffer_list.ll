@@ -202,8 +202,7 @@ _ZN4absl12lts_202505126StatusD2Ev.exit:           ; preds = %bb.g, %bb.h
 bb.j:                                             ; preds = %bb.f
   %i.ak = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #16
-  br label %.loopexit.split
+  br label %.loopexit.split.sink.split
 
 bb.k:                                             ; preds = %bb.c
   call void @abort() #17
@@ -357,8 +356,7 @@ _ZN4absl12lts_202505126StatusD2Ev.exit61:         ; preds = %bb.v, %bb.w
 .split83.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.p, %bb.u
   %lpad.loopexit.split-lp171 = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #16
-  br label %.loopexit.split
+  br label %.loopexit.split.sink.split
 
 .outer._crit_edge:                                ; preds = %.outer, %_ZN4absl12lts_202505126StatusD2Ev.exit61, %_ZN4absl12lts_202505126StatusD2Ev.exit61.us, %bb.m
   %.043.ph.lcssa71 = phi ptr [ null, %_ZN4absl12lts_202505126StatusD2Ev.exit61.us ], [ null, %bb.m ], [ %.043.ph90, %_ZN4absl12lts_202505126StatusD2Ev.exit61 ], [ %.us-phi81, %.outer ]
@@ -380,8 +378,14 @@ bb.x:                                             ; preds = %.outer._crit_edge
 _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %.outer._crit_edge
   ret void
 
-.loopexit.split:                                  ; preds = %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.split83.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.j
-  %.pn53 = phi { ptr, i32 } [ %lpad.loopexit.split-lp171, %.split83.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.ak, %bb.j ], [ %lpad.loopexit.split-lp177, %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split.sink.split:                       ; preds = %bb.j, %.split83.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.sink = phi ptr [ %5, %.split83.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %4, %bb.j ]
+  %.pn53.ph = phi { ptr, i32 } [ %lpad.loopexit.split-lp171, %.split83.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.ak, %bb.j ]
+  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #16
+  br label %.loopexit.split
+
+.loopexit.split:                                  ; preds = %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split.sink.split
+  %.pn53 = phi { ptr, i32 } [ %.pn53.ph, %.loopexit.split.sink.split ], [ %lpad.loopexit.split-lp177, %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
           to label %_ZN4absl12lts_202505129MutexLockD2Ev.exit62 unwind label %bb.y
 

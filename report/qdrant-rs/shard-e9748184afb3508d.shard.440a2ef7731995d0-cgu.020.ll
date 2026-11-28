@@ -202,9 +202,9 @@ bb.l:                                             ; preds = %bb.a
 bb.m:                                             ; preds = %bb.a
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.cf = load ptr, ptr %i.ce, align 8, !nonnull !6, !align !8, !noundef !6 ; 3 uses
+  %i.cf = load ptr, ptr %i.ce, align 8, !nonnull !6, !align !8, !noundef !6 ; 4 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ch = load ptr, ptr %i.cg, align 8, !nonnull !6, !align !8, !noundef !6 ; 4 uses
+  %i.ch = load ptr, ptr %i.cg, align 8, !nonnull !6, !align !8, !noundef !6 ; 5 uses
   %i.ci = load i32, ptr %i.cd, align 8, !range !17, !noundef !6
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ck = load float, ptr %i.cj, align 4
@@ -372,9 +372,16 @@ bb.ac:                                            ; preds = %.thread160, %.threa
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #12
   unreachable
 
-.body63:                                          ; preds = %bb.w, %bb.z, %.thread170, %.body118, %.thread165, %.body111, %.thread160, %.body104, %bb.ca, %bb.cd, %bb.bu, %bb.bx, %bb.bo, %bb.br, %bb.bn, %3, %bb.av, %bb.ay, %bb.ad, %bb.ag, %2
-  %.sink = phi ptr [ %i.dl, %.thread165 ], [ %i.cz, %.thread160 ], [ %i.cw, %bb.ca ], [ %i.cu, %bb.bu ], [ %i.cs, %bb.bo ], [ %i.cq, %bb.bn ], [ %i.cm, %bb.av ], [ %i.cc, %bb.ad ], [ %i.cf, %2 ], [ %i.dx, %.thread170 ], [ %i.cc, %bb.ag ], [ %i.cm, %bb.ay ], [ %i.cq, %3 ], [ %i.cs, %bb.br ], [ %i.cu, %bb.bx ], [ %i.cw, %bb.cd ], [ %i.cz, %.body104 ], [ %i.dl, %.body111 ], [ %i.dx, %.body118 ], [ %i.ca, %bb.z ], [ %i.ca, %bb.w ]
-  %.pn31 = phi { ptr, i32 } [ %eh.lpad-body34, %.thread165 ], [ %eh.lpad-body37, %.thread160 ], [ %i.gm, %bb.ca ], [ %i.gg, %bb.bu ], [ %i.ga, %bb.bo ], [ %.pn27.ph, %bb.bn ], [ %i.fi, %bb.av ], [ %i.eo, %bb.ad ], [ %.pn29153, %2 ], [ %eh.lpad-body, %.thread170 ], [ %i.er, %bb.ag ], [ %i.fl, %bb.ay ], [ %eh.lpad-body49, %3 ], [ %i.gd, %bb.br ], [ %i.gj, %bb.bx ], [ %i.gp, %bb.cd ], [ %eh.lpad-body.i, %.body104 ], [ %eh.lpad-body.i109, %.body111 ], [ %eh.lpad-body.i116, %.body118 ], [ %i.ek, %bb.z ], [ %i.eh, %bb.w ]
+.body63.sink.split:                               ; preds = %.body48, %.body57, %.thread
+  %.sink193 = phi ptr [ %i.ch, %.body57 ], [ %i.ch, %.thread ], [ %i.co, %.body48 ]
+  %.sink.ph = phi ptr [ %i.cf, %.body57 ], [ %i.cf, %.thread ], [ %i.cq, %.body48 ]
+  %.pn31.ph = phi { ptr, i32 } [ %eh.lpad-body58, %.body57 ], [ %eh.lpad-body61, %.thread ], [ %eh.lpad-body49, %.body48 ]
+  call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink193, i64 noundef 64, i64 noundef 8) #14
+  br label %.body63
+
+.body63:                                          ; preds = %.body63.sink.split, %bb.w, %bb.z, %.thread170, %.body118, %.thread165, %.body111, %.thread160, %.body104, %bb.ca, %bb.cd, %bb.bu, %bb.bx, %bb.bo, %bb.br, %bb.bn, %bb.av, %bb.ay, %bb.ad, %bb.ag
+  %.sink = phi ptr [ %i.dl, %.thread165 ], [ %i.cz, %.thread160 ], [ %i.cw, %bb.ca ], [ %i.cu, %bb.bu ], [ %i.cs, %bb.bo ], [ %i.cq, %bb.bn ], [ %i.cm, %bb.av ], [ %i.cc, %bb.ad ], [ %i.ca, %bb.z ], [ %i.dx, %.thread170 ], [ %i.cc, %bb.ag ], [ %i.cm, %bb.ay ], [ %i.ca, %bb.w ], [ %i.cs, %bb.br ], [ %i.cu, %bb.bx ], [ %i.cw, %bb.cd ], [ %i.cz, %.body104 ], [ %i.dl, %.body111 ], [ %i.dx, %.body118 ], [ %.sink.ph, %.body63.sink.split ]
+  %.pn31 = phi { ptr, i32 } [ %eh.lpad-body34, %.thread165 ], [ %eh.lpad-body37, %.thread160 ], [ %i.gm, %bb.ca ], [ %i.gg, %bb.bu ], [ %i.ga, %bb.bo ], [ %.pn27.ph, %bb.bn ], [ %i.fi, %bb.av ], [ %i.eo, %bb.ad ], [ %i.ek, %bb.z ], [ %eh.lpad-body, %.thread170 ], [ %i.er, %bb.ag ], [ %i.fl, %bb.ay ], [ %i.eh, %bb.w ], [ %i.gd, %bb.br ], [ %i.gj, %bb.bx ], [ %i.gp, %bb.cd ], [ %eh.lpad-body.i, %.body104 ], [ %eh.lpad-body.i109, %.body111 ], [ %eh.lpad-body.i116, %.body118 ], [ %.pn31.ph, %.body63.sink.split ]
   call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink, i64 noundef 64, i64 noundef 8) #14
   resume { ptr, i32 } %.pn31
 
@@ -467,7 +474,7 @@ bb.ap:                                            ; preds = %bb.ao
 .body57:                                          ; preds = %bb.as, %bb.ap
   %eh.lpad-body58 = phi { ptr, i32 } [ %i.ez, %bb.ap ], [ %i.fc, %bb.as ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtCs5QaNqjAn6vc_5shard5query7formula18ExpressionInternalEEB1g_(ptr noalias nofree noundef align 8 dereferenceable(8) %i.ai) #15
-          to label %2 unwind label %bb.ac
+          to label %.body63.sink.split unwind label %bb.ac
 
 bb.aq:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae)
@@ -515,12 +522,7 @@ bb.au:                                            ; preds = %bb.aq
 .thread:                                          ; preds = %bb.am, %bb.aj
   %eh.lpad-body61 = phi { ptr, i32 } [ %i.eu, %bb.aj ], [ %i.ex, %bb.am ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCshMzyYDJGtjv_3api4rest6schema10ExpressionECs5QaNqjAn6vc_5shard(ptr noalias nofree noundef align 8 dereferenceable(64) %i.ch) #15
-          to label %2 unwind label %bb.ac
-
-2:                                                ; preds = %.thread, %.body57
-  %.pn29153 = phi { ptr, i32 } [ %eh.lpad-body61, %.thread ], [ %eh.lpad-body58, %.body57 ]
-  call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ch, i64 noundef 64, i64 noundef 8) #14
-  br label %.body63
+          to label %.body63.sink.split unwind label %bb.ac
 
 bb.av:                                            ; preds = %bb.n
   %i.fi = landingpad { ptr, i32 }
@@ -611,7 +613,7 @@ bb.bh:                                            ; preds = %bb.bg
 .body48:                                          ; preds = %bb.bk, %bb.bh
   %eh.lpad-body49 = phi { ptr, i32 } [ %i.ft, %bb.bh ], [ %i.fw, %bb.bk ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtNtCs5QaNqjAn6vc_5shard5query7formula18ExpressionInternalEEB1g_(ptr noalias nofree noundef align 8 dereferenceable(8) %i.ab) #15
-          to label %3 unwind label %bb.ac
+          to label %.body63.sink.split unwind label %bb.ac
 
 bb.bi:                                            ; preds = %bb.bg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
@@ -651,10 +653,6 @@ bb.bm:                                            ; preds = %bb.bi
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.co, i64 noundef 64, i64 noundef 8) #14
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.cq, i64 noundef 64, i64 noundef 8) #14
   br label %bb.v
-
-3:                                                ; preds = %.body48
-  call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.co, i64 noundef 64, i64 noundef 8) #14
-  br label %.body63
 
 bb.bn:                                            ; preds = %bb.bb, %bb.be
   %.pn27.ph = phi { ptr, i32 } [ %i.fr, %bb.be ], [ %i.fo, %bb.bb ]

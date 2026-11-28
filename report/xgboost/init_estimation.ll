@@ -173,7 +173,7 @@ $_ZTVN4dmlc5ErrorE = comdat any
 define void @_ZNK7xgboost3obj12FitIntercept14InitEstimationERKNS_8MetaInfoEPNS_6linalg6TensorIfLi1EEE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(248) %1, ptr noundef %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.xgboost::HostDeviceVector", align 8 ; 7 uses
-  %4 = alloca %"class.xgboost::linalg::Tensor.17", align 8 ; 15 uses
+  %4 = alloca %"class.xgboost::linalg::Tensor.17", align 8 ; 14 uses
   %5 = alloca %"class.xgboost::Json", align 8     ; 9 uses
   %6 = alloca %"class.xgboost::JsonObject", align 8 ; 15 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -226,8 +226,7 @@ bb.d:                                             ; preds = %.noexc
 bb.e:                                             ; preds = %bb.h, %bb.f, %bb.d
   %i.v = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN7xgboost16HostDeviceVectorINS_6detail20GradientPairInternalIfEEED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(25) %4) #15
-  br label %.body
+  br label %.body.sink.split
 
 bb.f:                                             ; preds = %bb.d, %.noexc
   invoke void @_ZN7xgboost16HostDeviceVectorINS_6detail20GradientPairInternalIfEEE6ResizeEm(ptr noundef nonnull align 8 dereferenceable(25) %4, i64 noundef %i.s)
@@ -456,11 +455,15 @@ bb.aa:                                            ; preds = %bb.z
 _ZN7xgboost4JsonD2Ev.exit41:                      ; preds = %bb.aa, %bb.z, %bb.y, %bb.v
   %.pn23.pn.pn.pn = phi { ptr, i32 } [ %i.ce, %bb.v ], [ %.pn23.pn.pn, %bb.y ], [ %.pn23.pn.pn, %bb.z ], [ %.pn23.pn.pn, %bb.aa ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
+  br label %.body.sink.split
+
+.body.sink.split:                                 ; preds = %_ZN7xgboost4JsonD2Ev.exit41, %bb.e
+  %.pn23.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.v, %bb.e ], [ %.pn23.pn.pn.pn, %_ZN7xgboost4JsonD2Ev.exit41 ]
   call void @_ZN7xgboost16HostDeviceVectorINS_6detail20GradientPairInternalIfEEED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(25) %4) #15
   br label %.body
 
-.body:                                            ; preds = %bb.u, %bb.e, %_ZN7xgboost4JsonD2Ev.exit41
-  %.pn23.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn23.pn.pn.pn, %_ZN7xgboost4JsonD2Ev.exit41 ], [ %i.cd, %bb.u ], [ %i.v, %bb.e ]
+.body:                                            ; preds = %.body.sink.split, %bb.u
+  %.pn23.pn.pn.pn.pn = phi { ptr, i32 } [ %i.cd, %bb.u ], [ %.pn23.pn.pn.pn.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @_ZN7xgboost16HostDeviceVectorIfED1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15

@@ -202,7 +202,7 @@ bb.a:
   %14 = alloca %"class.cv::Mat_", align 8         ; 11 uses
   %15 = alloca %"class.std::vector.76", align 8   ; 13 uses
   %16 = alloca %"class.cv::Rect_", align 8        ; 12 uses
-  %17 = alloca %"class.cv::tracking::impl::tld::TrackerTLDImpl::Pexpert", align 8 ; 13 uses
+  %17 = alloca %"class.cv::tracking::impl::tld::TrackerTLDImpl::Pexpert", align 8 ; 12 uses
   %18 = alloca %"class.cv::tracking::impl::tld::TrackerTLDImpl::Nexpert", align 8 ; 14 uses
   %19 = alloca %"class.std::vector.61", align 8   ; 18 uses
   %20 = alloca %"class.std::vector.61", align 8   ; 20 uses
@@ -605,8 +605,7 @@ bb.ar:                                            ; preds = %.thread, %bb.aq
 bb.as:                                            ; preds = %.noexc115
   %i.ef = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(480) %17) #25
-  br label %.body
+  br label %.body.sink.split
 
 bb.at:                                            ; preds = %.noexc115
   %i.eg = getelementptr inbounds nuw i8, ptr %17, i64 416
@@ -992,11 +991,15 @@ _ZNSt6vectorIN2cv4Mat_IhEESaIS2_EED2Ev.exit157:   ; preds = %_ZSt8_DestroyIPN2cv
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(480) %18) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #25
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.ee) #25
+  br label %.body.sink.split
+
+.body.sink.split:                                 ; preds = %.body116, %bb.as
+  %.pn75.pn.pn.ph = phi { ptr, i32 } [ %i.ef, %bb.as ], [ %.pn75.pn, %.body116 ]
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(480) %17) #25
   br label %.body
 
-.body:                                            ; preds = %bb.ay, %bb.as, %.body116
-  %.pn75.pn.pn = phi { ptr, i32 } [ %.pn75.pn, %.body116 ], [ %i.gm, %bb.ay ], [ %i.ef, %bb.as ]
+.body:                                            ; preds = %.body.sink.split, %bb.ay
+  %.pn75.pn.pn = phi { ptr, i32 } [ %i.gm, %bb.ay ], [ %.pn75.pn.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #25
   br label %bb.bn
 

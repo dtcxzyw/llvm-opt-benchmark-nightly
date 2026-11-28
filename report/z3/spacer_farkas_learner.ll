@@ -205,9 +205,9 @@ bb.a:
   %27 = alloca %class.obj_ref, align 8            ; 11 uses
   %28 = alloca %class.rational, align 8           ; 19 uses
   %29 = alloca %class.vector.23, align 8          ; 10 uses
-  %30 = alloca %class.rational, align 8           ; 16 uses
+  %30 = alloca %class.rational, align 8           ; 15 uses
   %i.f = alloca ptr, align 8                      ; 7 uses
-  %31 = alloca %class.rational, align 8           ; 16 uses
+  %31 = alloca %class.rational, align 8           ; 15 uses
   %32 = alloca %class.obj_ref, align 8            ; 8 uses
   %i.g = alloca ptr, align 8                      ; 5 uses
   %i.h = load ptr, ptr %3, align 8, !tbaa !58, !nonnull !26, !align !27 ; 13 uses
@@ -610,13 +610,7 @@ bb.il:                                            ; preds = %_ZN11mpq_managerILb
 _ZN8rationalC2ERKS_.exit.i:                       ; preds = %bb.il, %bb.ik
   %i.aen = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !48, !noalias !252
   invoke void @_ZN11mpz_managerILb1EE3absER3mpz(ptr noundef nonnull align 8 dereferenceable(728) %i.aen, ptr noundef nonnull align 8 dereferenceable(32) %30)
-          to label %_Z3absRK8rational.exit unwind label %33
-
-33:                                               ; preds = %_ZN8rationalC2ERKS_.exit.i
-  %34 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %30) #18
-  br label %.body419
+          to label %_Z3absRK8rational.exit unwind label %bb.ip
 
 _Z3absRK8rational.exit:                           ; preds = %_ZN8rationalC2ERKS_.exit.i
   %i.aeo = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6vectorI8rationalLb1EjE9push_backEOS0_(ptr noundef nonnull align 8 dereferenceable(8) %29, ptr noundef nonnull align 8 dereferenceable(32) %30)
@@ -647,14 +641,14 @@ bb.io:                                            ; preds = %bb.il, %bb.ij
           cleanup
   br label %.body419
 
-bb.ip:                                            ; preds = %_Z3absRK8rational.exit
+bb.ip:                                            ; preds = %_ZN8rationalC2ERKS_.exit.i, %_Z3absRK8rational.exit
   %i.aet = landingpad { ptr, i32 }
           cleanup
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %30) #18
   br label %.body419
 
-.body419:                                         ; preds = %bb.io, %33, %bb.ip
-  %.pn203 = phi { ptr, i32 } [ %i.aet, %bb.ip ], [ %i.aes, %bb.io ], [ %34, %33 ]
+.body419:                                         ; preds = %bb.ip, %bb.io
+  %.pn203 = phi { ptr, i32 } [ %i.aes, %bb.io ], [ %i.aet, %bb.ip ]
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #18
   br label %bb.kv
 
@@ -921,13 +915,7 @@ bb.jk:                                            ; preds = %_ZN11mpq_managerILb
 _ZN8rationalC2ERKS_.exit.i444:                    ; preds = %bb.jk, %bb.jj
   %i.aik = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !48, !noalias !253
   invoke void @_ZN11mpz_managerILb1EE3absER3mpz(ptr noundef nonnull align 8 dereferenceable(728) %i.aik, ptr noundef nonnull align 8 dereferenceable(32) %31)
-          to label %_Z3absRK8rational.exit449 unwind label %35
-
-35:                                               ; preds = %_ZN8rationalC2ERKS_.exit.i444
-  %36 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %31) #18
-  br label %.body447
+          to label %_Z3absRK8rational.exit449 unwind label %bb.jo
 
 _Z3absRK8rational.exit449:                        ; preds = %_ZN8rationalC2ERKS_.exit.i444
   %i.ail = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN6vectorI8rationalLb1EjE9push_backEOS0_(ptr noundef nonnull align 8 dereferenceable(8) %29, ptr noundef nonnull align 8 dereferenceable(32) %31)
@@ -960,14 +948,14 @@ bb.jn:                                            ; preds = %bb.jk, %bb.ji
           cleanup
   br label %.body447
 
-bb.jo:                                            ; preds = %_Z3absRK8rational.exit449
+bb.jo:                                            ; preds = %_ZN8rationalC2ERKS_.exit.i444, %_Z3absRK8rational.exit449
   %i.aiq = landingpad { ptr, i32 }
           cleanup
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %31) #18
   br label %.body447
 
-.body447:                                         ; preds = %bb.jn, %35, %bb.jo
-  %.pn198 = phi { ptr, i32 } [ %i.aiq, %bb.jo ], [ %i.aip, %bb.jn ], [ %36, %35 ]
+.body447:                                         ; preds = %bb.jo, %bb.jn
+  %.pn198 = phi { ptr, i32 } [ %i.aip, %bb.jn ], [ %i.aiq, %bb.jo ]
   call void @llvm.lifetime.end.p0(ptr nonnull %31) #18
   br label %bb.jp
 

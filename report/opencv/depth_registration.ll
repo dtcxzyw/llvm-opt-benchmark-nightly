@@ -205,7 +205,7 @@ bb.a:
   %.sroa.0460 = alloca [15 x float], align 4      ; 9 uses
   %19 = alloca %"class.cv::Matx.0", align 16      ; 27 uses
   %20 = alloca %"class.cv::Mat_.3", align 8       ; 14 uses
-  %21 = alloca %"class.cv::Mat_.3", align 8       ; 11 uses
+  %21 = alloca %"class.cv::Mat_.3", align 8       ; 10 uses
   %22 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %23 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
   %24 = alloca %"class.cv::_InputArray", align 8  ; 7 uses
@@ -533,8 +533,7 @@ bb.g:                                             ; preds = %_ZNK2cv4MatxIfLi4EL
 bb.h:                                             ; preds = %.noexc
   %i.fw = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN2cv3MatD2Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #13
-  br label %.body
+  br label %.body.sink.split
 
 bb.i:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
@@ -780,11 +779,15 @@ bb.n:                                             ; preds = %._crit_edge407.spli
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #13
+  br label %.body.sink.split
+
+.body.sink.split:                                 ; preds = %bb.n, %bb.h
+  %.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.fw, %bb.h ], [ %i.js, %bb.n ]
   call void @_ZN2cv3MatD2Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #13
   br label %.body
 
-.body:                                            ; preds = %bb.j, %bb.h, %bb.n
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.js, %bb.n ], [ %i.gp, %bb.j ], [ %i.fw, %bb.h ]
+.body:                                            ; preds = %.body.sink.split, %bb.j
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.gp, %bb.j ], [ %.pn.pn.pn.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #13
   br label %bb.au
 
@@ -1187,7 +1190,7 @@ bb.a:
   %.sroa.0461 = alloca [15 x float], align 4      ; 9 uses
   %19 = alloca %"class.cv::Matx.0", align 16      ; 27 uses
   %20 = alloca %"class.cv::Mat_.3", align 8       ; 14 uses
-  %21 = alloca %"class.cv::Mat_.3", align 8       ; 11 uses
+  %21 = alloca %"class.cv::Mat_.3", align 8       ; 10 uses
   %22 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %23 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
   %24 = alloca %"class.cv::_InputArray", align 8  ; 7 uses
@@ -1517,8 +1520,7 @@ bb.g:                                             ; preds = %_ZNK2cv4MatxIfLi4EL
 bb.h:                                             ; preds = %.noexc
   %i.fx = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN2cv3MatD2Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #13
-  br label %.body
+  br label %.body.sink.split
 
 bb.i:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
@@ -1826,11 +1828,15 @@ bb.n:                                             ; preds = %._crit_edge408.spli
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #13
+  br label %.body.sink.split
+
+.body.sink.split:                                 ; preds = %bb.n, %bb.h
+  %.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.fx, %bb.h ], [ %i.ld, %bb.n ]
   call void @_ZN2cv3MatD2Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #13
   br label %.body
 
-.body:                                            ; preds = %bb.j, %bb.h, %bb.n
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.ld, %bb.n ], [ %i.he, %bb.j ], [ %i.fx, %bb.h ]
+.body:                                            ; preds = %.body.sink.split, %bb.j
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.he, %bb.j ], [ %.pn.pn.pn.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #13
   br label %bb.au
 
@@ -2233,7 +2239,7 @@ bb.a:
   %.sroa.0461 = alloca [15 x float], align 4      ; 9 uses
   %19 = alloca %"class.cv::Matx.0", align 16      ; 27 uses
   %20 = alloca %"class.cv::Mat_.3", align 8       ; 14 uses
-  %21 = alloca %"class.cv::Mat_.3", align 8       ; 11 uses
+  %21 = alloca %"class.cv::Mat_.3", align 8       ; 10 uses
   %22 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %23 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
   %24 = alloca %"class.cv::_InputArray", align 8  ; 7 uses
@@ -2563,8 +2569,7 @@ bb.g:                                             ; preds = %_ZNK2cv4MatxIfLi4EL
 bb.h:                                             ; preds = %.noexc
   %i.fx = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN2cv3MatD2Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #13
-  br label %.body
+  br label %.body.sink.split
 
 bb.i:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
@@ -2809,11 +2814,15 @@ bb.n:                                             ; preds = %._crit_edge408.spli
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #13
+  br label %.body.sink.split
+
+.body.sink.split:                                 ; preds = %bb.n, %bb.h
+  %.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.fx, %bb.h ], [ %i.jt, %bb.n ]
   call void @_ZN2cv3MatD2Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %21) #13
   br label %.body
 
-.body:                                            ; preds = %bb.j, %bb.h, %bb.n
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.jt, %bb.n ], [ %i.gq, %bb.j ], [ %i.fx, %bb.h ]
+.body:                                            ; preds = %.body.sink.split, %bb.j
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.gq, %bb.j ], [ %.pn.pn.pn.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #13
   br label %bb.au
 

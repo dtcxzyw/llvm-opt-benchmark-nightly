@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #20
-          to label %bb.e unwind label %bb.k       ; 3 uses
+          to label %bb.e unwind label %29         ; 3 uses
 
 bb.e:                                             ; preds = %bb.d
   %i.l = invoke noundef i32 @_ZN7Imf_3_117globalThreadCountEv()
@@ -218,36 +218,40 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.m = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  call void @_ZdlPvm(ptr noundef nonnull %i.k, i64 noundef 16) #21
-  br label %bb.m
+  br label %bb.l
 
 bb.h:                                             ; preds = %bb.c
   %i.n = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #20
-          to label %bb.i unwind label %bb.k       ; 3 uses
+          to label %bb.i unwind label %29         ; 3 uses
 
 bb.i:                                             ; preds = %bb.h
   %i.o = invoke noundef i32 @_ZN7Imf_3_117globalThreadCountEv()
-          to label %bb.j unwind label %bb.l
+          to label %bb.j unwind label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   invoke void @_ZN7Imf_3_19InputFileC1EPKci(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef %1, i32 noundef %i.o)
-          to label %_ZNSt10unique_ptrIN7Imf_3_114TiledInputFileESt14default_deleteIS1_EED2Ev.exit unwind label %bb.l
+          to label %_ZNSt10unique_ptrIN7Imf_3_114TiledInputFileESt14default_deleteIS1_EED2Ev.exit unwind label %bb.k
 
-bb.k:                                             ; preds = %bb.d, %bb.h
+29:                                               ; preds = %bb.d, %bb.h
+  %30 = landingpad { ptr, i32 }
+          cleanup
+          catch ptr @_ZTISt9exception
+  br label %bb.m
+
+bb.k:                                             ; preds = %bb.j, %bb.i
   %i.p = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
+  br label %bb.l
+
+bb.l:                                             ; preds = %bb.g, %bb.k
+  %.sink = phi ptr [ %i.n, %bb.k ], [ %i.k, %bb.g ]
+  %.pn154.pn.ph = phi { ptr, i32 } [ %i.p, %bb.k ], [ %i.m, %bb.g ]
+  call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 16) #21
   br label %bb.m
 
-bb.l:                                             ; preds = %bb.j, %bb.i
-  %29 = landingpad { ptr, i32 }
-          cleanup
-          catch ptr @_ZTISt9exception
-  call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef 16) #21
-  br label %bb.m
-
-bb.m:                                             ; preds = %bb.k, %bb.l, %bb.g
-  %.pn154.pn = phi { ptr, i32 } [ %i.p, %bb.k ], [ %i.m, %bb.g ], [ %29, %bb.l ] ; 3 uses
+bb.m:                                             ; preds = %bb.l, %29
+  %.pn154.pn = phi { ptr, i32 } [ %30, %29 ], [ %.pn154.pn.ph, %bb.l ] ; 3 uses
   %.2 = extractvalue { ptr, i32 } %.pn154.pn, 1
   %i.q = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #19
   %i.r = icmp eq i32 %.2, %i.q

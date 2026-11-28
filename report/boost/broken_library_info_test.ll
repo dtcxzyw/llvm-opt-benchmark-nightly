@@ -204,9 +204,7 @@ _ZN5boost10filesystem4pathD2Ev.exit50:            ; preds = %bb.r, %_ZNKSt7__cxx
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i51: ; preds = %_ZN5boost10filesystem4pathD2Ev.exit50
   %i.cj = load i64, ptr %i.v, align 8, !tbaa !22
-  %13 = add i64 %i.cj, 1
-  call void @_ZdlPvm(ptr noundef %i.ch, i64 noundef %13) #28
-  br label %_ZN5boost10filesystem4pathD2Ev.exit53
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a
 
 bb.s:                                             ; preds = %_ZN5boost10filesystem9copy_fileERKNS0_4pathES3_NS0_12copy_optionsE.exit
   %i.ck = landingpad { ptr, i32 }
@@ -540,16 +538,22 @@ bb.av:                                            ; preds = %bb.au, %bb.aq, %bb.
   %.merged30 = phi { ptr, i32 } [ %.pn18, %bb.u ], [ %i.fj, %bb.au ], [ %.pn28, %bb.aq ], [ %.pn24, %bb.am ], [ %.pn22, %bb.y ] ; 2 uses
   %i.fk = load ptr, ptr %3, align 8, !tbaa !21    ; 2 uses
   %i.fl = icmp eq ptr %i.fk, %i.ai
-  br i1 %i.fl, label %_ZN5boost10filesystem4pathD2Ev.exit53, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a
+  br i1 %i.fl, label %_ZN5boost10filesystem4pathD2Ev.exit53, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a: ; preds = %bb.av
-  %14 = load i64, ptr %i.ai, align 8, !tbaa !22
-  %i.fm = add i64 %14, 1
-  call void @_ZdlPvm(ptr noundef %i.fk, i64 noundef %i.fm) #28
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82: ; preds = %bb.av
+  %13 = load i64, ptr %i.ai, align 8, !tbaa !22
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i51, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82
+  %.sink124 = phi i64 [ %13, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82 ], [ %i.cj, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i51 ]
+  %.sink = phi ptr [ %i.fk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82 ], [ %i.ch, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i51 ]
+  %.merged.ph = phi { ptr, i32 } [ %.merged30, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82 ], [ %i.cc, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i51 ]
+  %i.fm = add i64 %.sink124, 1
+  call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.fm) #28
   br label %_ZN5boost10filesystem4pathD2Ev.exit53
 
-_ZN5boost10filesystem4pathD2Ev.exit53:            ; preds = %bb.av, %_ZN5boost10filesystem4pathD2Ev.exit50, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i51, %bb.q
-  %.merged = phi { ptr, i32 } [ %i.cc, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i51 ], [ %i.cb, %bb.q ], [ %.merged30, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a ], [ %i.cc, %_ZN5boost10filesystem4pathD2Ev.exit50 ], [ %.merged30, %bb.av ]
+_ZN5boost10filesystem4pathD2Ev.exit53:            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a, %bb.av, %_ZN5boost10filesystem4pathD2Ev.exit50, %bb.q
+  %.merged = phi { ptr, i32 } [ %i.cc, %_ZN5boost10filesystem4pathD2Ev.exit50 ], [ %i.cb, %bb.q ], [ %.merged30, %bb.av ], [ %.merged.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i82.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   %i.fn = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
   %i.fo = icmp eq ptr %i.fn, %i.h

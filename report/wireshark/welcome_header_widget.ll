@@ -153,7 +153,7 @@ bb.a:
   %9 = alloca %class.QString, align 16            ; 11 uses
   %10 = alloca %class.QString, align 16           ; 12 uses
   %11 = alloca %class.QString, align 16           ; 12 uses
-  %12 = alloca %class.QString, align 16           ; 14 uses
+  %12 = alloca %class.QString, align 16           ; 13 uses
   %13 = alloca %class.QString, align 8            ; 10 uses
   %14 = alloca %"class.QMetaObject::Connection", align 8 ; 2 uses
   %15 = alloca %"class.QMetaObject::Connection", align 8 ; 2 uses
@@ -325,12 +325,7 @@ bb.p:                                             ; preds = %.noexc75
 _ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159:   ; preds = %bb.p
   %i.as = atomicrmw add ptr %i.ar, i32 -1 acq_rel, align 4
   %.not.i.i160 = icmp eq i32 %i.as, 1
-  br i1 %.not.i.i160, label %23, label %.body
-
-23:                                               ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159
-  %24 = load ptr, ptr %12, align 16
-  call void @_ZN10QArrayData10deallocateEPS_xx(ptr noundef %24, i64 noundef 2, i64 noundef 8) #21
-  br label %.body
+  br i1 %.not.i.i160, label %bb.aj, label %.body
 
 _ZplPKcRK7QString.exit:                           ; preds = %.noexc75
   call void @llvm.experimental.noalias.scope.decl(metadata !24)
@@ -532,13 +527,14 @@ _ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100:   ; preds = %.body80
   %.not.i.i101 = icmp eq i32 %i.ch, 1
   br i1 %.not.i.i101, label %bb.aj, label %.body
 
-bb.aj:                                            ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100
+bb.aj:                                            ; preds = %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159
+  %.pn42.pn.ph = phi { ptr, i32 } [ %i.aq, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159 ], [ %.pn42, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100 ]
   %i.ci = load ptr, ptr %12, align 16
   call void @_ZN10QArrayData10deallocateEPS_xx(ptr noundef %i.ci, i64 noundef 2, i64 noundef 8) #21
   br label %.body
 
-.body:                                            ; preds = %bb.aj, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100, %.body80, %bb.ah, %bb.p, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159, %23
-  %.pn42.pn = phi { ptr, i32 } [ %i.aq, %23 ], [ %i.cb, %bb.ah ], [ %i.aq, %bb.p ], [ %i.aq, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159 ], [ %.pn42, %.body80 ], [ %.pn42, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100 ], [ %.pn42, %bb.aj ]
+.body:                                            ; preds = %bb.aj, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100, %.body80, %bb.ah, %bb.p, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159
+  %.pn42.pn = phi { ptr, i32 } [ %.pn42, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i100 ], [ %i.cb, %bb.ah ], [ %i.aq, %bb.p ], [ %i.aq, %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i159 ], [ %.pn42, %.body80 ], [ %.pn42.pn.ph, %bb.aj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
   br label %bb.cu

@@ -202,8 +202,7 @@ bb.r:                                             ; preds = %_ZN4absl12lts_20250
 bb.s:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #25
-  br label %.body
+  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a
 
 bb.t:                                             ; preds = %_ZN9grpc_core24InterceptionChainBuilder13stack_builderEv.exit.thread, %_ZN9grpc_core24InterceptionChainBuilder13stack_builderEv.exit
   %i.bg = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
@@ -246,8 +245,7 @@ bb.w:                                             ; preds = %_ZN4absl12lts_20250
 bb.x:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit.i23
   %i.bp = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %2) #25
-  br label %.body
+  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a
 
 bb.y:                                             ; preds = %_ZN9grpc_core11CallFilters12StackBuilder3AddINS_20FaultInjectionFilterEEEvPT_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
@@ -344,24 +342,24 @@ _ZN4absl12lts_202505126StatusD2Ev.exit.i:         ; preds = %_ZN4absl12lts_20250
   %i.ct = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !51 ; 3 uses
   %.not.i.i33 = icmp eq ptr %i.cu, null
-  br i1 %.not.i.i33, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a, label %_ZNKSt14default_deleteIN9grpc_core20FaultInjectionFilterEEclEPS1_.exit.i.i
+  br i1 %.not.i.i33, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit, label %_ZNKSt14default_deleteIN9grpc_core20FaultInjectionFilterEEclEPS1_.exit.i.i
 
 _ZNKSt14default_deleteIN9grpc_core20FaultInjectionFilterEEclEPS1_.exit.i.i: ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit.i
   %i.cv = load ptr, ptr %i.cu, align 16, !tbaa !14
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 40
   %i.cx = load ptr, ptr %i.cw, align 8
   call void %i.cx(ptr noundef nonnull align 16 dereferenceable(64) %i.cu) #25, !inline_history !142
-  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a
+  br label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit
 
 _ZN4absl12lts_202505126StatusaSERKS1_.exit.thread: ; preds = %bb.h, %_ZN4absl12lts_202505126StatusaSERKS1_.exit
   %i.cy = phi i64 [ %.pr, %_ZN4absl12lts_202505126StatusaSERKS1_.exit ], [ %i.y, %bb.h ] ; 2 uses
   %i.cz = trunc i64 %i.cy to i1
-  br i1 %i.cz, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a, label %bb.ae
+  br i1 %i.cz, label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZN4absl12lts_202505126StatusaSERKS1_.exit.thread
   %i.da = inttoptr i64 %i.cy to ptr
   invoke void @_ZNK4absl12lts_2025051215status_internal9StatusRep5UnrefEv(ptr noundef nonnull align 8 dereferenceable(48) %i.da)
-          to label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a unwind label %bb.af
+          to label %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit unwind label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.db = landingpad { ptr, i32 }
@@ -370,12 +368,18 @@ bb.af:                                            ; preds = %bb.ae
   call void @__clang_call_terminate(ptr %i.dc) #28
   unreachable
 
-_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a: ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit.i, %_ZNKSt14default_deleteIN9grpc_core20FaultInjectionFilterEEclEPS1_.exit.i.i, %_ZN4absl12lts_202505126StatusaSERKS1_.exit.thread, %bb.ae
+_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit: ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit.i, %_ZNKSt14default_deleteIN9grpc_core20FaultInjectionFilterEEclEPS1_.exit.i.i, %_ZN4absl12lts_202505126StatusaSERKS1_.exit.thread, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   br label %bb.ag
 
-.body:                                            ; preds = %_ZNSt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS1_EED2Ev.exit32.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.s, %bb.x
-  %.pn.pn = phi { ptr, i32 } [ %i.bp, %bb.x ], [ %i.bf, %bb.s ], [ %lpad.loopexit.split-lp52, %_ZNSt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS1_EED2Ev.exit32.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a: ; preds = %bb.x, %bb.s
+  %.sink = phi ptr [ %3, %bb.s ], [ %2, %bb.x ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.bf, %bb.s ], [ %i.bp, %bb.x ]
+  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #25
+  br label %.body
+
+.body:                                            ; preds = %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a, %_ZNSt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS1_EED2Ev.exit32.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp52, %_ZNSt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS1_EED2Ev.exit32.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %.pn.pn.ph, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a ]
   call void @_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %4) #25
   br label %_ZN9grpc_core13RefCountedPtrIKNS_12FilterConfigEED2Ev.exit18
 
@@ -384,7 +388,7 @@ _ZN9grpc_core13RefCountedPtrIKNS_12FilterConfigEED2Ev.exit18: ; preds = %bb.l, %
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   resume { ptr, i32 } %.pn.pn.pn
 
-bb.ag:                                            ; preds = %bb.a, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit.a
+bb.ag:                                            ; preds = %bb.a, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataISt10unique_ptrIN9grpc_core20FaultInjectionFilterESt14default_deleteIS5_EEED2Ev.exit
   ret ptr %0
 }
 

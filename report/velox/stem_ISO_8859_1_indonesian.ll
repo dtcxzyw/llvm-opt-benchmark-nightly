@@ -202,11 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !54   ; 2 uses
   store i32 1, ptr %i.q, align 4, !tbaa !55
-  %1 = getelementptr inbounds nuw i8, ptr %i.q, i64 4 ; 2 uses
-  %2 = load i32, ptr %1, align 4, !tbaa !55
-  %3 = add nsw i32 %2, -1
-  store i32 %3, ptr %1, align 4, !tbaa !55
-  br label %bb.s
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.d
   %i.r = tail call i32 @slice_del(ptr noundef nonnull %0) #4 ; 2 uses
@@ -217,11 +213,7 @@ bb.h:                                             ; preds = %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !54   ; 2 uses
   store i32 3, ptr %i.u, align 4, !tbaa !55
-  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 4 ; 2 uses
-  %5 = load i32, ptr %4, align 4, !tbaa !55
-  %6 = add nsw i32 %5, -1
-  store i32 %6, ptr %4, align 4, !tbaa !55
-  br label %bb.s
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -233,11 +225,7 @@ bb.i:                                             ; preds = %bb.d
 
 bb.j:                                             ; preds = %bb.i
   %i.z = load ptr, ptr %i.v, align 8, !tbaa !54
-  %7 = getelementptr inbounds nuw i8, ptr %i.z, i64 4 ; 2 uses
-  %8 = load i32, ptr %7, align 4, !tbaa !55
-  %9 = add nsw i32 %8, -1
-  store i32 %9, ptr %7, align 4, !tbaa !55
-  br label %bb.s
+  br label %.sink.split
 
 bb.k:                                             ; preds = %bb.d
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -249,11 +237,7 @@ bb.k:                                             ; preds = %bb.d
 
 bb.l:                                             ; preds = %bb.k
   %i.ae = load ptr, ptr %i.aa, align 8, !tbaa !54
-  %10 = getelementptr inbounds nuw i8, ptr %i.ae, i64 4 ; 2 uses
-  %11 = load i32, ptr %10, align 4, !tbaa !55
-  %12 = add nsw i32 %11, -1
-  store i32 %12, ptr %10, align 4, !tbaa !55
-  br label %bb.s
+  br label %.sink.split
 
 bb.m:                                             ; preds = %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -311,8 +295,16 @@ bb.r:                                             ; preds = %bb.p
   %.1196.ph = phi i32 [ %i.ax, %bb.q ], [ %i.az, %bb.r ]
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.d, %bb.f, %bb.h, %bb.j, %bb.l, %bb.o, %bb.n, %bb.r, %bb.q, %.thread130, %.thread117, %bb.c, %bb.a, %bb.b, %bb.e, %bb.g, %bb.i, %bb.k
-  %.12 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %i.n, %bb.e ], [ %i.r, %bb.g ], [ %i.x, %bb.i ], [ %i.ac, %bb.k ], [ %.792.ph, %.thread117 ], [ %.1196.ph, %.thread130 ], [ 0, %bb.b ], [ 1, %bb.q ], [ 1, %bb.r ], [ 1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.l ], [ 1, %bb.j ], [ 1, %bb.h ], [ 1, %bb.f ], [ 1, %bb.d ]
+.sink.split:                                      ; preds = %bb.l, %bb.j, %bb.h, %bb.f
+  %.sink144 = phi ptr [ %i.q, %bb.f ], [ %i.u, %bb.h ], [ %i.z, %bb.j ], [ %i.ae, %bb.l ]
+  %1 = getelementptr inbounds nuw i8, ptr %.sink144, i64 4 ; 2 uses
+  %2 = load i32, ptr %1, align 4, !tbaa !55
+  %3 = add nsw i32 %2, -1
+  store i32 %3, ptr %1, align 4, !tbaa !55
+  br label %bb.s
+
+bb.s:                                             ; preds = %.sink.split, %bb.d, %bb.o, %bb.n, %bb.r, %bb.q, %.thread130, %.thread117, %bb.c, %bb.a, %bb.b, %bb.e, %bb.g, %bb.i, %bb.k
+  %.12 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %i.n, %bb.e ], [ %i.r, %bb.g ], [ %i.x, %bb.i ], [ %i.ac, %bb.k ], [ %.792.ph, %.thread117 ], [ %.1196.ph, %.thread130 ], [ 0, %bb.b ], [ 1, %bb.q ], [ 1, %bb.r ], [ 1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.d ], [ 1, %.sink.split ]
   ret i32 %.12
 }
 

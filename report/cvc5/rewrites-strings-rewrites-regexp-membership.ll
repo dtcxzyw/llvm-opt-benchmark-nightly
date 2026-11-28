@@ -204,7 +204,7 @@ begin_hunk_0_@_ZN4cvc58internal8rewriter46addRewrites_strings_rewrites_regexp_me
   %242 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %243 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %244 = alloca %"class.std::vector.103", align 8 ; 10 uses
-  %245 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 12 uses
+  %245 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 11 uses
   %246 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %247 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %248 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
@@ -216,7 +216,7 @@ begin_hunk_0_@_ZN4cvc58internal8rewriter46addRewrites_strings_rewrites_regexp_me
   %254 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %255 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %256 = alloca %"class.std::vector.103", align 8 ; 10 uses
-  %257 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 12 uses
+  %257 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 11 uses
   %258 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %259 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %260 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
@@ -277,7 +277,7 @@ begin_hunk_0_@_ZN4cvc58internal8rewriter46addRewrites_strings_rewrites_regexp_me
   %315 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %316 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 7 uses
   %317 = alloca %"class.std::vector.103", align 8 ; 10 uses
-  %318 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 12 uses
+  %318 = alloca [2 x %"class.cvc5::internal::NodeTemplate"], align 8 ; 11 uses
   %319 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %320 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
   %321 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 4 uses
@@ -680,8 +680,7 @@ bb.avo:                                           ; preds = %bb.ni
 .loopexit2384.loopexit2400:                       ; preds = %bb.no
   %i.fga = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %245) #17
-  br label %.loopexit2384
+  br label %.loopexit2384.sink.split
 
 bb.avp:                                           ; preds = %bb.nu
   %i.fgb = landingpad { ptr, i32 }
@@ -733,11 +732,15 @@ bb.avx:                                           ; preds = %bb.avw, %bb.avp
   %.pn635.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn635.pn.pn.pn, %bb.avx ], [ %i.axm, %bb.np ], [ %i.axm, %bb.nq ]
   %i.fgg = getelementptr inbounds nuw i8, ptr %245, i64 8
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.fgg) #17
+  br label %.loopexit2384.sink.split
+
+.loopexit2384.sink.split:                         ; preds = %.body1271, %.loopexit2384.loopexit2400
+  %.pn635.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.fga, %.loopexit2384.loopexit2400 ], [ %.pn635.pn.pn.pn.pn, %.body1271 ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %245) #17
   br label %.loopexit2384
 
-.loopexit2384:                                    ; preds = %.loopexit2384.loopexit2400, %.body1271, %.thread
-  %.pn635.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn635.pn.pn.pn.pn, %.body1271 ], [ %i.aws, %.thread ], [ %i.fga, %.loopexit2384.loopexit2400 ]
+.loopexit2384:                                    ; preds = %.loopexit2384.sink.split, %.thread
+  %.pn635.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.aws, %.thread ], [ %.pn635.pn.pn.pn.pn.pn.ph, %.loopexit2384.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %245) #17
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %243) #17
   br label %bb.avy
@@ -819,8 +822,7 @@ bb.awf:                                           ; preds = %bb.qf
 .loopexit2381.loopexit2399:                       ; preds = %bb.ql
   %i.fgn = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %257) #17
-  br label %.loopexit2381
+  br label %.loopexit2381.sink.split
 
 bb.awg:                                           ; preds = %bb.qr
   %i.fgo = landingpad { ptr, i32 }
@@ -872,11 +874,15 @@ bb.awo:                                           ; preds = %bb.awn, %bb.awg
   %.pn650.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn650.pn.pn.pn, %bb.awo ], [ %i.bie, %bb.qm ], [ %i.bie, %bb.qn ]
   %i.fgt = getelementptr inbounds nuw i8, ptr %257, i64 8
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.fgt) #17
+  br label %.loopexit2381.sink.split
+
+.loopexit2381.sink.split:                         ; preds = %.body1353, %.loopexit2381.loopexit2399
+  %.pn650.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.fgn, %.loopexit2381.loopexit2399 ], [ %.pn650.pn.pn.pn.pn, %.body1353 ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %257) #17
   br label %.loopexit2381
 
-.loopexit2381:                                    ; preds = %.loopexit2381.loopexit2399, %.body1353, %.thread2289
-  %.pn650.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn650.pn.pn.pn.pn, %.body1353 ], [ %i.bhk, %.thread2289 ], [ %i.fgn, %.loopexit2381.loopexit2399 ]
+.loopexit2381:                                    ; preds = %.loopexit2381.sink.split, %.thread2289
+  %.pn650.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bhk, %.thread2289 ], [ %.pn650.pn.pn.pn.pn.pn.ph, %.loopexit2381.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %257) #17
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %255) #17
   br label %bb.awp
@@ -1279,8 +1285,7 @@ bb.azm:                                           ; preds = %bb.aek
 .loopexit2350.loopexit2395:                       ; preds = %bb.aeq
   %i.fjo = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %318) #17
-  br label %.loopexit2350
+  br label %.loopexit2350.sink.split
 
 bb.azn:                                           ; preds = %bb.aew
   %i.fjp = landingpad { ptr, i32 }
@@ -1332,11 +1337,15 @@ bb.azv:                                           ; preds = %bb.azu, %bb.azn
   %.pn725.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn725.pn.pn.pn, %bb.azv ], [ %i.dkv, %bb.aer ], [ %i.dkv, %bb.aes ]
   %i.fju = getelementptr inbounds nuw i8, ptr %318, i64 8
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.fju) #17
+  br label %.loopexit2350.sink.split
+
+.loopexit2350.sink.split:                         ; preds = %.body1863, %.loopexit2350.loopexit2395
+  %.pn725.pn.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.fjo, %.loopexit2350.loopexit2395 ], [ %.pn725.pn.pn.pn.pn, %.body1863 ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %318) #17
   br label %.loopexit2350
 
-.loopexit2350:                                    ; preds = %.loopexit2350.loopexit2395, %.body1863, %.thread2337
-  %.pn725.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn725.pn.pn.pn.pn, %.body1863 ], [ %i.dkb, %.thread2337 ], [ %i.fjo, %.loopexit2350.loopexit2395 ]
+.loopexit2350:                                    ; preds = %.loopexit2350.sink.split, %.thread2337
+  %.pn725.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.dkb, %.thread2337 ], [ %.pn725.pn.pn.pn.pn.pn.ph, %.loopexit2350.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %318) #17
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %316) #17
   br label %bb.azw

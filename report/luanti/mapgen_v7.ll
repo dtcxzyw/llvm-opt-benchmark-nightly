@@ -202,44 +202,37 @@ bb.r:                                             ; preds = %bb.ai, %bb.ac, %bb.
 bb.s:                                             ; preds = %bb.c
   %i.di = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bc, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.t:                                             ; preds = %bb.e
   %i.dj = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bl, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.u:                                             ; preds = %bb.g
   %i.dk = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bs, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.v:                                             ; preds = %bb.i
   %i.dl = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bz, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.w:                                             ; preds = %bb.k
   %i.dm = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.cg, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.x:                                             ; preds = %bb.n
   %i.dn = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.cq, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.y:                                             ; preds = %bb.p
   %i.do = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.cx, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.z:                                             ; preds = %bb.q, %bb.l
   %i.dp = phi i32 [ %.pre, %bb.q ], [ %i.co, %bb.l ] ; 2 uses
@@ -287,14 +280,12 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ab
   %i.ei = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.dr, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.ag:                                            ; preds = %bb.ad
   %i.ej = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.dy, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.ah:                                            ; preds = %bb.ae, %bb.z
   %i.ek = phi i32 [ %.pre42, %bb.ae ], [ %i.dp, %bb.z ]
@@ -326,8 +317,7 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.aj
   %i.ew = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.em, i64 noundef 88) #12
-  br label %bb.an
+  br label %.sink.split
 
 bb.am:                                            ; preds = %bb.ak, %bb.ah
   %i.ex = getelementptr inbounds nuw i8, ptr %1, i64 548
@@ -344,8 +334,14 @@ bb.am:                                            ; preds = %bb.ak, %bb.ah
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.fe, ptr noundef nonnull align 4 dereferenceable(40) %i.fd, i64 40, i1 false), !tbaa.struct !107
   ret void
 
-bb.an:                                            ; preds = %bb.al, %bb.ag, %bb.af, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r
-  %.pn = phi { ptr, i32 } [ %i.ew, %bb.al ], [ %i.dh, %bb.r ], [ %i.ej, %bb.ag ], [ %i.ei, %bb.af ], [ %i.do, %bb.y ], [ %i.dn, %bb.x ], [ %i.dm, %bb.w ], [ %i.dl, %bb.v ], [ %i.dk, %bb.u ], [ %i.dj, %bb.t ], [ %i.di, %bb.s ]
+.sink.split:                                      ; preds = %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.af, %bb.ag, %bb.al
+  %.sink = phi ptr [ %i.em, %bb.al ], [ %i.dy, %bb.ag ], [ %i.dr, %bb.af ], [ %i.cx, %bb.y ], [ %i.cq, %bb.x ], [ %i.cg, %bb.w ], [ %i.bz, %bb.v ], [ %i.bs, %bb.u ], [ %i.bl, %bb.t ], [ %i.bc, %bb.s ]
+  %.pn.ph = phi { ptr, i32 } [ %i.ew, %bb.al ], [ %i.ej, %bb.ag ], [ %i.ei, %bb.af ], [ %i.do, %bb.y ], [ %i.dn, %bb.x ], [ %i.dm, %bb.w ], [ %i.dl, %bb.v ], [ %i.dk, %bb.u ], [ %i.dj, %bb.t ], [ %i.di, %bb.s ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 88) #12
+  br label %bb.an
+
+bb.an:                                            ; preds = %.sink.split, %bb.r
+  %.pn = phi { ptr, i32 } [ %i.dh, %bb.r ], [ %.pn.ph, %.sink.split ]
   tail call void @_ZN11MapgenBasicD2Ev(ptr noundef nonnull align 8 dead_on_return(474) dereferenceable(474) %0) #13
   resume { ptr, i32 } %.pn
 }

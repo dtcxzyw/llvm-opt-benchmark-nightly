@@ -202,7 +202,7 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca ptr, align 8                      ; 4 uses
   %6 = alloca %"class.llvh::InitLLVM", align 8    ; 6 uses
-  %7 = alloca %"class.llvh::PrettyStackTraceProgram", align 8 ; 10 uses
+  %7 = alloca %"class.llvh::PrettyStackTraceProgram", align 8 ; 9 uses
   %8 = alloca %"class.hermes::oscompat::SigAltStackLeakSuppressor", align 1 ; 5 uses
   %9 = alloca %"class.std::shared_ptr", align 16  ; 12 uses
   %10 = alloca %"class.std::shared_ptr.19", align 8 ; 7 uses
@@ -243,8 +243,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.noexc
   %i.i = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4llvh21PrettyStackTraceEntryD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(32) %7) #22
-  br label %.body
+  br label %_ZN4llvh17llvm_shutdown_objD2Ev.exit170
 
 _ZN4llvh23PrettyStackTraceProgramC2EiPKPKc.exit:  ; preds = %.noexc
   %i.j = load i32, ptr %i.c, align 4, !tbaa !8
@@ -647,12 +646,13 @@ bb.dh:                                            ; preds = %bb.dg
   call void @__clang_call_terminate(ptr %i.mc) #26
   unreachable
 
-_ZN4llvh17llvm_shutdown_objD2Ev.exit170:          ; preds = %bb.dg
+_ZN4llvh17llvm_shutdown_objD2Ev.exit170:          ; preds = %bb.dg, %bb.c
+  %.merged67.ph = phi { ptr, i32 } [ %i.i, %bb.c ], [ %.merged68, %bb.dg ]
   call void @_ZN4llvh21PrettyStackTraceEntryD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %7) #22
   br label %.body
 
-.body:                                            ; preds = %bb.l, %bb.c, %_ZN4llvh17llvm_shutdown_objD2Ev.exit170
-  %.merged67 = phi { ptr, i32 } [ %.merged68, %_ZN4llvh17llvm_shutdown_objD2Ev.exit170 ], [ %i.ak, %bb.l ], [ %i.i, %bb.c ]
+.body:                                            ; preds = %_ZN4llvh17llvm_shutdown_objD2Ev.exit170, %bb.l
+  %.merged67 = phi { ptr, i32 } [ %i.ak, %bb.l ], [ %.merged67.ph, %_ZN4llvh17llvm_shutdown_objD2Ev.exit170 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   br label %bb.di
 

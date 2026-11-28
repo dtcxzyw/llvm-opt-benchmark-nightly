@@ -160,14 +160,12 @@ bb.g:                                             ; preds = %bb.d, %bb.a
 bb.h:                                             ; preds = %bb.b
   %i.bc = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ah, i64 noundef 88) #10
-  br label %bb.k
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.e
   %i.bd = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.au, i64 noundef 88) #10
-  br label %bb.k
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.c, %bb.f
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 228
@@ -184,8 +182,14 @@ bb.j:                                             ; preds = %bb.c, %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bl, ptr noundef nonnull align 4 dereferenceable(40) %i.bk, i64 40, i1 false), !tbaa.struct !89
   ret void
 
-bb.k:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.pn = phi { ptr, i32 } [ %i.bd, %bb.i ], [ %i.bb, %bb.g ], [ %i.bc, %bb.h ]
+.sink.split:                                      ; preds = %bb.h, %bb.i
+  %.sink = phi ptr [ %i.au, %bb.i ], [ %i.ah, %bb.h ]
+  %.pn.ph = phi { ptr, i32 } [ %i.bd, %bb.i ], [ %i.bc, %bb.h ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 88) #10
+  br label %bb.k
+
+bb.k:                                             ; preds = %.sink.split, %bb.g
+  %.pn = phi { ptr, i32 } [ %i.bb, %bb.g ], [ %.pn.ph, %.sink.split ]
   tail call void @_ZN11MapgenBasicD2Ev(ptr noundef nonnull align 8 dead_on_return(474) dereferenceable(474) %0) #11
   resume { ptr, i32 } %.pn
 }

@@ -176,8 +176,7 @@ bb.r:                                             ; preds = %bb.o
 bb.s:                                             ; preds = %bb.p
   %i.bi = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.be) #11
-  br label %bb.am
+  br label %.sink.split
 
 bb.t:                                             ; preds = %bb.q, %bb.n
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -213,8 +212,7 @@ bb.x:                                             ; preds = %bb.u
 bb.y:                                             ; preds = %bb.v
   %i.bt = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.bn) #11
-  br label %bb.am
+  br label %.sink.split
 
 bb.z:                                             ; preds = %bb.t, %bb.w
   %i.bu = phi i32 [ %i.bl, %bb.t ], [ %.pre, %bb.w ]
@@ -269,8 +267,7 @@ bb.ae:                                            ; preds = %bb.m
 bb.af:                                            ; preds = %bb.ab
   %i.cu = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.ch) #11
-  br label %bb.am
+  br label %.sink.split
 
 bb.ag:                                            ; preds = %bb.ac, %bb.z
   %i.cv = tail call noundef ptr @_ZN6icu_787UMemorynwEm(i64 noundef 96) #11 ; 4 uses
@@ -297,14 +294,19 @@ bb.aj:                                            ; preds = %bb.ag
 bb.ak:                                            ; preds = %bb.ah
   %i.db = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.cv) #11
-  br label %bb.am
+  br label %.sink.split
 
 bb.al:                                            ; preds = %bb.ai, %bb.ad, %bb.aj, %bb.a, %bb.x, %bb.r, %bb.l, %bb.i, %bb.d
   ret void
 
-bb.am:                                            ; preds = %bb.ae, %bb.af, %bb.ak, %bb.y, %bb.s
-  %.pn.pn = phi { ptr, i32 } [ %i.bi, %bb.s ], [ %i.bt, %bb.y ], [ %i.cu, %bb.af ], [ %i.db, %bb.ak ], [ %i.ct, %bb.ae ]
+.sink.split:                                      ; preds = %bb.s, %bb.y, %bb.ak, %bb.af
+  %.sink75 = phi ptr [ %i.ch, %bb.af ], [ %i.cv, %bb.ak ], [ %i.bn, %bb.y ], [ %i.be, %bb.s ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.cu, %bb.af ], [ %i.db, %bb.ak ], [ %i.bt, %bb.y ], [ %i.bi, %bb.s ]
+  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %.sink75) #11
+  br label %bb.am
+
+bb.am:                                            ; preds = %.sink.split, %bb.ae
+  %.pn.pn = phi { ptr, i32 } [ %i.ct, %bb.ae ], [ %.pn.pn.ph, %.sink.split ]
   tail call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %i.a) #11
   resume { ptr, i32 } %.pn.pn
 }

@@ -204,10 +204,10 @@ record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit: ; preds = %bb.r, %b
   %indvars.iv.next.jt0.lcssa134 = phi i64 [ %indvars.iv.next.jt0.peel, %bb.ab ], [ %indvars.iv.next.jt0, %bb.r ]
   br label %record_size_skip_cipher.exit.thread.jt0.sink.split
 
-record_size_skip_cipher.exit.thread.jt0.sink.split: ; preds = %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit, %bb.s, %bb.q
-  %.sink = phi i32 [ 2241, %bb.q ], [ 2255, %bb.s ], [ 2241, %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit ]
-  %.str.118.sink = phi ptr [ @.str.117, %bb.q ], [ @.str.118, %bb.s ], [ @.str.117, %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit ]
-  %indvars.iv127.ph = phi i64 [ %indvars.iv, %bb.q ], [ %indvars.iv124, %bb.s ], [ %indvars.iv.next.jt0.lcssa134, %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit ]
+record_size_skip_cipher.exit.thread.jt0.sink.split: ; preds = %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit, %bb.q, %bb.s
+  %.sink = phi i32 [ 2255, %bb.s ], [ 2241, %bb.q ], [ 2241, %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit ]
+  %.str.118.sink = phi ptr [ @.str.118, %bb.s ], [ @.str.117, %bb.q ], [ @.str.117, %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit ]
+  %indvars.iv127.ph = phi i64 [ %indvars.iv124, %bb.s ], [ %indvars.iv, %bb.q ], [ %indvars.iv.next.jt0.lcssa134, %record_size_skip_cipher.exit.thread.jt0.sink.split.loopexit ]
   %i.af = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str, ptr noundef nonnull @.str.1, i32 noundef %.sink) ; 0 uses
   %i.ag = load ptr, ptr @stdout, align 8, !tbaa !15
   %fwrite = tail call i64 @fwrite(ptr nonnull @.str.2, i64 15, i64 1, ptr %i.ag) ; 0 uses
@@ -221,10 +221,10 @@ record_size_skip_cipher.exit.thread.jt0.sink.split: ; preds = %record_size_skip_
   %i.am = tail call i32 @fflush(ptr noundef %i.al) ; 0 uses
   br label %record_size_skip_cipher.exit.thread.jt0.preheader
 
-record_size_skip_cipher.exit.thread.jt0.preheader: ; preds = %bb.s, %bb.q, %record_size_skip_cipher.exit.thread.jt0.sink.split
-  %indvars.iv127.ph131 = phi i64 [ %indvars.iv127.ph, %record_size_skip_cipher.exit.thread.jt0.sink.split ], [ %indvars.iv, %bb.q ], [ %indvars.iv124, %bb.s ]
-  %.not121.jt0.ph = phi i1 [ true, %record_size_skip_cipher.exit.thread.jt0.sink.split ], [ false, %bb.q ], [ false, %bb.s ]
-  %.480.jt0.ph = phi i32 [ 0, %record_size_skip_cipher.exit.thread.jt0.sink.split ], [ 1, %bb.q ], [ 1, %bb.s ] ; 10 uses
+record_size_skip_cipher.exit.thread.jt0.preheader: ; preds = %bb.s, %record_size_skip_cipher.exit.thread.jt0.sink.split, %bb.q
+  %indvars.iv127.ph131 = phi i64 [ %indvars.iv, %bb.q ], [ %indvars.iv124, %bb.s ], [ %indvars.iv127.ph, %record_size_skip_cipher.exit.thread.jt0.sink.split ]
+  %.not121.jt0.ph = phi i1 [ false, %bb.q ], [ false, %bb.s ], [ true, %record_size_skip_cipher.exit.thread.jt0.sink.split ]
+  %.480.jt0.ph = phi i32 [ 1, %bb.q ], [ 1, %bb.s ], [ 0, %record_size_skip_cipher.exit.thread.jt0.sink.split ] ; 10 uses
   %indvars.iv.next.jt0.peel = add nuw nsw i64 %indvars.iv127.ph131, 1 ; 14 uses
   %exitcond.not.jt0.peel = icmp eq i64 %indvars.iv.next.jt0.peel, %wide.trip.count
   br i1 %exitcond.not.jt0.peel, label %._crit_edge.thread, label %.lr.ph.jt0.peel, !llvm.loop !68

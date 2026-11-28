@@ -185,7 +185,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ae = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 4 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %10, i64 48 ; 4 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 7 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 4 uses
   br label %bb.l
 
@@ -588,7 +588,7 @@ _ZN5vcpkg7details19OptionalStorageDtorINSt7__cxx1112basic_stringIcSt11char_trait
   br label %bb.az
 
 _ZN5vcpkg7details19OptionalStorageDtorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EED2Ev.exit: ; preds = %bb.au, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i100, %_ZN5vcpkg13ParseMessagesD2Ev.exit99, %bb.x
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bm, %bb.x ], [ %.pn.pn.pn, %_ZN5vcpkg13ParseMessagesD2Ev.exit99 ], [ %.pn.pn.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i100 ], [ %.pn.pn.pn, %bb.au ] ; 4 uses
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bm, %bb.x ], [ %.pn.pn.pn, %_ZN5vcpkg13ParseMessagesD2Ev.exit99 ], [ %.pn.pn.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i100 ], [ %.pn.pn.pn, %bb.au ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #16
   %i.hl = load i8, ptr %i.o, align 8, !tbaa !67, !range !68, !noundef !69
   %i.hm = trunc nuw i8 %i.hl to i1
@@ -597,13 +597,7 @@ _ZN5vcpkg7details19OptionalStorageDtorINSt7__cxx1112basic_stringIcSt11char_trait
 bb.ax:                                            ; preds = %_ZN5vcpkg7details19OptionalStorageDtorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EED2Ev.exit
   %i.hn = load ptr, ptr %10, align 8, !tbaa !20   ; 2 uses
   %i.ho = icmp eq ptr %i.hn, %i.ah
-  br i1 %i.ho, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i105
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i105: ; preds = %bb.ax
-  %20 = load i64, ptr %i.ah, align 8, !tbaa !21
-  %21 = add i64 %20, 1
-  call void @_ZdlPvm(ptr noundef %i.hn, i64 noundef %21) #18
-  br label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit
+  br i1 %i.ho, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit.sink.split
 
 bb.ay:                                            ; preds = %_ZN5vcpkg7details19OptionalStorageDtorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EED2Ev.exit
   %i.hp = load ptr, ptr %.sroa.gep, align 8, !tbaa !20 ; 2 uses
@@ -619,13 +613,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i: ; preds = %bb.ay, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
   %i.ht = load ptr, ptr %10, align 8, !tbaa !20   ; 2 uses
   %i.hu = icmp eq ptr %i.ht, %i.ah
-  br i1 %i.hu, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i
-  %22 = load i64, ptr %i.ah, align 8, !tbaa !21
-  %23 = add i64 %22, 1
-  call void @_ZdlPvm(ptr noundef %i.ht, i64 noundef %23) #18
-  br label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit
+  br i1 %i.hu, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit.sink.split
 
 .thread:                                          ; preds = %_ZN5vcpkg7details19OptionalStorageDtorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0EED2Ev.exit104.thread, %bb.o
   store i8 1, ptr %5, align 8, !tbaa !44
@@ -682,8 +670,15 @@ _ZN5vcpkg4PathD2Ev.exit:                          ; preds = %_ZN5vcpkg9ExpectedT
   %.not = icmp eq ptr %i.il, %i.l
   br i1 %.not, label %bb.k, label %bb.l
 
-_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %bb.ax, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i105, %bb.w
-  %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bl, %bb.w ], [ %.pn.pn.pn.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i ], [ %.pn.pn.pn.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i105 ], [ %.pn.pn.pn.pn, %bb.ax ], [ %.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ] ; 2 uses
+_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit.sink.split: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %bb.ax
+  %.sink275 = phi ptr [ %i.hn, %bb.ax ], [ %i.ht, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ]
+  %20 = load i64, ptr %i.ah, align 8, !tbaa !21
+  %21 = add i64 %20, 1
+  call void @_ZdlPvm(ptr noundef %.sink275, i64 noundef %21) #18
+  br label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit
+
+_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit: ; preds = %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i, %bb.ax, %bb.w
+  %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bl, %bb.w ], [ %.pn.pn.pn.pn, %bb.ax ], [ %.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i ], [ %.pn.pn.pn.pn, %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit.sink.split ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #16
   %i.im = load ptr, ptr %9, align 8, !tbaa !20    ; 2 uses
   %i.in = icmp eq ptr %i.im, %i.ai

@@ -204,7 +204,7 @@ bb.a:
   %8 = alloca %"class.bzla::util::Logger::Line", align 8 ; 7 uses
   %9 = alloca %"class.bzla::Node", align 8        ; 7 uses
   %10 = alloca %"class.std::vector", align 8      ; 12 uses
-  %11 = alloca [2 x %"class.bzla::Node"], align 8 ; 11 uses
+  %11 = alloca [2 x %"class.bzla::Node"], align 8 ; 10 uses
   %12 = alloca %"class.std::vector.205", align 8  ; 8 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !37, !nonnull !38, !align !39
   %i.b = tail call noundef nonnull align 8 dereferenceable(3712) ptr @_ZNK4bzla14SolvingContext7optionsEv(ptr noundef nonnull align 8 dereferenceable(12744) %i.a)
@@ -607,8 +607,7 @@ _ZNSt6vectorIN4bzla4NodeESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN4bz
 .loopexit.loopexit134:                            ; preds = %bb.ao
   %i.dh = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %11) #14
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.az:                                            ; preds = %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.1
   %i.di = landingpad { ptr, i32 }
@@ -644,11 +643,15 @@ _ZNSt6vectorImSaImEED2Ev.exit93:                  ; preds = %bb.bb, %bb.bc
   %.pn59.pn = phi { ptr, i32 } [ %.pn59, %_ZNSt6vectorImSaImEED2Ev.exit93 ], [ %eh.lpad-body96, %.body95 ], [ %eh.lpad-body96, %bb.au ]
   %i.dp = getelementptr inbounds nuw i8, ptr %11, i64 8
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.dp) #14
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.body, %.loopexit.loopexit134
+  %.pn59.pn.pn.ph = phi { ptr, i32 } [ %i.dh, %.loopexit.loopexit134 ], [ %.pn59.pn, %.body ]
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %11) #14
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit134, %.body, %.thread
-  %.pn59.pn.pn = phi { ptr, i32 } [ %.pn59.pn, %.body ], [ %i.ca, %.thread ], [ %i.dh, %.loopexit.loopexit134 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn59.pn.pn = phi { ptr, i32 } [ %i.ca, %.thread ], [ %.pn59.pn.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
@@ -1051,11 +1054,11 @@ bb.a:
   %6 = alloca %"class.std::unordered_set.223", align 8 ; 14 uses
   %7 = alloca %"class.bzla::Node", align 8        ; 7 uses
   %8 = alloca %"class.std::vector", align 8       ; 12 uses
-  %9 = alloca [2 x %"class.bzla::Node"], align 8  ; 11 uses
+  %9 = alloca [2 x %"class.bzla::Node"], align 8  ; 10 uses
   %10 = alloca %"class.std::vector.205", align 8  ; 8 uses
   %11 = alloca %"class.bzla::Node", align 8       ; 7 uses
   %12 = alloca %"class.std::vector", align 8      ; 12 uses
-  %13 = alloca [2 x %"class.bzla::Node"], align 8 ; 11 uses
+  %13 = alloca [2 x %"class.bzla::Node"], align 8 ; 10 uses
   %14 = alloca %"class.std::vector.205", align 8  ; 8 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(4048) ptr @_ZN4bzla14SolvingContext3envEv(ptr noundef nonnull align 8 dereferenceable(12744) %1)
   %i.b = tail call noundef nonnull align 8 dereferenceable(216) ptr @_ZN4bzla3Env2nmEv(ptr noundef nonnull align 8 dereferenceable(4048) %i.a) ; 2 uses
@@ -1436,8 +1439,7 @@ bb.ai:                                            ; preds = %bb.b, %bb.d, %bb.e,
 .loopexit80.loopexit125:                          ; preds = %bb.m, %bb.l
   %i.cq = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %9) #14
-  br label %.loopexit80
+  br label %.loopexit80.sink.split
 
 bb.aj:                                            ; preds = %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.1
   %i.cr = landingpad { ptr, i32 }
@@ -1463,11 +1465,15 @@ _ZNSt6vectorImSaImEED2Ev.exit55:                  ; preds = %bb.aj, %bb.ak
   %.pn = phi { ptr, i32 } [ %i.cr, %_ZNSt6vectorImSaImEED2Ev.exit55 ], [ %eh.lpad-body59, %.body58 ], [ %eh.lpad-body59, %bb.s ]
   %i.cx = getelementptr inbounds nuw i8, ptr %9, i64 8
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.cx) #14
+  br label %.loopexit80.sink.split
+
+.loopexit80.sink.split:                           ; preds = %.body, %.loopexit80.loopexit125
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.cq, %.loopexit80.loopexit125 ], [ %.pn, %.body ]
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %9) #14
   br label %.loopexit80
 
-.loopexit80:                                      ; preds = %.loopexit80.loopexit125, %.body, %.thread
-  %.pn.pn = phi { ptr, i32 } [ %.pn, %.body ], [ %i.z, %.thread ], [ %i.cq, %.loopexit80.loopexit125 ]
+.loopexit80:                                      ; preds = %.loopexit80.sink.split, %.thread
+  %.pn.pn = phi { ptr, i32 } [ %i.z, %.thread ], [ %.pn.pn.ph, %.loopexit80.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
   br label %bb.ap
@@ -1475,8 +1481,7 @@ _ZNSt6vectorImSaImEED2Ev.exit55:                  ; preds = %bb.aj, %bb.ak
 .loopexit.loopexit124:                            ; preds = %bb.x, %bb.w
   %i.cy = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %13) #14
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.al:                                            ; preds = %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i68.1
   %i.cz = landingpad { ptr, i32 }
@@ -1512,11 +1517,15 @@ _ZNSt6vectorImSaImEED2Ev.exit57:                  ; preds = %bb.an, %bb.ao
   %.pn26.pn = phi { ptr, i32 } [ %.pn26, %_ZNSt6vectorImSaImEED2Ev.exit57 ], [ %eh.lpad-body72, %.body71 ], [ %eh.lpad-body72, %bb.ad ]
   %i.dg = getelementptr inbounds nuw i8, ptr %13, i64 8
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.dg) #14
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.body39, %.loopexit.loopexit124
+  %.pn26.pn.pn.ph = phi { ptr, i32 } [ %i.cy, %.loopexit.loopexit124 ], [ %.pn26.pn, %.body39 ]
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %13) #14
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit124, %.body39, %.thread77
-  %.pn26.pn.pn = phi { ptr, i32 } [ %.pn26.pn, %.body39 ], [ %i.bh, %.thread77 ], [ %i.cy, %.loopexit.loopexit124 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread77
+  %.pn26.pn.pn = phi { ptr, i32 } [ %i.bh, %.thread77 ], [ %.pn26.pn.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #14
@@ -1591,7 +1600,7 @@ bb.a:
   %6 = alloca %"class.std::vector.205", align 8   ; 8 uses
   %7 = alloca %"class.bzla::Node", align 8        ; 7 uses
   %8 = alloca %"class.std::vector", align 8       ; 12 uses
-  %9 = alloca [2 x %"class.bzla::Node"], align 8  ; 11 uses
+  %9 = alloca [2 x %"class.bzla::Node"], align 8  ; 10 uses
   %10 = alloca %"class.std::vector.205", align 8  ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.b = load i64, ptr %i.a, align 8, !tbaa !57
@@ -1944,8 +1953,7 @@ _ZNSt6vectorImSaImEED2Ev.exit44:                  ; preds = %bb.ab, %bb.ac
 .loopexit.loopexit85:                             ; preds = %bb.o
   %i.cy = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %9) #14
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.ad:                                            ; preds = %_ZSt10_ConstructIN4bzla4NodeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.1
   %i.cz = landingpad { ptr, i32 }
@@ -1981,11 +1989,15 @@ _ZNSt6vectorImSaImEED2Ev.exit46:                  ; preds = %bb.af, %bb.ag
   %.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt6vectorImSaImEED2Ev.exit46 ], [ %eh.lpad-body50, %.body49 ], [ %eh.lpad-body50, %bb.u ]
   %i.dg = getelementptr inbounds nuw i8, ptr %9, i64 8
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.dg) #14
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.body, %.loopexit.loopexit85
+  %.pn.pn.pn.ph = phi { ptr, i32 } [ %i.cy, %.loopexit.loopexit85 ], [ %.pn.pn, %.body ]
   call void @_ZN4bzla4NodeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %9) #14
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit85, %.body, %.thread
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %.body ], [ %i.bb, %.thread ], [ %i.cy, %.loopexit.loopexit85 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.bb, %.thread ], [ %.pn.pn.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14

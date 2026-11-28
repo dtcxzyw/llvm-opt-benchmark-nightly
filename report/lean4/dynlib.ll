@@ -137,7 +137,7 @@ _ZN4lean7sstreamlsIPcEERS0_RKT_.exit:             ; preds = %bb.c, %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !44)
   call void @llvm.experimental.noalias.scope.decl(metadata !45)
   call void @llvm.experimental.noalias.scope.decl(metadata !46)
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 8 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
   store ptr %i.n, ptr %1, align 8, !tbaa !15, !alias.scope !47
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 0, ptr %i.o, align 8, !tbaa !17, !alias.scope !47
@@ -167,13 +167,7 @@ bb.f:                                             ; preds = %bb.g, %bb.e
           cleanup                                 ; 2 uses
   %i.ab = load ptr, ptr %1, align 8, !tbaa !19, !alias.scope !47 ; 2 uses
   %i.ac = icmp eq ptr %i.ab, %i.n
-  br i1 %i.ac, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i: ; preds = %bb.f
-  %3 = load i64, ptr %i.n, align 8, !tbaa !18, !alias.scope !47
-  %4 = add i64 %3, 1
-  call void @_ZdlPvm(ptr noundef %i.ab, i64 noundef %4) #21
-  br label %.body
+  br i1 %i.ac, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
 
 bb.g:                                             ; preds = %_ZN4lean7sstreamlsIPcEERS0_RKT_.exit
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 80
@@ -239,14 +233,16 @@ bb.j:                                             ; preds = %_ZNK4lean7sstream3s
   %i.ba = icmp eq ptr %i.az, %i.n
   br i1 %i.ba, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12: ; preds = %bb.j
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12: ; preds = %bb.j, %bb.f
+  %.sink = phi ptr [ %i.ab, %bb.f ], [ %i.az, %bb.j ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.aa, %bb.f ], [ %i.ay, %bb.j ]
   %i.bb = load i64, ptr %i.n, align 8, !tbaa !18
   %i.bc = add i64 %i.bb, 1
-  call void @_ZdlPvm(ptr noundef %i.az, i64 noundef %i.bc) #21
+  call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.bc) #21
   br label %.body
 
-.body:                                            ; preds = %bb.j, %bb.f, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i, %bb.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
-  %.pn.pn = phi { ptr, i32 } [ %i.ay, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12 ], [ %i.aa, %bb.f ], [ %i.ax, %bb.i ], [ %i.aa, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i ], [ %i.ay, %bb.j ]
+.body:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12, %bb.j, %bb.f, %bb.i
+  %.pn.pn = phi { ptr, i32 } [ %i.ay, %bb.j ], [ %i.aa, %bb.f ], [ %i.ax, %bb.i ], [ %.pn.pn.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12 ]
   call void @_ZN4lean7sstreamD2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20

@@ -204,7 +204,7 @@ bb.a:
   %45 = alloca %"class.duckdb::PragmaFunction", align 8 ; 9 uses
   %46 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %47 = alloca %"class.duckdb::vector.3", align 8 ; 9 uses
-  %48 = alloca [2 x %"struct.duckdb::LogicalType"], align 8 ; 11 uses
+  %48 = alloca [2 x %"struct.duckdb::LogicalType"], align 8 ; 10 uses
   %49 = alloca %"struct.duckdb::LogicalType", align 8 ; 4 uses
   %50 = alloca %"class.duckdb::PragmaFunction", align 8 ; 9 uses
   %51 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -607,8 +607,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit537: ; preds = %.l
 .loopexit.loopexit645:                            ; preds = %bb.ce
   %i.ui = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %48) #18
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.fg:                                            ; preds = %_ZSt10_ConstructIN6duckdb11LogicalTypeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i602.1
   %i.uj = landingpad { ptr, i32 }
@@ -640,11 +639,15 @@ bb.fk:                                            ; preds = %bb.fj, %bb.fg
   %.pn143.pn.pn = phi { ptr, i32 } [ %.pn143.pn, %bb.fk ], [ %eh.lpad-body606, %.body605 ], [ %eh.lpad-body606, %bb.ck ]
   %i.um = getelementptr inbounds nuw i8, ptr %48, i64 24
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.um) #18
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.body437, %.loopexit.loopexit645
+  %.pn143.pn.pn.pn.ph = phi { ptr, i32 } [ %i.ui, %.loopexit.loopexit645 ], [ %.pn143.pn.pn, %.body437 ]
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %48) #18
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit645, %.body437, %.thread
-  %.pn143.pn.pn.pn = phi { ptr, i32 } [ %.pn143.pn.pn, %.body437 ], [ %i.og, %.thread ], [ %i.ui, %.loopexit.loopexit645 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn143.pn.pn.pn = phi { ptr, i32 } [ %i.og, %.thread ], [ %.pn143.pn.pn.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %48) #18
   %i.un = load ptr, ptr %46, align 8, !tbaa !106  ; 2 uses
   %i.uo = icmp eq ptr %i.un, %i.od

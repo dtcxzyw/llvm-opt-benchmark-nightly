@@ -202,7 +202,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   %i.b = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #17
-          to label %bb.b unwind label %bb.r       ; 3 uses
+          to label %bb.b unwind label %3          ; 3 uses
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %1, align 8, !tbaa !12     ; 5 uses
@@ -231,7 +231,7 @@ bb.e:                                             ; preds = %bb.d
   %i.o = or i64 %i.d, 1152920405095219200
   store i64 %i.o, ptr %i.c, align 8
   invoke void @_ZN4cvc58internal4expr9NodeValue20markRefCountMaxedOutEv(ptr noundef nonnull align 8 dereferenceable(24) %i.c)
-          to label %_ZN4cvc58internal8TypeNodeC2ERKS1_.exit unwind label %bb.s
+          to label %_ZN4cvc58internal8TypeNodeC2ERKS1_.exit unwind label %bb.r
 
 _ZN4cvc58internal8TypeNodeC2ERKS1_.exit:          ; preds = %bb.d, %bb.c, %bb.e
   %i.p = load ptr, ptr %0, align 8, !tbaa !21     ; 3 uses
@@ -272,7 +272,7 @@ _ZNKSt14default_deleteIN4cvc58internal8TypeNodeEEclEPS2_.exit.i.i: ; preds = %bb
 
 _ZNSt10unique_ptrIN4cvc58internal8TypeNodeESt14default_deleteIS2_EE5resetEPS2_.exit: ; preds = %_ZN4cvc58internal8TypeNodeC2ERKS1_.exit, %_ZNKSt14default_deleteIN4cvc58internal8TypeNodeEEclEPS2_.exit.i.i
   %i.aa = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #17
-          to label %bb.j unwind label %bb.r       ; 3 uses
+          to label %bb.j unwind label %3          ; 3 uses
 
 bb.j:                                             ; preds = %_ZNSt10unique_ptrIN4cvc58internal8TypeNodeESt14default_deleteIS2_EE5resetEPS2_.exit
   %i.ab = load ptr, ptr %2, align 8, !tbaa !23    ; 5 uses
@@ -301,7 +301,7 @@ bb.m:                                             ; preds = %bb.l
   %i.an = or i64 %i.ac, 1152920405095219200
   store i64 %i.an, ptr %i.ab, align 8
   invoke void @_ZN4cvc58internal4expr9NodeValue20markRefCountMaxedOutEv(ptr noundef nonnull align 8 dereferenceable(24) %i.ab)
-          to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit unwind label %bb.t
+          to label %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit unwind label %bb.s
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit: ; preds = %bb.l, %bb.k, %bb.m
   %i.ao = load ptr, ptr %i.a, align 8, !tbaa !25  ; 3 uses
@@ -343,25 +343,29 @@ _ZNKSt14default_deleteIN4cvc58internal12NodeTemplateILb1EEEEclEPS3_.exit.i.i: ; 
 _ZNSt10unique_ptrIN4cvc58internal12NodeTemplateILb1EEESt14default_deleteIS3_EE5resetEPS3_.exit: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit, %_ZNKSt14default_deleteIN4cvc58internal12NodeTemplateILb1EEEEclEPS3_.exit.i.i
   ret void
 
-bb.r:                                             ; preds = %_ZNSt10unique_ptrIN4cvc58internal8TypeNodeESt14default_deleteIS2_EE5resetEPS2_.exit, %bb.a
+3:                                                ; preds = %_ZNSt10unique_ptrIN4cvc58internal8TypeNodeESt14default_deleteIS2_EE5resetEPS2_.exit, %bb.a
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.u
+
+bb.r:                                             ; preds = %bb.e
   %i.az = landingpad { ptr, i32 }
           cleanup
-  br label %bb.u
+  br label %bb.t
 
-bb.s:                                             ; preds = %bb.e
+bb.s:                                             ; preds = %bb.m
   %i.ba = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 8) #16
+  br label %bb.t
+
+bb.t:                                             ; preds = %bb.r, %bb.s
+  %.sink = phi ptr [ %i.aa, %bb.s ], [ %i.b, %bb.r ]
+  %.pn.ph = phi { ptr, i32 } [ %i.ba, %bb.s ], [ %i.az, %bb.r ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 8) #16
   br label %bb.u
 
-bb.t:                                             ; preds = %bb.m
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aa, i64 noundef 8) #16
-  br label %bb.u
-
-bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
-  %.pn = phi { ptr, i32 } [ %3, %bb.t ], [ %i.az, %bb.r ], [ %i.ba, %bb.s ]
+bb.u:                                             ; preds = %bb.t, %3
+  %.pn = phi { ptr, i32 } [ %4, %3 ], [ %.pn.ph, %bb.t ]
   tail call void @_ZNSt10unique_ptrIN4cvc58internal12NodeTemplateILb1EEESt14default_deleteIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.a) #14
   tail call void @_ZNSt10unique_ptrIN4cvc58internal8TypeNodeESt14default_deleteIS2_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #14
   resume { ptr, i32 } %.pn

@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit11: ; preds = %bb.o, %bb.n, %bb.p
   invoke void @_ZN4cvc58internal7CDProof11getProofForENS0_12NodeTemplateILb1EEE(ptr dead_on_unwind writable sret(%"class.std::shared_ptr") align 8 %0, ptr noundef nonnull align 8 dereferenceable(217) %3, ptr noundef nonnull align 8 %7)
-          to label %bb.q unwind label %bb.x
+          to label %bb.q unwind label %8
 
 bb.q:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit11
   %i.br = load ptr, ptr %7, align 8, !tbaa !29    ; 3 uses
@@ -263,17 +263,21 @@ bb.w:                                             ; preds = %_ZN4cvc58internal12
           cleanup
   call void @_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %6) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #18
-  br label %bb.y
+  br label %bb.x
 
-bb.x:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit11
-  %8 = landingpad { ptr, i32 }
+8:                                                ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit11
+  %9 = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #18
+  br label %bb.x
+
+bb.x:                                             ; preds = %bb.w, %8
+  %.sink = phi ptr [ %7, %8 ], [ %5, %bb.w ]
+  %.pn6.ph = phi { ptr, i32 } [ %9, %8 ], [ %i.ch, %bb.w ]
+  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #18
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
-  %.pn6 = phi { ptr, i32 } [ %8, %bb.x ], [ %i.cg, %bb.v ], [ %i.ch, %bb.w ]
+bb.y:                                             ; preds = %bb.x, %bb.v
+  %.pn6 = phi { ptr, i32 } [ %i.cg, %bb.v ], [ %.pn6.ph, %bb.x ]
   call void @_ZN4cvc58internal7CDProofD1Ev(ptr noundef nonnull align 8 dead_on_return(217) dereferenceable(217) %3) #18
   br label %bb.z
 

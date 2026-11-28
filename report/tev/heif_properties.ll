@@ -202,6 +202,10 @@ bb.a:
   %i.a = icmp ne ptr %3, null
   %i.b = icmp ne ptr %0, null
   %or.cond = and i1 %i.b, %i.a
+  %.sink.sroa.gep = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %.sink.sroa.gep55 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %.sink.sroa.gep56 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %.sink.sroa.gep57 = getelementptr inbounds nuw i8, ptr %9, i64 16
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -475,60 +479,28 @@ bb.w:                                             ; preds = %_ZNK8Box_udes8get_l
           cleanup                                 ; 2 uses
   %i.dy = load i8, ptr %6, align 8
   %i.dz = trunc i8 %i.dy to i1
-  br i1 %i.dz, label %10, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
-
-10:                                               ; preds = %bb.w
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %12 = load ptr, ptr %11, align 8, !tbaa !51
-  %13 = load i64, ptr %6, align 8
-  %14 = and i64 %13, -2
-  call void @_ZdlPvm(ptr noundef %12, i64 noundef %14) #26
-  br label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
+  br i1 %i.dz, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45.sink.split, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
 
 bb.x:                                             ; preds = %_ZNK8Box_udes8get_nameEv.exit
   %i.ea = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.eb = load i8, ptr %7, align 8
   %i.ec = trunc i8 %i.eb to i1
-  br i1 %i.ec, label %15, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
-
-15:                                               ; preds = %bb.x
-  %16 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %17 = load ptr, ptr %16, align 8, !tbaa !51
-  %18 = load i64, ptr %7, align 8
-  %19 = and i64 %18, -2
-  call void @_ZdlPvm(ptr noundef %17, i64 noundef %19) #26
-  br label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
+  br i1 %i.ec, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45.sink.split, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
 
 bb.y:                                             ; preds = %_ZNK8Box_udes15get_descriptionEv.exit
   %i.ed = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.ee = load i8, ptr %8, align 8
   %i.ef = trunc i8 %i.ee to i1
-  br i1 %i.ef, label %20, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
-
-20:                                               ; preds = %bb.y
-  %21 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %22 = load ptr, ptr %21, align 8, !tbaa !51
-  %23 = load i64, ptr %8, align 8
-  %24 = and i64 %23, -2
-  call void @_ZdlPvm(ptr noundef %22, i64 noundef %24) #26
-  br label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
+  br i1 %i.ef, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45.sink.split, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
 
 bb.z:                                             ; preds = %_ZNK8Box_udes8get_tagsEv.exit
   %i.eg = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.eh = load i8, ptr %9, align 8
   %i.ei = trunc i8 %i.eh to i1
-  br i1 %i.ei, label %25, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
-
-25:                                               ; preds = %bb.z
-  %26 = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %27 = load ptr, ptr %26, align 8, !tbaa !51
-  %28 = load i64, ptr %9, align 8
-  %29 = and i64 %28, -2
-  call void @_ZdlPvm(ptr noundef %27, i64 noundef %29) #26
-  br label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
+  br i1 %i.ei, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45.sink.split, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
 
 bb.aa:                                            ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit44, %_ZNK6ResultINSt3__110shared_ptrI8Box_udesEEE12error_structEP11ErrorBuffer.exit
   %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload15, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit44 ], [ %i.h, %_ZNK6ResultINSt3__110shared_ptrI8Box_udesEEE12error_structEP11ErrorBuffer.exit ]
@@ -560,8 +532,18 @@ _ZN6ResultINSt3__110shared_ptrI8Box_udesEEED2Ev.exit: ; preds = %bb.aa, %_ZNSt3_
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %bb.ad
 
-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45: ; preds = %25, %bb.z, %20, %bb.y, %15, %bb.x, %10, %bb.w, %bb.v
-  %.pn.pn = phi { ptr, i32 } [ %i.dx, %10 ], [ %i.ed, %20 ], [ %i.dw, %bb.v ], [ %i.ea, %15 ], [ %i.dx, %bb.w ], [ %i.ea, %bb.x ], [ %i.ed, %bb.y ], [ %i.eg, %bb.z ], [ %i.eg, %25 ]
+_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45.sink.split: ; preds = %bb.z, %bb.y, %bb.x, %bb.w
+  %.sink.sroa.phi = phi ptr [ %.sink.sroa.gep, %bb.y ], [ %.sink.sroa.gep55, %bb.x ], [ %.sink.sroa.gep56, %bb.w ], [ %.sink.sroa.gep57, %bb.z ]
+  %.sink = phi ptr [ %8, %bb.y ], [ %7, %bb.x ], [ %6, %bb.w ], [ %9, %bb.z ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.ed, %bb.y ], [ %i.ea, %bb.x ], [ %i.dx, %bb.w ], [ %i.eg, %bb.z ]
+  %10 = load ptr, ptr %.sink.sroa.phi, align 8, !tbaa !51
+  %11 = load i64, ptr %.sink, align 8
+  %12 = and i64 %11, -2
+  call void @_ZdlPvm(ptr noundef %10, i64 noundef %12) #26
+  br label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45
+
+_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45: ; preds = %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45.sink.split, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
+  %.pn.pn = phi { ptr, i32 } [ %i.ea, %bb.x ], [ %i.ed, %bb.y ], [ %i.dw, %bb.v ], [ %i.eg, %bb.z ], [ %i.dx, %bb.w ], [ %.pn.pn.ph, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit45.sink.split ]
   call void @_ZN6ResultINSt3__110shared_ptrI8Box_udesEEED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %5) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   resume { ptr, i32 } %.pn.pn

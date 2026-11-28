@@ -204,7 +204,7 @@ bb.a:
   %3 = alloca %class.ref_vector, align 8          ; 7 uses
   %4 = alloca %class.arith_util, align 8          ; 7 uses
   %5 = alloca %class.obj_ref, align 8             ; 10 uses
-  %6 = alloca %"class.smt::ext_theory_eq_propagation_justification", align 8 ; 16 uses
+  %6 = alloca %"class.smt::ext_theory_eq_propagation_justification", align 8 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !146, !nonnull !100, !align !101
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8720
@@ -403,13 +403,7 @@ bb.j:                                             ; preds = %_ZN7obj_refI4expr11
   %i.ci = getelementptr inbounds nuw i8, ptr %6, i64 64
   store ptr %i.cc, ptr %i.ci, align 8, !tbaa !184
   invoke void @_ZN3smt39ext_theory_eq_propagation_justification3logERNS_7contextE(ptr noundef nonnull align 8 dereferenceable(72) %6, ptr noundef nonnull align 8 dereferenceable(10728) %i.cd)
-          to label %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit unwind label %7
-
-7:                                                ; preds = %.noexc41
-  %8 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN3smt31ext_theory_simple_justificationD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(72) %6) #18
-  br label %.body
+          to label %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit unwind label %bb.ab
 
 _ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit: ; preds = %.noexc41
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cd, i64 224
@@ -685,14 +679,14 @@ bb.aa:                                            ; preds = %bb.j
           cleanup
   br label %.body
 
-bb.ab:                                            ; preds = %bb.n, %.noexc47, %bb.k, %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit
+bb.ab:                                            ; preds = %.noexc41, %bb.n, %.noexc47, %bb.k, %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit
   %i.fy = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN3smt31ext_theory_simple_justificationD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %6) #18
+  call void @_ZN3smt31ext_theory_simple_justificationD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(72) %6) #18
   br label %.body
 
-.body:                                            ; preds = %bb.aa, %7, %bb.ab
-  %.pn = phi { ptr, i32 } [ %i.fy, %bb.ab ], [ %i.fx, %bb.aa ], [ %8, %7 ]
+.body:                                            ; preds = %bb.ab, %bb.aa
+  %.pn = phi { ptr, i32 } [ %i.fx, %bb.aa ], [ %i.fy, %bb.ab ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   br label %bb.ad
 
@@ -893,7 +887,7 @@ define hidden void @_ZN3smt11theory_char9init_bitsEi(ptr noundef nonnull align 8
 bb.a:
   %2 = alloca %class.ref_vector, align 8          ; 8 uses
   %3 = alloca %class.obj_ref, align 8             ; 7 uses
-  %4 = alloca %"class.smt::ext_theory_eq_propagation_justification", align 8 ; 16 uses
+  %4 = alloca %"class.smt::ext_theory_eq_propagation_justification", align 8 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !134  ; 5 uses
   %i.c = icmp eq ptr %i.b, null
@@ -1296,13 +1290,7 @@ bb.ad:                                            ; preds = %bb.ac
   %i.jm = getelementptr inbounds nuw i8, ptr %4, i64 64
   store ptr %i.jf, ptr %i.jm, align 8, !tbaa !184
   invoke void @_ZN3smt39ext_theory_eq_propagation_justification3logERNS_7contextE(ptr noundef nonnull align 8 dereferenceable(72) %4, ptr noundef nonnull align 8 dereferenceable(10728) %i.jg)
-          to label %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit unwind label %5
-
-5:                                                ; preds = %.noexc104
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN3smt31ext_theory_simple_justificationD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(72) %4) #18
-  br label %.body
+          to label %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit unwind label %bb.aq
 
 _ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit: ; preds = %.noexc104
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jg, i64 224
@@ -1507,14 +1495,14 @@ bb.ap:                                            ; preds = %bb.ad
           cleanup
   br label %.body
 
-bb.aq:                                            ; preds = %bb.ah, %.noexc110, %bb.ae, %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit
+bb.aq:                                            ; preds = %.noexc104, %bb.ah, %.noexc110, %bb.ae, %_ZN3smt39ext_theory_eq_propagation_justificationC2EiRNS_7contextEPNS_5enodeES4_.exit
   %i.mf = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN3smt31ext_theory_simple_justificationD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %4) #18
+  call void @_ZN3smt31ext_theory_simple_justificationD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(72) %4) #18
   br label %.body
 
-.body:                                            ; preds = %bb.ap, %5, %bb.aq
-  %.pn = phi { ptr, i32 } [ %i.mf, %bb.aq ], [ %i.me, %bb.ap ], [ %6, %5 ]
+.body:                                            ; preds = %bb.aq, %bb.ap
+  %.pn = phi { ptr, i32 } [ %i.me, %bb.ap ], [ %i.mf, %bb.aq ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   br label %bb.as
 

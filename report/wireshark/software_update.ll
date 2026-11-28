@@ -202,21 +202,21 @@ bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 96) (i8, ptr @_ZTV14SoftwareUpdate, i64 16), ptr %0, align 8
   %i.e = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.f = invoke noalias noundef dereferenceable_or_null(16) ptr @_Znwm(i64 noundef 16) #27
-          to label %bb.b unwind label %bb.h       ; 3 uses
+          to label %bb.b unwind label %4          ; 3 uses
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZN6QTimerC1EP7QObject(ptr noundef align 8 dereferenceable_or_null(16) %i.f, ptr noundef %0)
-          to label %bb.c unwind label %bb.i
+          to label %bb.c unwind label %bb.h
 
 bb.c:                                             ; preds = %bb.b
   store ptr %i.f, ptr %i.e, align 8
   %i.g = getelementptr i8, ptr %0, i64 24
   %i.h = invoke noalias noundef dereferenceable_or_null(16) ptr @_Znwm(i64 noundef 16) #27
-          to label %bb.d unwind label %bb.h       ; 4 uses
+          to label %bb.d unwind label %4          ; 4 uses
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN21QNetworkAccessManagerC1EP7QObject(ptr noundef align 8 dereferenceable_or_null(16) %i.h, ptr noundef %0)
-          to label %bb.e unwind label %bb.j
+          to label %bb.e unwind label %bb.i
 
 bb.e:                                             ; preds = %bb.d
   store ptr %i.h, ptr %i.g, align 8
@@ -229,7 +229,7 @@ bb.e:                                             ; preds = %bb.d
   %.fca.1.gep.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 0, ptr %.fca.1.gep.i, align 8, !noalias !14
   %i.i = invoke noalias noundef dereferenceable_or_null(32) ptr @_Znwm(i64 noundef 32) #27
-          to label %.noexc unwind label %bb.h, !noalias !14 ; 5 uses
+          to label %.noexc unwind label %4, !noalias !14 ; 5 uses
 
 .noexc:                                           ; preds = %bb.e
   store i32 1, ptr %i.i, align 4, !noalias !14
@@ -240,7 +240,7 @@ bb.e:                                             ; preds = %bb.d
   %.repack7.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   store i64 0, ptr %.repack7.i.i, align 8, !noalias !14
   invoke void @_ZN7QObject11connectImplEPKS_PPvS1_S3_PN9QtPrivate15QSlotObjectBaseEN2Qt14ConnectionTypeEPKiPK11QMetaObject(ptr dead_on_unwind nonnull writable sret(%"class.QMetaObject::Connection") align 8 %2, ptr noundef %i.h, ptr noundef nonnull %i.c, ptr noundef %0, ptr noundef nonnull %i.d, ptr noundef %i.i, i32 noundef 0, ptr noundef null, ptr noundef @_ZN21QNetworkAccessManager16staticMetaObjectE)
-          to label %bb.f unwind label %bb.h
+          to label %bb.f unwind label %4
 
 bb.f:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
@@ -256,7 +256,7 @@ bb.f:                                             ; preds = %.noexc
   %.fca.1.gep.i15 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 0, ptr %.fca.1.gep.i15, align 8, !noalias !15
   %i.m = invoke noalias noundef dereferenceable_or_null(32) ptr @_Znwm(i64 noundef 32) #27
-          to label %.noexc17 unwind label %bb.h, !noalias !15 ; 5 uses
+          to label %.noexc17 unwind label %4, !noalias !15 ; 5 uses
 
 .noexc17:                                         ; preds = %bb.f
   store i32 1, ptr %i.m, align 4, !noalias !15
@@ -267,7 +267,7 @@ bb.f:                                             ; preds = %.noexc
   %.repack7.i.i16 = getelementptr inbounds nuw i8, ptr %i.m, i64 24
   store i64 0, ptr %.repack7.i.i16, align 8, !noalias !15
   invoke void @_ZN7QObject11connectImplEPKS_PPvS1_S3_PN9QtPrivate15QSlotObjectBaseEN2Qt14ConnectionTypeEPKiPK11QMetaObject(ptr dead_on_unwind nonnull writable sret(%"class.QMetaObject::Connection") align 8 %3, ptr noundef %i.l, ptr noundef nonnull %i.a, ptr noundef %0, ptr noundef nonnull %i.b, ptr noundef %i.m, i32 noundef 0, ptr noundef null, ptr noundef @_ZN6QTimer16staticMetaObjectE)
-          to label %bb.g unwind label %bb.h
+          to label %bb.g unwind label %4
 
 bb.g:                                             ; preds = %.noexc17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -275,25 +275,29 @@ bb.g:                                             ; preds = %.noexc17
   call void @_ZN11QMetaObject10ConnectionD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable_or_null(8) %3) #25
   ret void
 
-bb.h:                                             ; preds = %.noexc17, %bb.f, %.noexc, %bb.e, %bb.c, %bb.a
+4:                                                ; preds = %.noexc17, %bb.f, %.noexc, %bb.e, %bb.c, %bb.a
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.k
+
+bb.h:                                             ; preds = %bb.b
   %i.p = landingpad { ptr, i32 }
           cleanup
-  br label %bb.k
+  br label %bb.j
 
-bb.i:                                             ; preds = %bb.b
+bb.i:                                             ; preds = %bb.d
   %i.q = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef %i.f, i64 noundef 16) #28
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.h, %bb.i
+  %.sink = phi ptr [ %i.h, %bb.i ], [ %i.f, %bb.h ]
+  %.pn.ph = phi { ptr, i32 } [ %i.q, %bb.i ], [ %i.p, %bb.h ]
+  tail call void @_ZdlPvm(ptr noundef %.sink, i64 noundef 16) #28
   br label %bb.k
 
-bb.j:                                             ; preds = %bb.d
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPvm(ptr noundef %i.h, i64 noundef 16) #28
-  br label %bb.k
-
-bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
-  %.pn = phi { ptr, i32 } [ %i.p, %bb.h ], [ %4, %bb.j ], [ %i.q, %bb.i ]
+bb.k:                                             ; preds = %bb.j, %4
+  %.pn = phi { ptr, i32 } [ %5, %4 ], [ %.pn.ph, %bb.j ]
   call void @_ZN7QObjectD2Ev(ptr noundef align 8 dead_on_return(16) dereferenceable_or_null(16) %0) #25
   resume { ptr, i32 } %.pn
 }

@@ -99,7 +99,7 @@ bb.a:
   %i.ab = load <2 x i16>, ptr %i.z, align 4, !tbaa !52
   store <2 x i16> %i.ab, ptr %i.aa, align 2, !tbaa !52
   %i.ac = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #10
-          to label %bb.b unwind label %bb.j       ; 3 uses
+          to label %bb.b unwind label %3          ; 3 uses
 
 bb.b:                                             ; preds = %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 88
@@ -112,13 +112,13 @@ bb.b:                                             ; preds = %bb.a
   %i.ak = load i16, ptr %i.aj, align 4, !tbaa !88
   %i.al = sext i16 %i.ak to i32
   invoke void @_ZN5NoiseC1EPK11NoiseParamsijjj(ptr noundef nonnull align 8 dereferenceable(88) %i.ac, ptr noundef nonnull %i.ad, i32 noundef %i.af, i32 noundef %i.ai, i32 noundef %i.al, i32 noundef 1)
-          to label %bb.c unwind label %bb.k
+          to label %bb.c unwind label %bb.j
 
 bb.c:                                             ; preds = %bb.b
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 208
   store ptr %i.ac, ptr %i.am, align 8, !tbaa !57
   %i.an = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #10
-          to label %bb.d unwind label %bb.j       ; 3 uses
+          to label %bb.d unwind label %3          ; 3 uses
 
 bb.d:                                             ; preds = %bb.c
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 128
@@ -128,12 +128,12 @@ bb.d:                                             ; preds = %bb.c
   %i.as = load i16, ptr %i.aj, align 4, !tbaa !88
   %i.at = sext i16 %i.as to i32
   invoke void @_ZN5NoiseC1EPK11NoiseParamsijjj(ptr noundef nonnull align 8 dereferenceable(88) %i.an, ptr noundef nonnull %i.ao, i32 noundef %i.ap, i32 noundef %i.ar, i32 noundef %i.at, i32 noundef 1)
-          to label %bb.e unwind label %bb.l
+          to label %bb.e unwind label %bb.k
 
 bb.e:                                             ; preds = %bb.d
   store ptr %i.an, ptr %i.a, align 8, !tbaa !59
   %i.au = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #10
-          to label %bb.f unwind label %bb.j       ; 3 uses
+          to label %bb.f unwind label %3          ; 3 uses
 
 bb.f:                                             ; preds = %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 168
@@ -143,12 +143,12 @@ bb.f:                                             ; preds = %bb.e
   %i.az = load i16, ptr %i.aj, align 4, !tbaa !88
   %i.ba = sext i16 %i.az to i32
   invoke void @_ZN5NoiseC1EPK11NoiseParamsijjj(ptr noundef nonnull align 8 dereferenceable(88) %i.au, ptr noundef nonnull %i.av, i32 noundef %i.aw, i32 noundef %i.ay, i32 noundef %i.ba, i32 noundef 1)
-          to label %bb.g unwind label %bb.m
+          to label %bb.g unwind label %bb.l
 
 bb.g:                                             ; preds = %bb.f
   store ptr %i.au, ptr %i.b, align 8, !tbaa !60
   %i.bb = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #10
-          to label %bb.h unwind label %bb.j       ; 3 uses
+          to label %bb.h unwind label %3          ; 3 uses
 
 bb.h:                                             ; preds = %bb.g
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 208
@@ -162,7 +162,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bk = load i16, ptr %i.aj, align 4, !tbaa !88
   %i.bl = sext i16 %i.bk to i32
   invoke void @_ZN5NoiseC1EPK11NoiseParamsijjj(ptr noundef nonnull align 8 dereferenceable(88) %i.bb, ptr noundef nonnull %i.bc, i32 noundef %i.bd, i32 noundef %i.bf, i32 noundef %i.bj, i32 noundef %i.bl)
-          to label %bb.i unwind label %bb.n
+          to label %bb.i unwind label %bb.m
 
 bb.i:                                             ; preds = %bb.h
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 496
@@ -181,37 +181,39 @@ bb.i:                                             ; preds = %bb.h
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.bu, ptr noundef nonnull align 8 dereferenceable(40) %i.bt, i64 40, i1 false), !tbaa.struct !90
   ret void
 
-bb.j:                                             ; preds = %bb.g, %bb.e, %bb.c, %bb.a
+3:                                                ; preds = %bb.g, %bb.e, %bb.c, %bb.a
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.o
+
+bb.j:                                             ; preds = %bb.b
   %i.bv = landingpad { ptr, i32 }
           cleanup
-  br label %bb.o
+  br label %bb.n
 
-bb.k:                                             ; preds = %bb.b
+bb.k:                                             ; preds = %bb.d
   %i.bw = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ac, i64 noundef 88) #11
-  br label %bb.o
+  br label %bb.n
 
-bb.l:                                             ; preds = %bb.d
+bb.l:                                             ; preds = %bb.f
   %i.bx = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.an, i64 noundef 88) #11
-  br label %bb.o
+  br label %bb.n
 
-bb.m:                                             ; preds = %bb.f
+bb.m:                                             ; preds = %bb.h
   %i.by = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.au, i64 noundef 88) #11
+  br label %bb.n
+
+bb.n:                                             ; preds = %bb.j, %bb.k, %bb.l, %bb.m
+  %.sink = phi ptr [ %i.bb, %bb.m ], [ %i.au, %bb.l ], [ %i.an, %bb.k ], [ %i.ac, %bb.j ]
+  %.pn.ph = phi { ptr, i32 } [ %i.by, %bb.m ], [ %i.bx, %bb.l ], [ %i.bw, %bb.k ], [ %i.bv, %bb.j ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 88) #11
   br label %bb.o
 
-bb.n:                                             ; preds = %bb.h
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bb, i64 noundef 88) #11
-  br label %bb.o
-
-bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j
-  %.pn = phi { ptr, i32 } [ %3, %bb.n ], [ %i.bv, %bb.j ], [ %i.by, %bb.m ], [ %i.bx, %bb.l ], [ %i.bw, %bb.k ]
+bb.o:                                             ; preds = %bb.n, %3
+  %.pn = phi { ptr, i32 } [ %4, %3 ], [ %.pn.ph, %bb.n ]
   tail call void @_ZN11MapgenBasicD2Ev(ptr noundef nonnull align 8 dead_on_return(474) dereferenceable(474) %0) #12
   resume { ptr, i32 } %.pn
 }

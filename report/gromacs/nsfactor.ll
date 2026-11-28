@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ai, label %bb.i, label %.noexc44
 
 bb.i:                                             ; preds = %bb.h
-  %i.aj = call ptr @__cxa_allocate_exception(i64 24) #15 ; 3 uses
+  %i.aj = call ptr @__cxa_allocate_exception(i64 24) #15 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #15
   invoke void @_ZN3gmx20ExceptionInitializerC2EPKc(ptr noundef nonnull align 8 dereferenceable(56) %14, ptr noundef nonnull @.str.19)
           to label %bb.j unwind label %.thread.i
@@ -234,14 +234,14 @@ bb.l:                                             ; preds = %bb.k
   %i.al = landingpad { ptr, i32 }
           catch ptr @_ZTISt9exception
           catch ptr null
-  br label %.sink.split.i
+  br label %bb.n
 
 .thread24.i:                                      ; preds = %bb.j
   %i.am = landingpad { ptr, i32 }
           catch ptr @_ZTISt9exception
           catch ptr null
   call void @_ZN3gmx20ExceptionInitializerD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %14) #15
-  br label %.sink.split.i
+  br label %bb.n
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.0.i = phi i1 [ false, %bb.l ], [ true, %bb.k ]
@@ -253,17 +253,12 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   call void @_ZN3gmx16GromacsExceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %13) #15
   call void @_ZN3gmx20ExceptionInitializerD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %14) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #15
-  br i1 %.0.i, label %bb.n, label %.body
+  br i1 %.0.i, label %.body.sink.split, label %.body
 
-.sink.split.i:                                    ; preds = %.thread24.i, %.thread.i
-  %.pn.pn23.ph.i = phi { ptr, i32 } [ %i.am, %.thread24.i ], [ %i.al, %.thread.i ]
+bb.n:                                             ; preds = %.thread24.i, %.thread.i
+  %.pn.pn23.i = phi { ptr, i32 } [ %i.am, %.thread24.i ], [ %i.al, %.thread.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #15
-  br label %bb.n
-
-bb.n:                                             ; preds = %.sink.split.i, %bb.m
-  %.pn.pn23.i = phi { ptr, i32 } [ %i.an, %bb.m ], [ %.pn.pn23.ph.i, %.sink.split.i ]
-  call void @__cxa_free_exception(ptr %i.aj) #15
-  br label %.body
+  br label %.body.sink.split
 
 bb.o:                                             ; preds = %bb.l
   unreachable
@@ -393,7 +388,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ds, label %bb.t, label %.noexc54
 
 bb.t:                                             ; preds = %bb.s
-  %i.dt = call ptr @__cxa_allocate_exception(i64 24) #15 ; 3 uses
+  %i.dt = call ptr @__cxa_allocate_exception(i64 24) #15 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #15
   invoke void @_ZN3gmx20ExceptionInitializerC2EPKc(ptr noundef nonnull align 8 dereferenceable(56) %11, ptr noundef nonnull @.str.19)
           to label %bb.u unwind label %.thread.i57
@@ -423,14 +418,14 @@ bb.w:                                             ; preds = %bb.v
   %i.dv = landingpad { ptr, i32 }
           catch ptr @_ZTISt9exception
           catch ptr null
-  br label %.sink.split.i58
+  br label %bb.y
 
 .thread24.i62:                                    ; preds = %bb.u
   %i.dw = landingpad { ptr, i32 }
           catch ptr @_ZTISt9exception
           catch ptr null
   call void @_ZN3gmx20ExceptionInitializerD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %11) #15
-  br label %.sink.split.i58
+  br label %bb.y
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   %.0.i65 = phi i1 [ false, %bb.w ], [ true, %bb.v ]
@@ -442,17 +437,12 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   call void @_ZN3gmx16GromacsExceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %10) #15
   call void @_ZN3gmx20ExceptionInitializerD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %11) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
-  br i1 %.0.i65, label %bb.y, label %.body
+  br i1 %.0.i65, label %.body.sink.split, label %.body
 
-.sink.split.i58:                                  ; preds = %.thread24.i62, %.thread.i57
-  %.pn.pn23.ph.i59 = phi { ptr, i32 } [ %i.dw, %.thread24.i62 ], [ %i.dv, %.thread.i57 ]
+bb.y:                                             ; preds = %.thread24.i62, %.thread.i57
+  %.pn.pn23.i60 = phi { ptr, i32 } [ %i.dw, %.thread24.i62 ], [ %i.dv, %.thread.i57 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #15
-  br label %bb.y
-
-bb.y:                                             ; preds = %.sink.split.i58, %bb.x
-  %.pn.pn23.i60 = phi { ptr, i32 } [ %i.dx, %bb.x ], [ %.pn.pn23.ph.i59, %.sink.split.i58 ]
-  call void @__cxa_free_exception(ptr %i.dt) #15
-  br label %.body
+  br label %.body.sink.split
 
 bb.z:                                             ; preds = %bb.w
   unreachable
@@ -597,8 +587,14 @@ bb.ab:                                            ; preds = %_ZN3gmx22UniformInt
           catch ptr null
   br label %.body
 
-.body:                                            ; preds = %bb.ab, %bb.y, %bb.x, %bb.m, %bb.n
-  %eh.lpad-body = phi { ptr, i32 } [ %i.an, %bb.m ], [ %.pn.pn23.i, %bb.n ], [ %i.ia, %bb.ab ], [ %.pn.pn23.i60, %bb.y ], [ %i.dx, %bb.x ] ; 2 uses
+.body.sink.split:                                 ; preds = %bb.x, %bb.y, %bb.m, %bb.n
+  %.sink = phi ptr [ %i.aj, %bb.m ], [ %i.aj, %bb.n ], [ %i.dt, %bb.y ], [ %i.dt, %bb.x ]
+  %eh.lpad-body.ph = phi { ptr, i32 } [ %i.an, %bb.m ], [ %.pn.pn23.i, %bb.n ], [ %.pn.pn23.i60, %bb.y ], [ %i.dx, %bb.x ]
+  call void @__cxa_free_exception(ptr %.sink) #15
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.ab, %bb.x, %bb.m
+  %eh.lpad-body = phi { ptr, i32 } [ %i.an, %bb.m ], [ %i.dx, %bb.x ], [ %i.ia, %bb.ab ], [ %eh.lpad-body.ph, %.body.sink.split ] ; 2 uses
   %i.ib = extractvalue { ptr, i32 } %eh.lpad-body, 0 ; 2 uses
   %i.ic = extractvalue { ptr, i32 } %eh.lpad-body, 1
   %i.id = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #15

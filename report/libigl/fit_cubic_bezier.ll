@@ -205,7 +205,7 @@ bb.a:
   %9 = alloca %"class.Eigen::CwiseBinaryOp.93", align 8 ; 7 uses
   %10 = alloca %"class.Eigen::Matrix.3", align 8  ; 8 uses
   %11 = alloca %"class.Eigen::CwiseBinaryOp.93", align 8 ; 7 uses
-  %12 = alloca [2 x %"class.Eigen::Matrix.3"], align 8 ; 15 uses
+  %12 = alloca [2 x %"class.Eigen::Matrix.3"], align 8 ; 14 uses
   %13 = alloca %"class.Eigen::Matrix.3", align 8  ; 6 uses
   %14 = alloca %"class.Eigen::CwiseBinaryOp.149", align 8 ; 42 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -334,7 +334,7 @@ _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i.i: ; preds = %bb.f
   %i.bb = call ptr @__cxa_allocate_exception(i64 8) #20 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.bb, align 8, !tbaa !38
   invoke void @__cxa_throw(ptr nonnull %i.bb, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #22
-          to label %.cont unwind label %.thread.a
+          to label %.cont unwind label %.thread
 
 .cont:                                            ; preds = %.invoke
   unreachable
@@ -369,7 +369,7 @@ _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i.i149: ; preds = %bb
   %i.bj = call ptr @__cxa_allocate_exception(i64 8) #20 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.bj, align 8, !tbaa !38
   invoke void @__cxa_throw(ptr nonnull %i.bj, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #22
-          to label %.cont448 unwind label %.loopexit327.loopexit357
+          to label %.cont448 unwind label %.thread.a
 
 .cont448:                                         ; preds = %.invoke447
   unreachable
@@ -384,7 +384,7 @@ bb.i:                                             ; preds = %_ZN5Eigen8internal2
 _ZN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEC2ERKS1_.exit153: ; preds = %bb.i, %_ZN5Eigen8internal28conditional_aligned_new_autoIdLb1EEEPT_m.exit.thread.i.i.i150
   %i.bl = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %indvars.iv
   invoke void @_ZNSt6vectorIN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEESaIS2_EE13_M_assign_auxIPKS2_EEvT_S8_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.bl, ptr noundef nonnull %12, ptr noundef nonnull %i.ab)
-          to label %_ZNSt6vectorIN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEESaIS2_EEaSESt16initializer_listIS2_E.exit.preheader unwind label %.loopexit327.loopexit
+          to label %_ZNSt6vectorIN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEESaIS2_EEaSESt16initializer_listIS2_E.exit.preheader unwind label %.loopexit327.loopexit357
 
 _ZNSt6vectorIN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEESaIS2_EEaSESt16initializer_listIS2_E.exit.preheader: ; preds = %_ZN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEC2ERKS1_.exit153
   %i.bm = load ptr, ptr %i.ae, align 8, !tbaa !27
@@ -414,30 +414,32 @@ bb.k:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #20
   br label %bb.l
 
-.thread.a:                                        ; preds = %.invoke
+.thread:                                          ; preds = %.invoke
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit327
+
+.thread.a:                                        ; preds = %.invoke447
   %lpad.thr_comm.a = landingpad { ptr, i32 }
           cleanup
-  br label %.loopexit327
+  br label %.loopexit327.loopexit
 
-.loopexit327.loopexit357:                         ; preds = %.invoke447
+.loopexit327.loopexit357:                         ; preds = %_ZN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEC2ERKS1_.exit153
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
           cleanup
-  %i.bs = load ptr, ptr %12, align 8, !tbaa !27
+  %15 = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.bs = load ptr, ptr %15, align 8, !tbaa !27
   call void @free(ptr noundef %i.bs) #20
-  br label %.loopexit327
+  br label %.loopexit327.loopexit
 
-.loopexit327.loopexit:                            ; preds = %_ZN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEC2ERKS1_.exit153
-  %15 = landingpad { ptr, i32 }
-          cleanup
-  %16 = getelementptr inbounds nuw i8, ptr %12, i64 16
-  %17 = load ptr, ptr %16, align 8, !tbaa !27
-  call void @free(ptr noundef %17) #20
+.loopexit327.loopexit:                            ; preds = %.loopexit327.loopexit357, %.thread.a
+  %.pn137.ph = phi { ptr, i32 } [ %lpad.thr_comm.a, %.thread.a ], [ %lpad.thr_comm.split-lp, %.loopexit327.loopexit357 ]
   %i.bt = load ptr, ptr %12, align 8, !tbaa !27
   call void @free(ptr noundef %i.bt) #20
   br label %.loopexit327
 
-.loopexit327:                                     ; preds = %.loopexit327.loopexit357, %.loopexit327.loopexit, %.thread.a
-  %.pn137 = phi { ptr, i32 } [ %15, %.loopexit327.loopexit ], [ %lpad.thr_comm.a, %.thread.a ], [ %lpad.thr_comm.split-lp, %.loopexit327.loopexit357 ]
+.loopexit327:                                     ; preds = %.loopexit327.loopexit, %.thread
+  %.pn137 = phi { ptr, i32 } [ %lpad.thr_comm, %.thread ], [ %.pn137.ph, %.loopexit327.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #20
   %i.bu = load ptr, ptr %10, align 8, !tbaa !27
   call void @free(ptr noundef %i.bu) #20

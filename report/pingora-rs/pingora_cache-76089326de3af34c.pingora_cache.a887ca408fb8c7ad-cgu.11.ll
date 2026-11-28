@@ -202,7 +202,7 @@ define internal void @_RNCNvXs8_NtCset5b41vfmiv_13pingora_cache6memoryNtB7_8MemC
 bb.a:
   %.sroa.4 = alloca [32 x i8], align 8            ; 3 uses
   %i.a = alloca [48 x i8], align 8                ; 8 uses
-  %i.b = alloca [24 x i8], align 8                ; 16 uses
+  %i.b = alloca [24 x i8], align 8                ; 15 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.d = load i8, ptr %i.c, align 8, !range !16, !noundef !7
   switch i8 %i.d, label %default.unreachable52 [
@@ -225,8 +225,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31.sink.split
 
 bb.d:                                             ; preds = %bb.b
   %.val = load ptr, ptr %i.e, align 8, !nonnull !7, !noundef !7 ; 2 uses
@@ -243,7 +242,7 @@ bb.f:                                             ; preds = %bb.e
   %i.m = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #27
-          to label %3 unwind label %bb.t
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31.sink.split unwind label %bb.t
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %.val, i64 24
@@ -367,8 +366,13 @@ bb.t:                                             ; preds = %bb.ac, %bb.s, %bb.h
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #26
   unreachable
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31: ; preds = %.body, %bb.ac, %bb.y, %3, %bb.s, %bb.c
-  %.pn10.pn = phi { ptr, i32 } [ %i.h, %bb.c ], [ %i.ae, %bb.s ], [ %i.ak, %bb.y ], [ %i.m, %3 ], [ %.pn7, %bb.ac ], [ %.pn7, %.body ]
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31.sink.split: ; preds = %bb.f, %bb.c
+  %.pn10.pn.ph = phi { ptr, i32 } [ %i.h, %bb.c ], [ %i.m, %bb.f ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31.sink.split, %.body, %bb.ac, %bb.y, %bb.s
+  %.pn10.pn = phi { ptr, i32 } [ %.pn7, %bb.ac ], [ %i.ae, %bb.s ], [ %i.ak, %bb.y ], [ %.pn7, %.body ], [ %.pn10.pn.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31.sink.split ]
   store i8 2, ptr %i.c, align 8
   resume { ptr, i32 } %.pn10.pn
 
@@ -423,10 +427,6 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %.body
   invoke void @_RNvMs8_NtCs9VZ2FwlvA7t_11parking_lot10raw_rwlockNtB5_9RawRwLock21unlock_exclusive_slow(ptr noundef nonnull align 8 %i.i, i1 noundef zeroext false)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31 unwind label %bb.t
-
-3:                                                ; preds = %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock16RwLockWriteGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCset5b41vfmiv_13pingora_cache6memory11CacheObjectEEEB3T_.exit31
 
 bb.ad:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCskKLDkoKarTP_4core9panicking11panic_const28panic_const_async_fn_resumed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #29
@@ -830,7 +830,7 @@ bb.a:
   %i.a = alloca [40 x i8], align 8                ; 4 uses
   %.sroa.4 = alloca [16 x i8], align 8            ; 2 uses
   %i.b = alloca [40 x i8], align 8                ; 10 uses
-  %i.c = alloca [24 x i8], align 8                ; 19 uses
+  %i.c = alloca [24 x i8], align 8                ; 18 uses
   %i.d = alloca [32 x i8], align 8                ; 13 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.f = load i8, ptr %i.e, align 8, !range !16, !noundef !7
@@ -855,8 +855,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.j = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99.sink.split
 
 bb.d:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -883,7 +882,7 @@ bb.e:                                             ; preds = %_RNvMs8_NtCs9VZ2Fwl
   %i.u = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c) #27
-          to label %3 unwind label %bb.af
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99.sink.split unwind label %bb.af
 
 bb.f:                                             ; preds = %_RNvMs8_NtCs9VZ2FwlvA7t_11parking_lot10raw_rwlockNtB5_9RawRwLock20try_lock_shared_fast.exit.thread.i.i, %_RNvMs8_NtCs9VZ2FwlvA7t_11parking_lot10raw_rwlockNtB5_9RawRwLock20try_lock_shared_fast.exit.i.i
   %i.v = getelementptr inbounds nuw i8, ptr %.val, i64 24
@@ -1286,8 +1285,13 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwL
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx107, i64 16, i1 false)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99: ; preds = %.body61, %bb.ar, %bb.an, %3, %bb.ap, %bb.c
-  %.pn37 = phi { ptr, i32 } [ %i.eh, %bb.ap ], [ %i.j, %bb.c ], [ %i.u, %3 ], [ %i.ed, %bb.an ], [ %.pn33, %bb.ar ], [ %.pn33, %.body61 ]
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99.sink.split: ; preds = %bb.e, %bb.c
+  %.pn37.ph = phi { ptr, i32 } [ %i.j, %bb.c ], [ %i.u, %bb.e ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99.sink.split, %.body61, %bb.ar, %bb.an, %bb.ap
+  %.pn37 = phi { ptr, i32 } [ %i.eh, %bb.ap ], [ %.pn33, %bb.ar ], [ %.pn33, %.body61 ], [ %i.ed, %bb.an ], [ %.pn37.ph, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   store i8 2, ptr %i.e, align 8
   resume { ptr, i32 } %.pn37
@@ -1306,10 +1310,6 @@ bb.aq:                                            ; preds = %.loopexit.split-lp
 bb.ar:                                            ; preds = %.body61
   invoke void @_RNvMs8_NtCs9VZ2FwlvA7t_11parking_lot10raw_rwlockNtB5_9RawRwLock18unlock_shared_slow(ptr noundef nonnull align 8 %i.l)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99 unwind label %bb.af
-
-3:                                                ; preds = %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCseJvwusBHZQA_8lock_api6rwlock15RwLockReadGuardNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringIB2j_yNtNtCset5b41vfmiv_13pingora_cache6memory10TempObjectEEEEB3Y_.exit99
 
 bb.as:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCskKLDkoKarTP_4core9panicking11panic_const28panic_const_async_fn_resumed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #29

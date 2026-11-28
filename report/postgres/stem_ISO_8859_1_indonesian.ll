@@ -202,16 +202,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.n = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
   %i.o = icmp sgt i32 %i.n, -1
-  br i1 %i.o, label %1, label %.thread168
-
-1:                                                ; preds = %bb.e
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 1, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %4 = load i32, ptr %3, align 4
-  %5 = add i32 %4, -1
-  store i32 %5, ptr %3, align 4
-  br label %.thread168
+  br i1 %i.o, label %.thread168.sink.split, label %.thread168
 
 bb.f:                                             ; preds = %bb.d
   %i.p = load i32, ptr %i.e, align 4
@@ -238,45 +229,18 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.v, ptr %i.m, align 8
   %i.x = tail call i32 @slice_from_s(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @s_0) #2 ; 2 uses
   %i.y = icmp sgt i32 %i.x, -1
-  br i1 %i.y, label %6, label %.thread168
-
-6:                                                ; preds = %bb.i
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 1, ptr %7, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %9 = load i32, ptr %8, align 4
-  %10 = add i32 %9, -1
-  store i32 %10, ptr %8, align 4
-  br label %.thread168
+  br i1 %i.y, label %.thread168.sink.split, label %.thread168
 
 bb.j:                                             ; preds = %bb.h, %bb.f, %bb.g
   store i32 %i.l, ptr %i.a, align 8
   %i.z = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
   %i.aa = icmp sgt i32 %i.z, -1
-  br i1 %i.aa, label %11, label %.thread168
-
-11:                                               ; preds = %bb.j
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 1, ptr %12, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %14 = load i32, ptr %13, align 4
-  %15 = add i32 %14, -1
-  store i32 %15, ptr %13, align 4
-  br label %.thread168
+  br i1 %i.aa, label %.thread168.sink.split, label %.thread168
 
 bb.k:                                             ; preds = %bb.d
   %i.ab = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
   %i.ac = icmp sgt i32 %i.ab, -1
-  br i1 %i.ac, label %16, label %.thread168
-
-16:                                               ; preds = %bb.k
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 3, ptr %17, align 8
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %19 = load i32, ptr %18, align 4
-  %20 = add i32 %19, -1
-  store i32 %20, ptr %18, align 4
-  br label %.thread168
+  br i1 %i.ac, label %.thread168.sink.split, label %.thread168
 
 bb.l:                                             ; preds = %bb.d
   %i.ad = load i32, ptr %i.e, align 4
@@ -303,31 +267,13 @@ bb.o:                                             ; preds = %bb.n
   store i32 %i.aj, ptr %i.m, align 8
   %i.al = tail call i32 @slice_from_s(ptr noundef nonnull %0, i32 noundef 1, ptr noundef nonnull @s_1) #2 ; 2 uses
   %i.am = icmp sgt i32 %i.al, -1
-  br i1 %i.am, label %21, label %.thread168
-
-21:                                               ; preds = %bb.o
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 3, ptr %22, align 8
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %24 = load i32, ptr %23, align 4
-  %25 = add i32 %24, -1
-  store i32 %25, ptr %23, align 4
-  br label %.thread168
+  br i1 %i.am, label %.thread168.sink.split, label %.thread168
 
 bb.p:                                             ; preds = %bb.n, %bb.l, %bb.m
   store i32 %i.l, ptr %i.a, align 8
   %i.an = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
   %i.ao = icmp sgt i32 %i.an, -1
-  br i1 %i.ao, label %26, label %.thread168
-
-26:                                               ; preds = %bb.p
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 3, ptr %27, align 8
-  %28 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %29 = load i32, ptr %28, align 4
-  %30 = add i32 %29, -1
-  store i32 %30, ptr %28, align 4
-  br label %.thread168
+  br i1 %i.ao, label %.thread168.sink.split, label %.thread168
 
 bb.q:                                             ; preds = %bb.d
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -381,8 +327,18 @@ bb.v:                                             ; preds = %bb.t
   %.15146.ph = phi i32 [ %i.bd, %bb.u ], [ %i.bf, %bb.v ]
   br label %.thread168
 
-.thread168:                                       ; preds = %bb.o, %bb.p, %bb.i, %bb.j, %bb.d, %1, %16, %11, %6, %26, %21, %bb.s, %bb.r, %bb.v, %bb.u, %.thread199, %.thread186, %bb.c, %bb.a, %bb.b, %bb.e, %bb.k
-  %.16147 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %i.n, %bb.e ], [ 1, %bb.d ], [ %i.ab, %bb.k ], [ %i.z, %bb.j ], [ %.11142.ph, %.thread186 ], [ %.15146.ph, %.thread199 ], [ 0, %bb.b ], [ 1, %bb.u ], [ 1, %bb.v ], [ 1, %bb.r ], [ 1, %bb.s ], [ 1, %21 ], [ 1, %26 ], [ 1, %6 ], [ 1, %11 ], [ 1, %16 ], [ 1, %1 ], [ %i.x, %bb.i ], [ %i.al, %bb.o ], [ %i.an, %bb.p ]
+.thread168.sink.split:                            ; preds = %bb.p, %bb.o, %bb.k, %bb.j, %bb.i, %bb.e
+  %.sink = phi i32 [ 3, %bb.k ], [ 1, %bb.j ], [ 1, %bb.i ], [ 1, %bb.e ], [ 3, %bb.o ], [ 3, %bb.p ]
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store i32 %.sink, ptr %1, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
+  %3 = load i32, ptr %2, align 4
+  %4 = add i32 %3, -1
+  store i32 %4, ptr %2, align 4
+  br label %.thread168
+
+.thread168:                                       ; preds = %.thread168.sink.split, %bb.o, %bb.p, %bb.i, %bb.j, %bb.d, %bb.s, %bb.r, %bb.v, %bb.u, %.thread199, %.thread186, %bb.c, %bb.a, %bb.b, %bb.e, %bb.k
+  %.16147 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %i.n, %bb.e ], [ 1, %bb.d ], [ %i.ab, %bb.k ], [ %i.z, %bb.j ], [ %.11142.ph, %.thread186 ], [ %.15146.ph, %.thread199 ], [ 0, %bb.b ], [ 1, %bb.u ], [ 1, %bb.v ], [ 1, %bb.r ], [ 1, %bb.s ], [ %i.x, %bb.i ], [ %i.al, %bb.o ], [ %i.an, %bb.p ], [ 1, %.thread168.sink.split ]
   ret i32 %.16147
 }
 

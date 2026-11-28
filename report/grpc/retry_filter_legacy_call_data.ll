@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN4absl12lts_202505126StatusC2ERKS1_.exit:       ; preds = %bb.b, %bb.a
   invoke void @_ZN9grpc_core11RetryFilter14LegacyCallData11CallAttempt9BatchData43MaybeAddClosureForRecvTrailingMetadataReadyEN4absl12lts_202505126StatusEPNS_23CallCombinerClosureListE(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 %3, ptr noundef nonnull %2)
-          to label %bb.c unwind label %bb.o
+          to label %bb.c unwind label %bb.n
 
 bb.c:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit
   br i1 %i.b, label %_ZN4absl12lts_202505126StatusD2Ev.exit, label %bb.d
@@ -224,7 +224,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN4absl12lts_202505126StatusD2Ev.exit:           ; preds = %bb.c, %bb.d
   invoke void @_ZN9grpc_core11RetryFilter14LegacyCallData11CallAttempt9BatchData41AddClosuresForDeferredCompletionCallbacksEPNS_23CallCombinerClosureListE(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %2)
-          to label %bb.f unwind label %bb.n
+          to label %bb.f unwind label %5
 
 bb.f:                                             ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit
   %i.h = load i64, ptr %1, align 8, !tbaa !188    ; 4 uses
@@ -239,7 +239,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN4absl12lts_202505126StatusC2ERKS1_.exit4:      ; preds = %bb.g, %bb.f
   invoke void @_ZN9grpc_core11RetryFilter14LegacyCallData11CallAttempt9BatchData40AddClosuresToFailUnstartedPendingBatchesEN4absl12lts_202505126StatusEPNS_23CallCombinerClosureListE(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 8 %4, ptr noundef nonnull %2)
-          to label %bb.h unwind label %bb.p
+          to label %bb.h unwind label %bb.o
 
 bb.h:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit4
   br i1 %i.i, label %_ZN4absl12lts_202505126StatusD2Ev.exit5, label %bb.i
@@ -264,7 +264,7 @@ _ZN4absl12lts_202505126StatusD2Ev.exit5:          ; preds = %bb.h, %bb.i
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 120
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !239
   invoke void @_ZN9grpc_core23CallCombinerClosureList11RunClosuresEPNS_12CallCombinerE(ptr noundef nonnull align 8 dereferenceable(152) %2, ptr noundef %i.t)
-          to label %bb.k unwind label %bb.n
+          to label %bb.k unwind label %5
 
 bb.k:                                             ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit5
   %i.u = load i64, ptr %2, align 8, !tbaa !228
@@ -286,25 +286,29 @@ _ZN9grpc_core23CallCombinerClosureListD2Ev.exit:  ; preds = %bb.k, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #33
   ret void
 
-bb.n:                                             ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit5, %_ZN4absl12lts_202505126StatusD2Ev.exit
+5:                                                ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit5, %_ZN4absl12lts_202505126StatusD2Ev.exit
+  %6 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.q
+
+bb.n:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit
   %i.y = landingpad { ptr, i32 }
           cleanup
-  br label %bb.q
+  br label %bb.p
 
-bb.o:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit
+bb.o:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit4
   %i.z = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %3) #33
+  br label %bb.p
+
+bb.p:                                             ; preds = %bb.n, %bb.o
+  %.sink = phi ptr [ %4, %bb.o ], [ %3, %bb.n ]
+  %.pn.ph = phi { ptr, i32 } [ %i.z, %bb.o ], [ %i.y, %bb.n ]
+  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #33
   br label %bb.q
 
-bb.p:                                             ; preds = %_ZN4absl12lts_202505126StatusC2ERKS1_.exit4
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %4) #33
-  br label %bb.q
-
-bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
-  %.pn = phi { ptr, i32 } [ %i.y, %bb.n ], [ %5, %bb.p ], [ %i.z, %bb.o ]
+bb.q:                                             ; preds = %bb.p, %5
+  %.pn = phi { ptr, i32 } [ %6, %5 ], [ %.pn.ph, %bb.p ]
   call void @_ZN9grpc_core23CallCombinerClosureListD2Ev(ptr noundef nonnull align 8 dead_on_return(152) dereferenceable(152) %2) #33
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #33
   resume { ptr, i32 } %.pn

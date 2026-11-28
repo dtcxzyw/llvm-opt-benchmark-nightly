@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.bzla::Node", align 8        ; 7 uses
   %3 = alloca %"class.std::vector.32", align 8    ; 11 uses
   %4 = alloca [3 x %"class.bzla::Node"], align 8  ; 14 uses
-  %5 = alloca %"class.bzla::BitVector", align 8   ; 10 uses
+  %5 = alloca %"class.bzla::BitVector", align 8   ; 9 uses
   %6 = alloca %"class.bzla::BitVector", align 8   ; 8 uses
   %7 = alloca %"class.std::vector.37", align 8    ; 9 uses
   store ptr null, ptr %0, align 8, !tbaa !22
@@ -421,15 +421,13 @@ bb.t:                                             ; preds = %bb.e, %bb.a, %bb.b,
 .thread74:                                        ; preds = %bb.h
   %i.aq = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4bzla9BitVectorD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %5) #13
-  br label %.preheader.preheader.sink.split
+  br label %.preheader.preheader.sink.split.sink.split
 
 .thread78:                                        ; preds = %bb.i
   %i.ar = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
-  call void @_ZN4bzla9BitVectorD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %5) #13
-  br label %.preheader.preheader.sink.split
+  br label %.preheader.preheader.sink.split.sink.split
 
 bb.u:                                             ; preds = %bb.j
   %i.as = landingpad { ptr, i32 }
@@ -485,9 +483,15 @@ bb.z:                                             ; preds = %bb.u, %.body
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br i1 %i.bd, label %.loopexit, label %.preheader.preheader
 
-.preheader.preheader.sink.split:                  ; preds = %.thread68, %.thread74, %.thread78
-  %.11273.ph = phi ptr [ %i.f, %.thread78 ], [ %i.e, %.thread74 ], [ %i.e, %.thread68 ]
-  %.pn.pn.pn.pn.pn.pn72.ph = phi { ptr, i32 } [ %i.ar, %.thread78 ], [ %i.aq, %.thread74 ], [ %i.ap, %.thread68 ]
+.preheader.preheader.sink.split.sink.split:       ; preds = %.thread78, %.thread74
+  %.11273.ph.ph = phi ptr [ %i.e, %.thread74 ], [ %i.f, %.thread78 ]
+  %.pn.pn.pn.pn.pn.pn72.ph.ph = phi { ptr, i32 } [ %i.aq, %.thread74 ], [ %i.ar, %.thread78 ]
+  call void @_ZN4bzla9BitVectorD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %5) #13
+  br label %.preheader.preheader.sink.split
+
+.preheader.preheader.sink.split:                  ; preds = %.preheader.preheader.sink.split.sink.split, %.thread68
+  %.11273.ph = phi ptr [ %i.e, %.thread68 ], [ %.11273.ph.ph, %.preheader.preheader.sink.split.sink.split ]
+  %.pn.pn.pn.pn.pn.pn72.ph = phi { ptr, i32 } [ %i.ap, %.thread68 ], [ %.pn.pn.pn.pn.pn.pn72.ph.ph, %.preheader.preheader.sink.split.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %.preheader.preheader
 

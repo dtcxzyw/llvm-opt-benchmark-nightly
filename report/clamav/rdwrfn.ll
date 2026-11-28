@@ -25,30 +25,30 @@ bb.a:
   tail call void @_ZN8DataHashC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
   invoke void @_ZN8DataHashC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %i.b)
-          to label %bb.b unwind label %bb.h
+          to label %bb.b unwind label %1
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 2 uses
   invoke void @_ZN8DataHashC1Ev(ptr noundef nonnull align 8 dereferenceable(16) %i.c)
-          to label %bb.c unwind label %bb.i
+          to label %bb.c unwind label %bb.h
 
 bb.c:                                             ; preds = %bb.b
   %i.d = invoke noalias noundef nonnull dereferenceable(2520) ptr @_Znwm(i64 noundef 2520) #15
-          to label %bb.d unwind label %bb.j       ; 3 uses
+          to label %bb.d unwind label %bb.i       ; 3 uses
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_ZN9CryptDataC1Ev(ptr noundef nonnull align 8 dereferenceable(2516) %i.d)
-          to label %bb.e unwind label %bb.k
+          to label %bb.e unwind label %bb.j
 
 bb.e:                                             ; preds = %bb.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 128
   store ptr %i.d, ptr %i.e, align 8, !tbaa !22
   %i.f = invoke noalias noundef nonnull dereferenceable(2520) ptr @_Znwm(i64 noundef 2520) #15
-          to label %bb.f unwind label %bb.j       ; 3 uses
+          to label %bb.f unwind label %bb.i       ; 3 uses
 
 bb.f:                                             ; preds = %bb.e
   invoke void @_ZN9CryptDataC1Ev(ptr noundef nonnull align 8 dereferenceable(2516) %i.f)
-          to label %bb.g unwind label %bb.l
+          to label %bb.g unwind label %bb.k
 
 bb.g:                                             ; preds = %bb.f
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -86,45 +86,49 @@ bb.g:                                             ; preds = %bb.f
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, i8 0, i64 24, i1 false)
   ret void
 
-bb.h:                                             ; preds = %bb.a
-  %i.w = landingpad { ptr, i32 }
+1:                                                ; preds = %bb.a
+  %2 = landingpad { ptr, i32 }
           cleanup
   br label %bb.o
 
-bb.i:                                             ; preds = %bb.b
-  %i.x = landingpad { ptr, i32 }
+bb.h:                                             ; preds = %bb.b
+  %i.w = landingpad { ptr, i32 }
           cleanup
   br label %bb.n
 
-bb.j:                                             ; preds = %bb.e, %bb.c
+bb.i:                                             ; preds = %bb.e, %bb.c
+  %i.x = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.m
+
+bb.j:                                             ; preds = %bb.d
   %i.y = landingpad { ptr, i32 }
           cleanup
-  br label %bb.m
+  br label %bb.l
 
-bb.k:                                             ; preds = %bb.d
+bb.k:                                             ; preds = %bb.f
   %i.z = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.d) #16
+  br label %bb.l
+
+bb.l:                                             ; preds = %bb.j, %bb.k
+  %.sink = phi ptr [ %i.f, %bb.k ], [ %i.d, %bb.j ]
+  %.pn.ph = phi { ptr, i32 } [ %i.z, %bb.k ], [ %i.y, %bb.j ]
+  tail call void @_ZdlPv(ptr noundef nonnull %.sink) #16
   br label %bb.m
 
-bb.l:                                             ; preds = %bb.f
-  %1 = landingpad { ptr, i32 }
-          cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.f) #16
-  br label %bb.m
-
-bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
-  %.pn = phi { ptr, i32 } [ %1, %bb.l ], [ %i.y, %bb.j ], [ %i.z, %bb.k ]
+bb.m:                                             ; preds = %bb.l, %bb.i
+  %.pn = phi { ptr, i32 } [ %i.x, %bb.i ], [ %.pn.ph, %bb.l ]
   tail call void @_ZN8DataHashD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.c) #17
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.i
-  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.m ], [ %i.x, %bb.i ]
+bb.n:                                             ; preds = %bb.m, %bb.h
+  %.pn.pn = phi { ptr, i32 } [ %.pn, %bb.m ], [ %i.w, %bb.h ]
   tail call void @_ZN8DataHashD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.b) #17
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %bb.h
-  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.n ], [ %i.w, %bb.h ]
+bb.o:                                             ; preds = %bb.n, %1
+  %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.n ], [ %2, %1 ]
   tail call void @_ZN8DataHashD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.a) #17
   resume { ptr, i32 } %.pn.pn.pn
 }

@@ -58,8 +58,7 @@ bb.b:                                             ; preds = %.noexc15
   %i.g = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.f, i64 noundef 1) #16, !noalias !37
-  br label %.body
+  br label %.body.sink.split
 
 _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %.noexc15
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !20   ; 3 uses
@@ -68,8 +67,8 @@ _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8
   br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i: ; preds = %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.h) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.h) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i, %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit
@@ -90,8 +89,7 @@ bb.d:                                             ; preds = %.noexc16
   %i.m = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef 1) #16, !noalias !39
-  br label %.body
+  br label %.body.sink.split
 
 _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit19: ; preds = %.noexc16
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -101,8 +99,8 @@ _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8
   br i1 %.not.i.i.i.i20, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit25, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i21
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i21: ; preds = %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit19
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.o) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.o) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit25
 
 bb.e:                                             ; preds = %.noexc, %bb.a
@@ -126,8 +124,7 @@ bb.g:                                             ; preds = %.noexc26
   %i.s = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef 1) #16, !noalias !40
-  br label %.body
+  br label %.body.sink.split
 
 _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit29: ; preds = %.noexc26
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -137,8 +134,8 @@ _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8
   br i1 %.not.i.i.i.i30, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit35, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i31
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i31: ; preds = %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit29
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.u) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.u) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit35
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit35: ; preds = %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit29, %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i31, %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit25
@@ -164,8 +161,7 @@ bb.i:                                             ; preds = %.noexc36
   %i.ac = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ab, i64 noundef 1) #16, !noalias !41
-  br label %.body
+  br label %.body.sink.split
 
 _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit39: ; preds = %.noexc36
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -175,8 +171,8 @@ _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8
   br i1 %.not.i.i.i.i40, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit45, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i41
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i41: ; preds = %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit39
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.ae) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ae, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.ae) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ae, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit45
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit45: ; preds = %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit39, %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i41, %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit35
@@ -197,8 +193,7 @@ bb.k:                                             ; preds = %.noexc46
   %i.aj = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ai, i64 noundef 1) #16, !noalias !43
-  br label %.body
+  br label %.body.sink.split
 
 _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit49: ; preds = %.noexc46
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -208,8 +203,8 @@ _ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8
   br i1 %.not.i.i.i.i50, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit55, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i51
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.i.i.i51: ; preds = %_ZSt11make_uniqueI12DeviceStreamJR13DeviceContext20DeviceStreamPriorityRKbEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit49
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.al) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.al) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit55
 
 bb.l:                                             ; preds = %bb.h, %bb.f, %bb.c, %_ZNK13DeviceContext8activateEv.exit, %bb.j
@@ -218,16 +213,22 @@ bb.l:                                             ; preds = %bb.h, %bb.f, %bb.c,
           catch ptr @_ZTISt9exception
   br label %.body
 
-.body:                                            ; preds = %bb.l, %bb.k, %bb.i, %bb.g, %bb.d, %bb.b
-  %.pn = phi { ptr, i32 } [ %i.ac, %bb.i ], [ %i.s, %bb.g ], [ %i.m, %bb.d ], [ %i.g, %bb.b ], [ %i.aj, %bb.k ], [ %i.am, %bb.l ] ; 3 uses
+.body.sink.split:                                 ; preds = %bb.b, %bb.d, %bb.g, %bb.i, %bb.k
+  %.sink = phi ptr [ %i.ai, %bb.k ], [ %i.ab, %bb.i ], [ %i.r, %bb.g ], [ %i.l, %bb.d ], [ %i.f, %bb.b ]
+  %.pn.ph = phi { ptr, i32 } [ %i.aj, %bb.k ], [ %i.ac, %bb.i ], [ %i.s, %bb.g ], [ %i.m, %bb.d ], [ %i.g, %bb.b ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 1) #17, !noalias !13
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.l
+  %.pn = phi { ptr, i32 } [ %i.am, %bb.l ], [ %.pn.ph, %.body.sink.split ] ; 3 uses
   %.0 = extractvalue { ptr, i32 } %.pn, 1
-  %i.an = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #17
+  %i.an = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #16
   %i.ao = icmp eq i32 %.0, %i.an
   br i1 %i.ao, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %.body
   %.011 = extractvalue { ptr, i32 } %.pn, 0
-  %i.ap = tail call ptr @__cxa_begin_catch(ptr %.011) #17
+  %i.ap = tail call ptr @__cxa_begin_catch(ptr %.011) #16
   invoke void @_ZN3gmx28processExceptionAsFatalErrorERKSt9exception(ptr noundef nonnull align 8 dereferenceable(8) %i.ap) #18
           to label %bb.n unwind label %bb.o
 
@@ -245,8 +246,8 @@ _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit55: ; preds = %
 
 bb.p:                                             ; preds = %bb.o, %.body, %bb.e
   %.merged = phi { ptr, i32 } [ %i.p, %bb.e ], [ %.pn, %.body ], [ %i.aq, %bb.o ]
-  tail call void @_ZN3gmx16EnumerationArrayINS_16DeviceStreamTypeESt10unique_ptrI12DeviceStreamSt14default_deleteIS3_EELS1_5EED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.a) #17
-  tail call void @_ZN13DeviceContextD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #17
+  tail call void @_ZN3gmx16EnumerationArrayINS_16DeviceStreamTypeESt10unique_ptrI12DeviceStreamSt14default_deleteIS3_EELS1_5EED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.a) #16
+  tail call void @_ZN13DeviceContextD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #16
   resume { ptr, i32 } %.merged
 
 bb.q:                                             ; preds = %bb.o
@@ -274,7 +275,7 @@ declare void @__cxa_end_catch() local_unnamed_addr
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #4 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #17 ; 0 uses
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #16 ; 0 uses
   tail call void @_ZSt9terminatev() #19
   unreachable
 }
@@ -291,8 +292,8 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i: ; preds = %bb.a
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.b) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.b) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i
@@ -302,8 +303,8 @@ _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit: ; preds = %bb
   br i1 %.not.i.1, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.1, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.1
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.1: ; preds = %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.d) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.d) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.1
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.1: ; preds = %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.1, %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit
@@ -313,8 +314,8 @@ _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.1: ; preds = %
   br i1 %.not.i.2, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.2, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.2
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.2: ; preds = %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.1
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.f) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.f, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.f) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.f, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.2
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.2: ; preds = %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.2, %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.1
@@ -324,8 +325,8 @@ _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.2: ; preds = %
   br i1 %.not.i.3, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.3, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.3
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.3: ; preds = %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.2
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.h) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.h) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.3
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.3: ; preds = %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.3, %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.2
@@ -334,8 +335,8 @@ _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.3: ; preds = %
   br i1 %.not.i.4, label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.4, label %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.4
 
 _ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.4: ; preds = %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.3
-  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.i) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 1) #16
+  tail call void @_ZN12DeviceStreamD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %i.i) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 1) #17
   br label %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.4
 
 _ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.4: ; preds = %_ZNKSt14default_deleteI12DeviceStreamEclEPS0_.exit.i.4, %_ZNSt10unique_ptrI12DeviceStreamSt14default_deleteIS0_EED2Ev.exit.3
@@ -381,17 +382,17 @@ bb.c:                                             ; preds = %bb.b
           catch ptr null                          ; 2 uses
   %i.c = extractvalue { ptr, i32 } %i.b, 0        ; 2 uses
   %i.d = extractvalue { ptr, i32 } %i.b, 1
-  %i.e = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #17
+  %i.e = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #16
   %i.f = icmp eq i32 %i.d, %i.e
   br i1 %i.f, label %bb.d, label %bb.w
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = tail call ptr @__cxa_begin_catch(ptr %i.c) #17 ; 2 uses
+  %i.g = tail call ptr @__cxa_begin_catch(ptr %i.c) #16 ; 2 uses
   %i.h = load ptr, ptr @stderr, align 8, !tbaa !45
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !47
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = tail call noundef ptr %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.g) #17
+  %i.l = tail call noundef ptr %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.g) #16
   %i.m = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.h, ptr noundef nonnull @.str, ptr noundef %i.l) #20 ; 0 uses
   invoke void @__cxa_end_catch()
           to label %bb.e unwind label %bb.v
@@ -412,17 +413,17 @@ bb.g:                                             ; preds = %bb.f
           catch ptr null                          ; 2 uses
   %i.p = extractvalue { ptr, i32 } %i.o, 0        ; 2 uses
   %i.q = extractvalue { ptr, i32 } %i.o, 1
-  %i.r = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #17
+  %i.r = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #16
   %i.s = icmp eq i32 %i.q, %i.r
   br i1 %i.s, label %bb.h, label %bb.w
 
 bb.h:                                             ; preds = %bb.g
-  %i.t = tail call ptr @__cxa_begin_catch(ptr %i.p) #17 ; 2 uses
+  %i.t = tail call ptr @__cxa_begin_catch(ptr %i.p) #16 ; 2 uses
   %i.u = load ptr, ptr @stderr, align 8, !tbaa !45
   %i.v = load ptr, ptr %i.t, align 8, !tbaa !47
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %i.x = load ptr, ptr %i.w, align 8
-  %i.y = tail call noundef ptr %i.x(ptr noundef nonnull align 8 dereferenceable(8) %i.t) #17
+  %i.y = tail call noundef ptr %i.x(ptr noundef nonnull align 8 dereferenceable(8) %i.t) #16
   %i.z = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.u, ptr noundef nonnull @.str, ptr noundef %i.y) #20 ; 0 uses
   invoke void @__cxa_end_catch()
           to label %bb.i unwind label %bb.v
@@ -443,17 +444,17 @@ bb.k:                                             ; preds = %bb.j
           catch ptr null                          ; 2 uses
   %i.ac = extractvalue { ptr, i32 } %i.ab, 0      ; 2 uses
   %i.ad = extractvalue { ptr, i32 } %i.ab, 1
-  %i.ae = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #17
+  %i.ae = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #16
   %i.af = icmp eq i32 %i.ad, %i.ae
   br i1 %i.af, label %bb.l, label %bb.w
 
 bb.l:                                             ; preds = %bb.k
-  %i.ag = tail call ptr @__cxa_begin_catch(ptr %i.ac) #17 ; 2 uses
+  %i.ag = tail call ptr @__cxa_begin_catch(ptr %i.ac) #16 ; 2 uses
   %i.ah = load ptr, ptr @stderr, align 8, !tbaa !45
   %i.ai = load ptr, ptr %i.ag, align 8, !tbaa !47
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   %i.ak = load ptr, ptr %i.aj, align 8
-  %i.al = tail call noundef ptr %i.ak(ptr noundef nonnull align 8 dereferenceable(8) %i.ag) #17
+  %i.al = tail call noundef ptr %i.ak(ptr noundef nonnull align 8 dereferenceable(8) %i.ag) #16
   %i.am = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ah, ptr noundef nonnull @.str, ptr noundef %i.al) #20 ; 0 uses
   invoke void @__cxa_end_catch()
           to label %bb.m unwind label %bb.v
@@ -474,17 +475,17 @@ bb.o:                                             ; preds = %bb.n
           catch ptr null                          ; 2 uses
   %i.ap = extractvalue { ptr, i32 } %i.ao, 0      ; 2 uses
   %i.aq = extractvalue { ptr, i32 } %i.ao, 1
-  %i.ar = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #17
+  %i.ar = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #16
   %i.as = icmp eq i32 %i.aq, %i.ar
   br i1 %i.as, label %bb.p, label %bb.w
 
 bb.p:                                             ; preds = %bb.o
-  %i.at = tail call ptr @__cxa_begin_catch(ptr %i.ap) #17 ; 2 uses
+  %i.at = tail call ptr @__cxa_begin_catch(ptr %i.ap) #16 ; 2 uses
   %i.au = load ptr, ptr @stderr, align 8, !tbaa !45
   %i.av = load ptr, ptr %i.at, align 8, !tbaa !47
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.ax = load ptr, ptr %i.aw, align 8
-  %i.ay = tail call noundef ptr %i.ax(ptr noundef nonnull align 8 dereferenceable(8) %i.at) #17
+  %i.ay = tail call noundef ptr %i.ax(ptr noundef nonnull align 8 dereferenceable(8) %i.at) #16
   %i.az = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.au, ptr noundef nonnull @.str, ptr noundef %i.ay) #20 ; 0 uses
   invoke void @__cxa_end_catch()
           to label %bb.q unwind label %bb.v
@@ -505,24 +506,24 @@ bb.s:                                             ; preds = %bb.r
           catch ptr null                          ; 2 uses
   %i.bc = extractvalue { ptr, i32 } %i.bb, 0      ; 2 uses
   %i.bd = extractvalue { ptr, i32 } %i.bb, 1
-  %i.be = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #17
+  %i.be = tail call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #16
   %i.bf = icmp eq i32 %i.bd, %i.be
   br i1 %i.bf, label %bb.t, label %bb.w
 
 bb.t:                                             ; preds = %bb.s
-  %i.bg = tail call ptr @__cxa_begin_catch(ptr %i.bc) #17 ; 2 uses
+  %i.bg = tail call ptr @__cxa_begin_catch(ptr %i.bc) #16 ; 2 uses
   %i.bh = load ptr, ptr @stderr, align 8, !tbaa !45
   %i.bi = load ptr, ptr %i.bg, align 8, !tbaa !47
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 16
   %i.bk = load ptr, ptr %i.bj, align 8
-  %i.bl = tail call noundef ptr %i.bk(ptr noundef nonnull align 8 dereferenceable(8) %i.bg) #17
+  %i.bl = tail call noundef ptr %i.bk(ptr noundef nonnull align 8 dereferenceable(8) %i.bg) #16
   %i.bm = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bh, ptr noundef nonnull @.str, ptr noundef %i.bl) #20 ; 0 uses
   invoke void @__cxa_end_catch()
           to label %bb.u unwind label %bb.v
 
 bb.u:                                             ; preds = %bb.t, %bb.r, %bb.q
-  tail call void @_ZN3gmx16EnumerationArrayINS_16DeviceStreamTypeESt10unique_ptrI12DeviceStreamSt14default_deleteIS3_EELS1_5EED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %.0.ptr) #17
-  tail call void @_ZN13DeviceContextD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #17
+  tail call void @_ZN3gmx16EnumerationArrayINS_16DeviceStreamTypeESt10unique_ptrI12DeviceStreamSt14default_deleteIS3_EELS1_5EED2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %.0.ptr) #16
+  tail call void @_ZN13DeviceContextD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) #16
   ret void
 
 bb.v:                                             ; preds = %bb.t, %bb.p, %bb.l, %bb.h, %bb.d
@@ -557,7 +558,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 56) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 56) #17
   resume { ptr, i32 } %i.b
 }
 
@@ -569,8 +570,8 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN3gmx19DeviceStreamManager4ImplESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN3gmx19DeviceStreamManager4ImplEEclEPS2_.exit.i
 
 _ZNKSt14default_deleteIN3gmx19DeviceStreamManager4ImplEEclEPS2_.exit.i: ; preds = %bb.a
-  tail call void @_ZN3gmx19DeviceStreamManager4ImplD1Ev(ptr noundef nonnull align 8 dead_on_return(49) dereferenceable(49) %i.a) #17
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 56) #16
+  tail call void @_ZN3gmx19DeviceStreamManager4ImplD1Ev(ptr noundef nonnull align 8 dead_on_return(49) dereferenceable(49) %i.a) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 56) #17
   br label %_ZNSt10unique_ptrIN3gmx19DeviceStreamManager4ImplESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN3gmx19DeviceStreamManager4ImplESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN3gmx19DeviceStreamManager4ImplEEclEPS2_.exit.i
@@ -681,8 +682,8 @@ attributes #12 = { nofree nounwind "no-trapping-math"="true" "stack-protector-bu
 attributes #13 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #14 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #15 = { builtin allocsize(0) }
-attributes #16 = { builtin nounwind }
-attributes #17 = { nounwind }
+attributes #16 = { nounwind }
+attributes #17 = { builtin nounwind }
 attributes #18 = { noreturn }
 attributes #19 = { noreturn nounwind }
 attributes #20 = { cold nounwind }

@@ -202,7 +202,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit57: ; preds = %bb.aq, %bb.ap, %bb.ar
   invoke void @_ZN4cvc58internal7CDProof11getProofForENS0_12NodeTemplateILb1EEE(ptr dead_on_unwind writable sret(%"class.std::shared_ptr.313") align 8 %0, ptr noundef nonnull align 8 dereferenceable(217) %6, ptr noundef nonnull align 8 %15)
-          to label %bb.as unwind label %bb.bi
+          to label %bb.as unwind label %16
 
 bb.as:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit57
   %i.gv = load ptr, ptr %15, align 8, !tbaa !42   ; 3 uses
@@ -339,17 +339,21 @@ bb.bh:                                            ; preds = %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #17
   call void @_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %12) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #17
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %11) #17
-  br label %bb.bj
+  br label %bb.bi
 
-bb.bi:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit57
-  %16 = landingpad { ptr, i32 }
+16:                                               ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit57
+  %17 = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %15) #17
+  br label %bb.bi
+
+bb.bi:                                            ; preds = %.loopexit, %16
+  %.sink = phi ptr [ %15, %16 ], [ %11, %.loopexit ]
+  %.pn18.ph = phi { ptr, i32 } [ %17, %16 ], [ %.pn15.pn, %.loopexit ]
+  call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %.sink) #17
   br label %bb.bj
 
-bb.bj:                                            ; preds = %bb.bi, %.loopexit, %bb.bf
-  %.pn18 = phi { ptr, i32 } [ %16, %bb.bi ], [ %i.hx, %bb.bf ], [ %.pn15.pn, %.loopexit ]
+bb.bj:                                            ; preds = %bb.bi, %bb.bf
+  %.pn18 = phi { ptr, i32 } [ %i.hx, %bb.bf ], [ %.pn18.ph, %bb.bi ]
   call void @_ZN4cvc58internal12NodeTemplateILb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %8) #17
   br label %bb.bk
 

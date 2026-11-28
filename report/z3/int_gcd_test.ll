@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %class.rational, align 8            ; 15 uses
   %5 = alloca %class.rational, align 8            ; 11 uses
   %6 = alloca %class.rational, align 8            ; 15 uses
-  %7 = alloca %class.rational, align 8            ; 20 uses
+  %7 = alloca %class.rational, align 8            ; 19 uses
   %8 = alloca %class.rational, align 8            ; 14 uses
   %9 = alloca %class.rational, align 8            ; 16 uses
   %10 = alloca %class.rational, align 8           ; 8 uses
@@ -463,13 +463,7 @@ bb.t:                                             ; preds = %_ZN11mpq_managerILb
 _ZN8rationalC2ERKS_.exit.i:                       ; preds = %bb.t, %bb.s
   %i.dh = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !65, !noalias !157
   invoke void @_ZN11mpz_managerILb1EE3absER3mpz(ptr noundef nonnull align 8 dereferenceable(728) %i.dh, ptr noundef nonnull align 8 dereferenceable(32) %7)
-          to label %_Z3absRK8rational.exit unwind label %13
-
-13:                                               ; preds = %_ZN8rationalC2ERKS_.exit.i
-  %14 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %7) #18
-  br label %.body
+          to label %_Z3absRK8rational.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _Z3absRK8rational.exit:                           ; preds = %_ZN8rationalC2ERKS_.exit.i
   %i.di = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !65 ; 2 uses
@@ -563,7 +557,7 @@ bb.ae:                                            ; preds = %bb.t, %bb.r
           cleanup
   br label %.body
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc62, %.lr.ph.i, %.invoke, %bb.ao, %bb.am, %.noexc60, %bb.aj, %bb.ah, %bb.af, %bb.ab, %bb.z, %bb.x, %_ZN11mpq_managerILb1EE2eqERK3mpzS3_.exit.i.i, %bb.ag, %bb.aa
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc62, %.lr.ph.i, %_ZN8rationalC2ERKS_.exit.i, %.invoke, %bb.ao, %bb.am, %.noexc60, %bb.aj, %bb.ah, %bb.af, %bb.ab, %bb.z, %bb.x, %_ZN11mpq_managerILb1EE2eqERK3mpzS3_.exit.i.i, %bb.ag, %bb.aa
   %lpad.loopexit.split-lp110 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp
@@ -807,13 +801,13 @@ bb.au:                                            ; preds = %bb.m, %_ZN8rational
   %i.hx = icmp eq ptr %i.hw, %i.bq
   br i1 %i.hx, label %._crit_edge, label %bb.l
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body67
-  %.pn37 = phi { ptr, i32 } [ %i.gp, %.body67 ], [ %lpad.loopexit.split-lp110, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp:                               ; preds = %.body67, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+  %.pn37 = phi { ptr, i32 } [ %lpad.loopexit.split-lp110, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.gp, %.body67 ]
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %7) #18
   br label %.body
 
-.body:                                            ; preds = %bb.ae, %13, %.loopexit.split-lp
-  %.pn37.pn = phi { ptr, i32 } [ %.pn37, %.loopexit.split-lp ], [ %i.et, %bb.ae ], [ %14, %13 ]
+.body:                                            ; preds = %.loopexit.split-lp, %bb.ae
+  %.pn37.pn = phi { ptr, i32 } [ %i.et, %bb.ae ], [ %.pn37, %.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
   call void @_ZN8rationalD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %6) #18
   br label %bb.av

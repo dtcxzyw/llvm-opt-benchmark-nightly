@@ -201,8 +201,7 @@ bb.g:                                             ; preds = %bb.c
 bb.h:                                             ; preds = %bb.e
   %i.ad = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.x) #10
-  br label %.body
+  br label %.body.sink.split
 
 bb.i:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %i.w, i64 16
@@ -223,8 +222,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 bb.l:                                             ; preds = %bb.j
   %i.ak = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %i.ah) #10
-  br label %.body
+  br label %.body.sink.split
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph, %bb.k, %_ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit, %bb.n, %._crit_edge, %bb.u
   %lpad.loopexit.split-lp102 = landingpad { ptr, i32 }
@@ -349,8 +347,14 @@ bb.u:                                             ; preds = %.loopexit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   ret void
 
-.body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.l, %bb.h
-  %.pn.pn = phi { ptr, i32 } [ %i.ad, %bb.h ], [ %i.ak, %bb.l ], [ %lpad.loopexit.split-lp102, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.body.sink.split:                                 ; preds = %bb.h, %bb.l
+  %.lcssa87.sink = phi ptr [ %i.ah, %bb.l ], [ %i.x, %bb.h ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.ak, %bb.l ], [ %i.ad, %bb.h ]
+  call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %.lcssa87.sink) #10
+  br label %.body
+
+.body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body.sink.split
+  %.pn.pn = phi { ptr, i32 } [ %.pn.pn.ph, %.body.sink.split ], [ %lpad.loopexit.split-lp102, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
   br label %bb.v
 

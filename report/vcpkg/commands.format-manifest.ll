@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %_ZN5vcpkg4Util4Sets
   %i.bn = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 6 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %25, i64 48 ; 4 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 7 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %25, i64 16 ; 6 uses
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %_ZN5vcpkg4PathD2Ev.exit242, %bb.j
@@ -605,7 +605,7 @@ _ZN5vcpkg4PathD2Ev.exit242:                       ; preds = %_ZN5vcpkg9ExpectedT
   br i1 %.not, label %._crit_edge, label %bb.k
 
 bb.cd:                                            ; preds = %bb.ca, %bb.az, %bb.aa
-  %.pn138.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn138.pn.pn.pn.pn, %bb.az ], [ %.pn133.pn.pn, %bb.ca ], [ %i.cw, %bb.aa ] ; 4 uses
+  %.pn138.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn138.pn.pn.pn.pn, %bb.az ], [ %.pn133.pn.pn, %bb.ca ], [ %i.cw, %bb.aa ] ; 3 uses
   %i.oa = load i8, ptr %i.an, align 8, !tbaa !100, !range !32, !noundef !25
   %i.ob = trunc nuw i8 %i.oa to i1
   br i1 %i.ob, label %bb.ce, label %bb.cf
@@ -613,13 +613,7 @@ bb.cd:                                            ; preds = %bb.ca, %bb.az, %bb.
 bb.ce:                                            ; preds = %bb.cd
   %i.oc = load ptr, ptr %25, align 8, !tbaa !28   ; 2 uses
   %i.od = icmp eq ptr %i.oc, %i.bq
-  br i1 %i.od, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit250, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i248
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i248: ; preds = %bb.ce
-  %44 = load i64, ptr %i.bq, align 8, !tbaa !30
-  %45 = add i64 %44, 1
-  call void @_ZdlPvm(ptr noundef %i.oc, i64 noundef %45) #18
-  br label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit250
+  br i1 %i.od, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit250, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245
 
 bb.cf:                                            ; preds = %bb.cd
   %i.oe = load ptr, ptr %.sroa.gep508, align 8, !tbaa !28 ; 2 uses
@@ -637,14 +631,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244: ; preds
   %i.oj = icmp eq ptr %i.oi, %i.bq
   br i1 %i.oj, label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit250, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244, %bb.ce
+  %.sink1034 = phi ptr [ %i.oc, %bb.ce ], [ %i.oi, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244 ]
   %i.ok = load i64, ptr %i.bq, align 8, !tbaa !30
   %i.ol = add i64 %i.ok, 1
-  call void @_ZdlPvm(ptr noundef %i.oi, i64 noundef %i.ol) #18
+  call void @_ZdlPvm(ptr noundef %.sink1034, i64 noundef %i.ol) #18
   br label %_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit250
 
-_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit250: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244, %bb.ce, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i248, %bb.z
-  %.pn138.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.cv, %bb.z ], [ %.pn138.pn.pn.pn.pn.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245 ], [ %.pn138.pn.pn.pn.pn.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i248 ], [ %.pn138.pn.pn.pn.pn.pn, %bb.ce ], [ %.pn138.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244 ]
+_ZN5vcpkg9ExpectedTINS_12FileContentsENS_15LocalizedStringEED2Ev.exit250: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244, %bb.ce, %bb.z
+  %.pn138.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.cv, %bb.z ], [ %.pn138.pn.pn.pn.pn.pn, %bb.ce ], [ %.pn138.pn.pn.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i244 ], [ %.pn138.pn.pn.pn.pn.pn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i1.i.i.i245 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #16
   br label %bb.cg
 

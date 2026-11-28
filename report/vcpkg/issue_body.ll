@@ -204,9 +204,7 @@ bb.t:                                             ; preds = %.noexc.i.i48
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49: ; preds = %bb.t
   %i.cr = load i64, ptr %i.cp, align 8, !tbaa !17
-  %31 = add i64 %i.cr, 1
-  call void @_ZdlPvm(ptr noundef %i.co, i64 noundef %31) #20
-  br label %.preheader.preheader
+  br label %.preheader.preheader.sink.split
 
 bb.u:                                             ; preds = %bb.s, %bb.r, %._crit_edge.i.i.i47
   %i.cs = load i64, ptr %i.c, align 8, !tbaa !31  ; 2 uses
@@ -267,9 +265,7 @@ bb.x:                                             ; preds = %.noexc.i.i58
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59: ; preds = %bb.x
   %i.dk = load i64, ptr %i.di, align 8, !tbaa !17
-  %32 = add i64 %i.dk, 1
-  call void @_ZdlPvm(ptr noundef %i.dh, i64 noundef %32) #20
-  br label %.preheader.preheader
+  br label %.preheader.preheader.sink.split
 
 bb.y:                                             ; preds = %bb.w, %bb.v, %._crit_edge.i.i.i57
   %i.dl = load i64, ptr %i.b, align 8, !tbaa !31  ; 2 uses
@@ -672,9 +668,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit100: ; preds = %bb
           cleanup
   br label %.body.thread
 
-.preheader.preheader:                             ; preds = %bb.x, %bb.t, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59, %.body.thread329
-  %eh.lpad-body327 = phi { ptr, i32 } [ %lpad.thr_comm, %.body.thread329 ], [ %i.dg, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59 ], [ %i.cn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49 ], [ %i.cn, %bb.t ], [ %i.dg, %bb.x ]
-  %.023.lpad-body326 = phi ptr [ %.023.ph, %.body.thread329 ], [ %i.cw, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59 ], [ %i.cd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49 ], [ %i.cd, %bb.t ], [ %i.cw, %bb.x ]
+.preheader.preheader.sink.split:                  ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49
+  %.sink333 = phi i64 [ %i.cr, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49 ], [ %i.dk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59 ]
+  %.sink = phi ptr [ %i.co, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49 ], [ %i.dh, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59 ]
+  %eh.lpad-body327.ph = phi { ptr, i32 } [ %i.cn, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49 ], [ %i.dg, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59 ]
+  %.023.lpad-body326.ph = phi ptr [ %i.cd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i49 ], [ %i.cw, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i59 ]
+  %31 = add i64 %.sink333, 1
+  call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %31) #20
+  br label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %.preheader.preheader.sink.split, %bb.x, %bb.t, %.body.thread329
+  %eh.lpad-body327 = phi { ptr, i32 } [ %lpad.thr_comm, %.body.thread329 ], [ %i.cn, %bb.t ], [ %i.dg, %bb.x ], [ %eh.lpad-body327.ph, %.preheader.preheader.sink.split ]
+  %.023.lpad-body326 = phi ptr [ %.023.ph, %.body.thread329 ], [ %i.cd, %bb.t ], [ %i.cw, %bb.x ], [ %.023.lpad-body326.ph, %.preheader.preheader.sink.split ]
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader

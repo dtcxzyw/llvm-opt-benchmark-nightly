@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %5 = alloca %"class.std::allocator", align 1    ; 3 uses
   %6 = alloca %"class.cv::Mat", align 8           ; 12 uses
-  %7 = alloca [2 x %"class.cv::Mat"], align 16    ; 9 uses
+  %7 = alloca [2 x %"class.cv::Mat"], align 16    ; 8 uses
   %8 = alloca %"class.cv::MatExpr", align 8       ; 10 uses
   %9 = alloca %"class.cv::Mat", align 8           ; 6 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -607,8 +607,7 @@ bb.cd:                                            ; preds = %bb.ca, %bb.bu
 .loopexit.loopexit22.i:                           ; preds = %bb.cd, %.body16.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i38
   %.pn.i35 = phi { ptr, i32 } [ %i.fy, %.body16.i ], [ %i.gd, %bb.cd ], [ %i.fa, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i38 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15
-  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #15
-  br label %.loopexit.i
+  br label %.loopexit.sink.split.i
 
 .loopexit.loopexit.i:                             ; preds = %bb.cc, %_ZNK2cv7MatExprcvNS_3MatEEv.exit.i
   %i.ge = landingpad { ptr, i32 }
@@ -616,11 +615,15 @@ bb.cd:                                            ; preds = %bb.ca, %bb.bu
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %9) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #15
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.ew) #15
+  br label %.loopexit.sink.split.i
+
+.loopexit.sink.split.i:                           ; preds = %.loopexit.loopexit.i, %.loopexit.loopexit22.i
+  %.pn14.ph.i = phi { ptr, i32 } [ %.pn.i35, %.loopexit.loopexit22.i ], [ %i.ge, %.loopexit.loopexit.i ]
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #15
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %.loopexit.loopexit22.i, %.thread.i
-  %.pn14.i = phi { ptr, i32 } [ %i.ge, %.loopexit.loopexit.i ], [ %i.gc, %.thread.i ], [ %.pn.i35, %.loopexit.loopexit22.i ]
+.loopexit.i:                                      ; preds = %.loopexit.sink.split.i, %.thread.i
+  %.pn14.i = phi { ptr, i32 } [ %i.gc, %.thread.i ], [ %.pn14.ph.i, %.loopexit.sink.split.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %6) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
@@ -839,7 +842,7 @@ bb.a:
   %4 = alloca %"class.cv::Mat", align 8           ; 9 uses
   %5 = alloca %"class.cv::_InputArray", align 8   ; 8 uses
   %6 = alloca %"class.cv::_OutputArray", align 8  ; 7 uses
-  %7 = alloca [2 x %"class.cv::Mat"], align 16    ; 11 uses
+  %7 = alloca [2 x %"class.cv::Mat"], align 16    ; 10 uses
   %8 = alloca %"class.cv::MatExpr", align 8       ; 10 uses
   %9 = alloca %"class.cv::_OutputArray", align 8  ; 7 uses
   %10 = alloca %"class.cv::Range", align 4        ; 6 uses
@@ -1055,8 +1058,7 @@ bb.t:                                             ; preds = %bb.s
 .loopexit.loopexit56:                             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body40, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
   %.pn31 = phi { ptr, i32 } [ %i.be, %.body40 ], [ %i.ad, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15
-  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #15
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .loopexit.loopexit:                               ; preds = %bb.s
   %i.bm = landingpad { ptr, i32 }
@@ -1064,11 +1066,15 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #15
   %i.bn = getelementptr inbounds nuw i8, ptr %7, i64 208
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.bn) #15
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.loopexit.loopexit, %.loopexit.loopexit56
+  %.pn34.pn.ph = phi { ptr, i32 } [ %.pn31, %.loopexit.loopexit56 ], [ %i.bm, %.loopexit.loopexit ]
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #15
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit56, %.loopexit.loopexit, %.thread
-  %.pn34.pn = phi { ptr, i32 } [ %i.bm, %.loopexit.loopexit ], [ %i.bl, %.thread ], [ %.pn31, %.loopexit.loopexit56 ]
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn34.pn = phi { ptr, i32 } [ %i.bl, %.thread ], [ %.pn34.pn.ph, %.loopexit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
   br label %bb.x
 

@@ -202,19 +202,25 @@ bb.bw:                                            ; preds = %._crit_edge.i.i.i.i
   %i.mz = add i64 %.sroa.01.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.my
   br label %bb.bu
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ch, %14, %bb.ca
-  %3 = phi ptr [ %i.oa, %bb.ca ], [ %i.oa, %14 ], [ %i.oa, %bb.ch ], [ %i.kk, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %4 = phi ptr [ %i.ob, %bb.ca ], [ %i.ob, %14 ], [ %i.ob, %bb.ch ], [ %i.kl, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %5 = phi ptr [ %i.oc, %bb.ca ], [ %i.oc, %14 ], [ %i.oc, %bb.ch ], [ %i.km, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %6 = phi ptr [ %i.od, %bb.ca ], [ %i.od, %14 ], [ %i.od, %bb.ch ], [ %i.kn, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %7 = phi ptr [ %i.oe, %bb.ca ], [ %i.oe, %14 ], [ %i.oe, %bb.ch ], [ %i.ko, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %8 = phi ptr [ %i.of, %bb.ca ], [ %i.of, %14 ], [ %i.of, %bb.ch ], [ %i.kp, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %9 = phi ptr [ %i.og, %bb.ca ], [ %i.og, %14 ], [ %i.og, %bb.ch ], [ %i.kq, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %10 = phi ptr [ %i.oh, %bb.ca ], [ %i.oh, %14 ], [ %i.oh, %bb.ch ], [ %i.kr, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %11 = phi ptr [ %i.oi, %bb.ca ], [ %i.oi, %14 ], [ %i.oi, %bb.ch ], [ %i.ks, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %12 = phi ptr [ %i.oj, %bb.ca ], [ %i.oj, %14 ], [ %i.oj, %bb.ch ], [ %i.kt, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %13 = phi ptr [ %i.ok, %bb.ca ], [ %i.ok, %14 ], [ %i.ok, %bb.ch ], [ %i.ku, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  %.pn21.pn.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.om, %bb.ca ], [ %i.om, %14 ], [ %i.oy, %bb.ch ], [ %lpad.loopexit.split-lp120, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.ch, %bb.cb
+  %.pn21.pn.ph.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.oy, %bb.ch ], [ %i.om, %bb.cb ]
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 3656
+  store i8 0, ptr %3, align 8, !noalias !1412
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i
+
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ca, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i
+  %4 = phi ptr [ %i.oa, %bb.ca ], [ %i.oa, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.kk, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %5 = phi ptr [ %i.ob, %bb.ca ], [ %i.ob, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.kl, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %6 = phi ptr [ %i.oc, %bb.ca ], [ %i.oc, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.km, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %7 = phi ptr [ %i.od, %bb.ca ], [ %i.od, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.kn, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %8 = phi ptr [ %i.oe, %bb.ca ], [ %i.oe, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.ko, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %9 = phi ptr [ %i.of, %bb.ca ], [ %i.of, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.kp, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %10 = phi ptr [ %i.og, %bb.ca ], [ %i.og, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.kq, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %11 = phi ptr [ %i.oh, %bb.ca ], [ %i.oh, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.kr, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %12 = phi ptr [ %i.oi, %bb.ca ], [ %i.oi, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.ks, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %13 = phi ptr [ %i.oj, %bb.ca ], [ %i.oj, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.kt, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %14 = phi ptr [ %i.ok, %bb.ca ], [ %i.ok, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %i.ku, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  %.pn21.pn.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.om, %bb.ca ], [ %.pn21.pn.ph.i.i.i.i.i.i.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i ], [ %lpad.loopexit.split-lp120, %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %i.na = getelementptr inbounds nuw i8, ptr %1, i64 568
   invoke void @_RNvXs2_NtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guardINtB5_15RwLockReadGuardINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCs577yCKf7gy3_4http3uri3UriNtNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_pool18DynamicChannelPoolEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsgGgPqgSfnMH_7storage(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.na)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guard15RwLockReadGuardINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCs577yCKf7gy3_4http3uri3UriNtNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_pool18DynamicChannelPoolEEECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i unwind label %bb.by, !noalias !1413
@@ -263,33 +269,33 @@ bb.by:                                            ; preds = %_RINvNtCskKLDkoKarT
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guard15RwLockReadGuardINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCs577yCKf7gy3_4http3uri3UriNtNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_pool18DynamicChannelPoolEEECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.cj, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i, %bb.bo, %bb.bn, %bb.bi
-  %i.np = phi ptr [ %i.pa, %bb.cj ], [ %3, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kk, %bb.bn ], [ %i.kk, %bb.bi ], [ %i.kk, %bb.bo ]
-  %i.nq = phi ptr [ %i.pb, %bb.cj ], [ %4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kl, %bb.bn ], [ %i.kl, %bb.bi ], [ %i.kl, %bb.bo ]
-  %i.nr = phi ptr [ %i.pc, %bb.cj ], [ %5, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.km, %bb.bn ], [ %i.km, %bb.bi ], [ %i.km, %bb.bo ]
-  %i.ns = phi ptr [ %i.pd, %bb.cj ], [ %6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kn, %bb.bn ], [ %i.kn, %bb.bi ], [ %i.kn, %bb.bo ]
-  %i.nt = phi ptr [ %i.pe, %bb.cj ], [ %7, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ko, %bb.bn ], [ %i.ko, %bb.bi ], [ %i.ko, %bb.bo ]
-  %i.nu = phi ptr [ %i.pf, %bb.cj ], [ %8, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kp, %bb.bn ], [ %i.kp, %bb.bi ], [ %i.kp, %bb.bo ]
-  %i.nv = phi ptr [ %i.pg, %bb.cj ], [ %9, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kq, %bb.bn ], [ %i.kq, %bb.bi ], [ %i.kq, %bb.bo ]
-  %i.nw = phi ptr [ %i.ph, %bb.cj ], [ %10, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kr, %bb.bn ], [ %i.kr, %bb.bi ], [ %i.kr, %bb.bo ]
-  %i.nx = phi ptr [ %i.pi, %bb.cj ], [ %11, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ks, %bb.bn ], [ %i.ks, %bb.bi ], [ %i.ks, %bb.bo ]
-  %i.ny = phi ptr [ %i.pj, %bb.cj ], [ %12, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kt, %bb.bn ], [ %i.kt, %bb.bi ], [ %i.kt, %bb.bo ]
-  %i.nz = phi ptr [ %i.pk, %bb.cj ], [ %13, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ku, %bb.bn ], [ %i.ku, %bb.bi ], [ %i.ku, %bb.bo ]
+  %i.np = phi ptr [ %i.pa, %bb.cj ], [ %4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kk, %bb.bn ], [ %i.kk, %bb.bi ], [ %i.kk, %bb.bo ]
+  %i.nq = phi ptr [ %i.pb, %bb.cj ], [ %5, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kl, %bb.bn ], [ %i.kl, %bb.bi ], [ %i.kl, %bb.bo ]
+  %i.nr = phi ptr [ %i.pc, %bb.cj ], [ %6, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.km, %bb.bn ], [ %i.km, %bb.bi ], [ %i.km, %bb.bo ]
+  %i.ns = phi ptr [ %i.pd, %bb.cj ], [ %7, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kn, %bb.bn ], [ %i.kn, %bb.bi ], [ %i.kn, %bb.bo ]
+  %i.nt = phi ptr [ %i.pe, %bb.cj ], [ %8, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ko, %bb.bn ], [ %i.ko, %bb.bi ], [ %i.ko, %bb.bo ]
+  %i.nu = phi ptr [ %i.pf, %bb.cj ], [ %9, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kp, %bb.bn ], [ %i.kp, %bb.bi ], [ %i.kp, %bb.bo ]
+  %i.nv = phi ptr [ %i.pg, %bb.cj ], [ %10, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kq, %bb.bn ], [ %i.kq, %bb.bi ], [ %i.kq, %bb.bo ]
+  %i.nw = phi ptr [ %i.ph, %bb.cj ], [ %11, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kr, %bb.bn ], [ %i.kr, %bb.bi ], [ %i.kr, %bb.bo ]
+  %i.nx = phi ptr [ %i.pi, %bb.cj ], [ %12, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ks, %bb.bn ], [ %i.ks, %bb.bi ], [ %i.ks, %bb.bo ]
+  %i.ny = phi ptr [ %i.pj, %bb.cj ], [ %13, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.kt, %bb.bn ], [ %i.kt, %bb.bi ], [ %i.kt, %bb.bo ]
+  %i.nz = phi ptr [ %i.pk, %bb.cj ], [ %14, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.ku, %bb.bn ], [ %i.ku, %bb.bi ], [ %i.ku, %bb.bo ]
   %.pn24.i.i.i.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.pl, %bb.cj ], [ %.pn21.pn.i.i.i.i.i.i.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i ], [ %i.li, %bb.bn ], [ %i.kx, %bb.bi ], [ %i.li, %bb.bo ]
   store i8 2, ptr %i.ny, align 8, !noalias !1412
   br label %.body.i.i.i.i.i.i.i.i.i
 
 bb.bz:                                            ; preds = %bb.bx, %bb.bd
-  %i.oa = phi ptr [ %i.kk, %bb.bx ], [ %.phi.trans.insert.i.i.i.i, %bb.bd ] ; 5 uses
-  %i.ob = phi ptr [ %i.kl, %bb.bx ], [ %i.bw, %bb.bd ] ; 4 uses
-  %i.oc = phi ptr [ %i.km, %bb.bx ], [ %.phi.trans.insert103.i.i.i.i.i, %bb.bd ] ; 5 uses
-  %i.od = phi ptr [ %i.kn, %bb.bx ], [ %.phi.trans.insert.i.i.i.i.i.i, %bb.bd ] ; 5 uses
-  %i.oe = phi ptr [ %i.ko, %bb.bx ], [ %i.ey, %bb.bd ] ; 4 uses
-  %i.of = phi ptr [ %i.kp, %bb.bx ], [ %.phi.trans.insert278.i.i.i.i.i.i.i, %bb.bd ] ; 5 uses
-  %i.og = phi ptr [ %i.kq, %bb.bx ], [ %i.ia, %bb.bd ] ; 4 uses
-  %i.oh = phi ptr [ %i.kr, %bb.bx ], [ %.phi.trans.insert.i.i.i.i.i.i.i.i, %bb.bd ] ; 5 uses
-  %i.oi = phi ptr [ %i.ks, %bb.bx ], [ %i.iv, %bb.bd ] ; 4 uses
-  %i.oj = phi ptr [ %i.kt, %bb.bx ], [ %.phi.trans.insert.i.i.i.i.i.i.i.i.i, %bb.bd ] ; 5 uses
-  %i.ok = phi ptr [ %i.ku, %bb.bx ], [ %i.jt, %bb.bd ] ; 4 uses
+  %i.oa = phi ptr [ %i.kk, %bb.bx ], [ %.phi.trans.insert.i.i.i.i, %bb.bd ] ; 4 uses
+  %i.ob = phi ptr [ %i.kl, %bb.bx ], [ %i.bw, %bb.bd ] ; 3 uses
+  %i.oc = phi ptr [ %i.km, %bb.bx ], [ %.phi.trans.insert103.i.i.i.i.i, %bb.bd ] ; 4 uses
+  %i.od = phi ptr [ %i.kn, %bb.bx ], [ %.phi.trans.insert.i.i.i.i.i.i, %bb.bd ] ; 4 uses
+  %i.oe = phi ptr [ %i.ko, %bb.bx ], [ %i.ey, %bb.bd ] ; 3 uses
+  %i.of = phi ptr [ %i.kp, %bb.bx ], [ %.phi.trans.insert278.i.i.i.i.i.i.i, %bb.bd ] ; 4 uses
+  %i.og = phi ptr [ %i.kq, %bb.bx ], [ %i.ia, %bb.bd ] ; 3 uses
+  %i.oh = phi ptr [ %i.kr, %bb.bx ], [ %.phi.trans.insert.i.i.i.i.i.i.i.i, %bb.bd ] ; 4 uses
+  %i.oi = phi ptr [ %i.ks, %bb.bx ], [ %i.iv, %bb.bd ] ; 3 uses
+  %i.oj = phi ptr [ %i.kt, %bb.bx ], [ %.phi.trans.insert.i.i.i.i.i.i.i.i.i, %bb.bd ] ; 4 uses
+  %i.ok = phi ptr [ %i.ku, %bb.bx ], [ %i.jt, %bb.bd ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !1412
   %i.ol = getelementptr inbounds nuw i8, ptr %1, i64 592
   invoke fastcc void @_RNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtB4_18DynamicChannelPool6choose0CsgGgPqgSfnMH_7storage(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.x, ptr noundef nonnull align 8 %i.ol, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
@@ -307,7 +313,7 @@ bb.ca:                                            ; preds = %bb.bz
 bb.cb:                                            ; preds = %bb.ca
   %i.op = getelementptr inbounds nuw i8, ptr %1, i64 632
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_pool17make_grpc_channel0ECsgGgPqgSfnMH_7storage(ptr noundef nonnull align 8 %i.op)
-          to label %14 unwind label %bb.cc, !noalias !1413
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i unwind label %bb.cc, !noalias !1413
 
 bb.cc:                                            ; preds = %bb.cb
   %i.oq = landingpad { ptr, i32 }
@@ -315,11 +321,6 @@ bb.cc:                                            ; preds = %bb.cb
   %i.or = getelementptr inbounds nuw i8, ptr %1, i64 3656
   store i8 0, ptr %i.or, align 8, !noalias !1412
   br label %.body32.i.i.i.i.i.i.i.i.i.i
-
-14:                                               ; preds = %bb.cb
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 3656
-  store i8 0, ptr %15, align 8, !noalias !1412
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i
 
 bb.cd:                                            ; preds = %bb.bz
   %i.os = getelementptr inbounds nuw i8, ptr %i.x, i64 24
@@ -355,9 +356,7 @@ bb.cg:                                            ; preds = %bb.cf
 bb.ch:                                            ; preds = %bb.cg
   %i.oy = landingpad { ptr, i32 }
           cleanup
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 3656
-  store i8 0, ptr %16, align 8, !noalias !1412
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.i.i.i.i.i.i.i.i.i.i
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtBG_18DynamicChannelPool6choose0ECsgGgPqgSfnMH_7storage.exit.sink.split.i.i.i.i.i.i.i.i.i.i
 
 bb.ci:                                            ; preds = %bb.cg
   %i.oz = getelementptr inbounds nuw i8, ptr %1, i64 3656
@@ -760,7 +759,14 @@ bb.eb:                                            ; preds = %bb.hr, %bb.hd, %bb.
           filter [0 x ptr] zeroinitializer        ; 0 uses
   br label %.body65.i.i.i.i.i.i.i.i.i.i
 
-.body65.i.i.i.i.i.i.i.i.i.i:                      ; preds = %bb.hh, %bb.gk, %bb.eb
+.body65.sink.split.i.i.i.i.i.i.i.i.i.i:           ; preds = %bb.hh, %bb.gk
+  %15 = phi ptr [ %i.aoo, %bb.hh ], [ %i.akw, %bb.gk ]
+  %.sink221.i.i.i.i.i.i.i.i.i.i = phi i64 [ 3288, %bb.hh ], [ 3664, %bb.gk ]
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 %.sink221.i.i.i.i.i.i.i.i.i.i
+  store i8 0, ptr %16, align 8, !noalias !1420
+  br label %.body65.i.i.i.i.i.i.i.i.i.i
+
+.body65.i.i.i.i.i.i.i.i.i.i:                      ; preds = %.body65.sink.split.i.i.i.i.i.i.i.i.i.i, %bb.eb
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #18, !noalias !1421
   unreachable
 
@@ -1163,7 +1169,7 @@ bb.gh:                                            ; preds = %bb.gd, %bb.cv
   %i.akt = phi ptr [ %i.aig, %bb.gd ], [ %.phi.trans.insert.i.i.i.i.i.i.i.i, %bb.cv ] ; 6 uses
   %i.aku = phi ptr [ %i.aih, %bb.gd ], [ %i.iv, %bb.cv ] ; 5 uses
   %i.akv = phi ptr [ %i.aii, %bb.gd ], [ %.phi.trans.insert65.i.i.i.i.i.i.i.i.i, %bb.cv ] ; 6 uses
-  %i.akw = phi ptr [ %i.aij, %bb.gd ], [ %i.qu, %bb.cv ] ; 5 uses
+  %i.akw = phi ptr [ %i.aij, %bb.gd ], [ %i.qu, %bb.cv ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !1420
   %i.akx = getelementptr inbounds nuw i8, ptr %1, i64 1144
   invoke fastcc void @_RNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtB4_18DynamicChannelPool6choose0CsgGgPqgSfnMH_7storage(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.u, ptr noundef nonnull align 8 %i.akx, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
@@ -1186,9 +1192,7 @@ bb.gj:                                            ; preds = %bb.gi
 bb.gk:                                            ; preds = %bb.gj
   %i.alc = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 4208
-  store i8 0, ptr %17, align 8, !noalias !1420
-  br label %.body65.i.i.i.i.i.i.i.i.i.i
+  br label %.body65.sink.split.i.i.i.i.i.i.i.i.i.i
 
 bb.gl:                                            ; preds = %bb.gh
   %i.ald = getelementptr inbounds nuw i8, ptr %i.u, i64 24
@@ -1426,7 +1430,7 @@ bb.he:                                            ; preds = %bb.ea, %bb.cu
   %i.aol = phi ptr [ %i.tg, %bb.ea ], [ %.phi.trans.insert.i.i.i.i.i.i.i.i, %bb.cu ] ; 6 uses
   %i.aom = phi ptr [ %i.th, %bb.ea ], [ %i.iv, %bb.cu ] ; 5 uses
   %i.aon = phi ptr [ %i.ti, %bb.ea ], [ %.phi.trans.insert65.i.i.i.i.i.i.i.i.i, %bb.cu ] ; 6 uses
-  %i.aoo = phi ptr [ %i.tj, %bb.ea ], [ %i.qu, %bb.cu ] ; 5 uses
+  %i.aoo = phi ptr [ %i.tj, %bb.ea ], [ %i.qu, %bb.cu ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1420
   %i.aop = getelementptr inbounds nuw i8, ptr %1, i64 768
   invoke fastcc void @_RNCNvMNtNtCshMzyYDJGtjv_3api4grpc20dynamic_channel_poolNtB4_18DynamicChannelPool6choose0CsgGgPqgSfnMH_7storage(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.q, ptr noundef nonnull align 8 %i.aop, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
@@ -1449,9 +1453,7 @@ bb.hg:                                            ; preds = %bb.hf
 bb.hh:                                            ; preds = %bb.hg
   %i.aou = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 3832
-  store i8 0, ptr %18, align 8, !noalias !1420
-  br label %.body65.i.i.i.i.i.i.i.i.i.i
+  br label %.body65.sink.split.i.i.i.i.i.i.i.i.i.i
 
 bb.hi:                                            ; preds = %bb.hg
   %i.aov = getelementptr inbounds nuw i8, ptr %1, i64 3832

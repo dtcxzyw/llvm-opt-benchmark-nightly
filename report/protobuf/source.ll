@@ -204,9 +204,7 @@ bb.br:                                            ; preds = %.noexc.i.i.i.i.i.i.
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i: ; preds = %bb.br
   %i.tx = load i64, ptr %i.sr, align 8, !tbaa !52
-  %28 = add i64 %i.tx, 1
-  call void @_ZdlPvm(ptr noundef %i.tv, i64 noundef %28) #18
-  br label %.body.i76.i.i.i.i.i
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a
 
 .noexc.i44.i.i.i.i.i.i:                           ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i80.i.i.i.i.i, %bb.bq
   %i.ty = phi i64 [ %i.tq, %bb.bq ], [ %.pre.i.i87.i.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i80.i.i.i.i.i ]
@@ -433,18 +431,26 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i: ; 
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   %i.wt = load ptr, ptr %6, align 8, !tbaa !51    ; 2 uses
   %i.wu = icmp eq ptr %i.wt, %i.uh
-  br i1 %i.wu, label %.body.i76.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a
+  br i1 %i.wu, label %.body.i76.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i
-  %29 = load i64, ptr %i.uh, align 8, !tbaa !52
-  %i.wv = add i64 %29, 1
-  call void @_ZdlPvm(ptr noundef %i.wt, i64 noundef %i.wv) #18
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i
+  %28 = load i64, ptr %i.uh, align 8, !tbaa !52
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i
+  %.sink149 = phi i64 [ %28, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i ], [ %i.tx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ]
+  %.sink147 = phi ptr [ %i.wt, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i ], [ %i.tv, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ]
+  %.021.i.i.i.i.i.i.ph = phi ptr [ %i.ug, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i ], [ %i.sm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ]
+  %.pn.pn.pn.pn.i77.i.i.i.i.i.ph = phi { ptr, i32 } [ %.pn.pn.i81.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i ], [ %i.tu, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ]
+  %.3.i78.i.i.i.i.i.ph = phi i1 [ %.1.i82.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i ], [ false, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ]
+  %i.wv = add i64 %.sink149, 1
+  call void @_ZdlPvm(ptr noundef %.sink147, i64 noundef %i.wv) #18
   br label %.body.i76.i.i.i.i.i
 
-.body.i76.i.i.i.i.i:                              ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i, %bb.br, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a, %bb.by, %bb.bx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i
-  %.021.i.i.i.i.i.i = phi ptr [ %i.sm, %bb.bx ], [ %i.ug, %bb.by ], [ %i.sm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ], [ %i.ug, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a ], [ %i.sm, %bb.br ], [ %i.ug, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i ] ; 2 uses
-  %.pn.pn.pn.pn.i77.i.i.i.i.i = phi { ptr, i32 } [ %i.wl, %bb.bx ], [ %i.wm, %bb.by ], [ %i.tu, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ], [ %.pn.pn.i81.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a ], [ %i.tu, %bb.br ], [ %.pn.pn.i81.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i ] ; 2 uses
-  %.3.i78.i.i.i.i.i = phi i1 [ false, %bb.bx ], [ false, %bb.by ], [ false, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i87.i.i.i.i.i ], [ %.1.i82.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a ], [ false, %bb.br ], [ %.1.i82.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i ] ; 2 uses
+.body.i76.i.i.i.i.i:                              ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i, %bb.br, %bb.by, %bb.bx
+  %.021.i.i.i.i.i.i = phi ptr [ %i.sm, %bb.bx ], [ %i.ug, %bb.by ], [ %i.sm, %bb.br ], [ %i.ug, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i ], [ %.021.i.i.i.i.i.i.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a ] ; 2 uses
+  %.pn.pn.pn.pn.i77.i.i.i.i.i = phi { ptr, i32 } [ %i.wl, %bb.bx ], [ %i.wm, %bb.by ], [ %i.tu, %bb.br ], [ %.pn.pn.i81.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i ], [ %.pn.pn.pn.pn.i77.i.i.i.i.i.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a ] ; 2 uses
+  %.3.i78.i.i.i.i.i = phi i1 [ false, %bb.bx ], [ false, %bb.by ], [ false, %bb.br ], [ %.1.i82.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit74.i.i.i.i.i.i ], [ %.3.i78.i.i.i.i.i.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75.i.i.i.i.i.i.a ] ; 2 uses
   %i.ww = load ptr, ptr %5, align 8, !tbaa !51    ; 2 uses
   %i.wx = icmp eq ptr %i.ww, %i.sn
   br i1 %i.wx, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80.i.i.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i78.i.i.i.i.i.i

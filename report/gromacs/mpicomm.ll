@@ -148,7 +148,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = tail call ptr @__cxa_allocate_exception(i64 24) #21 ; 3 uses
+  %i.f = tail call ptr @__cxa_allocate_exception(i64 24) #21 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   invoke void @_ZN3gmx20ExceptionInitializerC2EPKc(ptr noundef nonnull align 8 dereferenceable(56) %3, ptr noundef nonnull @.str)
           to label %bb.e unwind label %.thread
@@ -182,13 +182,13 @@ bb.h:                                             ; preds = %8, %bb.k, %bb.a
 .thread:                                          ; preds = %bb.d
   %i.i = landingpad { ptr, i32 }
           cleanup
-  br label %.sink.split
+  br label %bb.j
 
 .thread34:                                        ; preds = %bb.e
   %i.j = landingpad { ptr, i32 }
           cleanup
   call void @_ZN3gmx20ExceptionInitializerD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %3) #21
-  br label %.sink.split
+  br label %bb.j
 
 bb.i:                                             ; preds = %bb.f, %bb.g
   %.08 = phi i1 [ false, %bb.g ], [ true, %bb.f ]
@@ -199,17 +199,12 @@ bb.i:                                             ; preds = %bb.f, %bb.g
   call void @_ZN3gmx16GromacsExceptionD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %2) #21
   call void @_ZN3gmx20ExceptionInitializerD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %3) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
-  br i1 %.08, label %bb.j, label %bb.s
+  br i1 %.08, label %bb.r, label %bb.s
 
-.sink.split:                                      ; preds = %.thread, %.thread34
-  %.pn22.pn33.ph = phi { ptr, i32 } [ %i.j, %.thread34 ], [ %i.i, %.thread ]
+bb.j:                                             ; preds = %.thread, %.thread34
+  %.pn22.pn33 = phi { ptr, i32 } [ %i.j, %.thread34 ], [ %i.i, %.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
-  br label %bb.j
-
-bb.j:                                             ; preds = %.sink.split, %bb.i
-  %.pn22.pn33 = phi { ptr, i32 } [ %i.k, %bb.i ], [ %.pn22.pn33.ph, %.sink.split ]
-  call void @__cxa_free_exception(ptr %i.f) #21
-  br label %bb.s
+  br label %bb.r
 
 bb.k:                                             ; preds = %bb.c
   %i.l = invoke noundef i32 @_Z14tMPI_Comm_sizeP10tmpi_comm_Pi(ptr noundef nonnull %1, ptr noundef nonnull %i.a)
@@ -221,7 +216,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.n, label %bb.m, label %8
 
 bb.m:                                             ; preds = %bb.l
-  %i.o = tail call ptr @__cxa_allocate_exception(i64 24) #21 ; 3 uses
+  %i.o = tail call ptr @__cxa_allocate_exception(i64 24) #21 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
   invoke void @_ZN3gmx20ExceptionInitializerC2EPKc(ptr noundef nonnull align 8 dereferenceable(56) %6, ptr noundef nonnull @.str.2)
           to label %bb.n unwind label %.thread37
@@ -274,11 +269,6 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
   br label %bb.r
 
-bb.r:                                             ; preds = %.sink.split46, %bb.q
-  %.pn.pn40 = phi { ptr, i32 } [ %i.s, %bb.q ], [ %.pn.pn40.ph, %.sink.split46 ]
-  call void @__cxa_free_exception(ptr %i.o) #21
-  br label %bb.s
-
 8:                                                ; preds = %bb.l
   %9 = invoke noundef i32 @_Z14tMPI_Comm_rankP10tmpi_comm_Pi(ptr noundef nonnull %1, ptr noundef nonnull %i.b)
           to label %10 unwind label %bb.h         ; 0 uses
@@ -286,8 +276,14 @@ bb.r:                                             ; preds = %.sink.split46, %bb.
 10:                                               ; preds = %8, %bb.b
   ret void
 
-bb.s:                                             ; preds = %bb.q, %bb.r, %bb.i, %bb.j, %bb.h
-  %.pn22.pn.pn = phi { ptr, i32 } [ %.pn22.pn33, %bb.j ], [ %i.k, %bb.i ], [ %.pn.pn40, %bb.r ], [ %i.s, %bb.q ], [ %i.h, %bb.h ]
+bb.r:                                             ; preds = %bb.q, %.sink.split46, %bb.i, %bb.j
+  %.sink = phi ptr [ %i.f, %bb.i ], [ %i.f, %bb.j ], [ %i.o, %.sink.split46 ], [ %i.o, %bb.q ]
+  %.pn22.pn.pn.ph = phi { ptr, i32 } [ %i.k, %bb.i ], [ %.pn22.pn33, %bb.j ], [ %.pn.pn40.ph, %.sink.split46 ], [ %i.s, %bb.q ]
+  call void @__cxa_free_exception(ptr %.sink) #21
+  br label %bb.s
+
+bb.s:                                             ; preds = %bb.r, %bb.q, %bb.i, %bb.h
+  %.pn22.pn.pn = phi { ptr, i32 } [ %i.s, %bb.q ], [ %i.k, %bb.i ], [ %i.h, %bb.h ], [ %.pn22.pn.pn.ph, %bb.r ]
   %i.t = load ptr, ptr %i.c, align 8, !tbaa !29   ; 3 uses
   %.not.i = icmp eq ptr %i.t, null
   br i1 %.not.i, label %_ZNSt10unique_ptrIN3gmx7MpiComm19HierarchicalReducerESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN3gmx7MpiComm19HierarchicalReducerEEclEPS2_.exit.i

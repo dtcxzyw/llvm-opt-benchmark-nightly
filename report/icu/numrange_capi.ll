@@ -202,7 +202,7 @@ define noundef i32 @unumrf_resultGetFirstDecimalNumber_78(ptr noundef %0, ptr no
 bb.a:
   %4 = alloca %"class.icu_78::CharStringByteSink", align 8 ; 7 uses
   %5 = alloca %"class.icu_78::number::impl::DecNum", align 8 ; 8 uses
-  %6 = alloca %"class.icu_78::CharString", align 8 ; 13 uses
+  %6 = alloca %"class.icu_78::CharString", align 8 ; 12 uses
   %i.a = load i32, ptr %3, align 4, !tbaa !30
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit.thread
@@ -228,7 +228,7 @@ _ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumb
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.g = invoke noundef nonnull align 8 dereferenceable(92) ptr @_ZNK6icu_786number4impl15DecimalQuantity8toDecNumERNS1_6DecNumER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(66) %i.f, ptr noundef nonnull align 8 dereferenceable(92) %5, ptr noundef nonnull align 4 dereferenceable(4) %3)
-          to label %bb.d unwind label %bb.o
+          to label %bb.d unwind label %7
 
 bb.d:                                             ; preds = %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit
   call void @llvm.experimental.noalias.scope.decl(metadata !94)
@@ -263,14 +263,13 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.pn.i = phi { ptr, i32 } [ %i.m, %bb.g ], [ %i.l, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12, !noalias !94
-  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %6) #12
-  br label %.body
+  br label %bb.p
 
 bb.i:                                             ; preds = %bb.e
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %4) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12, !noalias !94
   %i.n = invoke noundef i32 @_ZNK6icu_7810CharString7extractEPciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %6, ptr noundef %1, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %3)
-          to label %bb.j unwind label %bb.p
+          to label %bb.j unwind label %bb.o
 
 bb.j:                                             ; preds = %bb.i
   %i.o = load i8, ptr %i.j, align 4, !tbaa !63
@@ -312,19 +311,23 @@ _ZN6icu_786number4impl6DecNumD2Ev.exit:           ; preds = %_ZN6icu_7810CharStr
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit.thread
 
-bb.o:                                             ; preds = %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit
-  %i.x = landingpad { ptr, i32 }
+7:                                                ; preds = %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit
+  %8 = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-bb.p:                                             ; preds = %bb.i
-  %7 = landingpad { ptr, i32 }
+bb.o:                                             ; preds = %bb.i
+  %i.x = landingpad { ptr, i32 }
           cleanup
+  br label %bb.p
+
+bb.p:                                             ; preds = %bb.o, %bb.h
+  %.pn.ph = phi { ptr, i32 } [ %.pn.i, %bb.h ], [ %i.x, %bb.o ]
   call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %6) #12
   br label %.body
 
-.body:                                            ; preds = %bb.o, %bb.h, %bb.p
-  %.pn = phi { ptr, i32 } [ %7, %bb.p ], [ %i.x, %bb.o ], [ %.pn.i, %bb.h ]
+.body:                                            ; preds = %bb.p, %7
+  %.pn = phi { ptr, i32 } [ %8, %7 ], [ %.pn.ph, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @_ZN6icu_786number4impl6DecNumD2Ev(ptr noundef nonnull align 8 dead_on_return(92) dereferenceable(92) %5) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
@@ -394,7 +397,7 @@ define noundef i32 @unumrf_resultGetSecondDecimalNumber_78(ptr noundef %0, ptr n
 bb.a:
   %4 = alloca %"class.icu_78::CharStringByteSink", align 8 ; 7 uses
   %5 = alloca %"class.icu_78::number::impl::DecNum", align 8 ; 8 uses
-  %6 = alloca %"class.icu_78::CharString", align 8 ; 13 uses
+  %6 = alloca %"class.icu_78::CharString", align 8 ; 12 uses
   %i.a = load i32, ptr %3, align 4, !tbaa !30
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit.thread
@@ -420,7 +423,7 @@ _ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumb
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 424
   %i.g = invoke noundef nonnull align 8 dereferenceable(92) ptr @_ZNK6icu_786number4impl15DecimalQuantity8toDecNumERNS1_6DecNumER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(66) %i.f, ptr noundef nonnull align 8 dereferenceable(92) %5, ptr noundef nonnull align 4 dereferenceable(4) %3)
-          to label %bb.d unwind label %bb.o
+          to label %bb.d unwind label %7
 
 bb.d:                                             ; preds = %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit
   call void @llvm.experimental.noalias.scope.decl(metadata !97)
@@ -455,14 +458,13 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.pn.i = phi { ptr, i32 } [ %i.m, %bb.g ], [ %i.l, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12, !noalias !97
-  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %6) #12
-  br label %.body
+  br label %bb.p
 
 bb.i:                                             ; preds = %bb.e
   call void @_ZN6icu_7818CharStringByteSinkD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %4) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12, !noalias !97
   %i.n = invoke noundef i32 @_ZNK6icu_7810CharString7extractEPciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %6, ptr noundef %1, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %3)
-          to label %bb.j unwind label %bb.p
+          to label %bb.j unwind label %bb.o
 
 bb.j:                                             ; preds = %bb.i
   %i.o = load i8, ptr %i.j, align 4, !tbaa !63
@@ -504,19 +506,23 @@ _ZN6icu_786number4impl6DecNumD2Ev.exit:           ; preds = %_ZN6icu_7810CharStr
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit.thread
 
-bb.o:                                             ; preds = %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit
-  %i.x = landingpad { ptr, i32 }
+7:                                                ; preds = %_ZN6icu_7813IcuCApiHelperI21UFormattedNumberRangeNS_6number4impl25UFormattedNumberRangeImplELi1178881536EE8validateEPKS1_R10UErrorCode.exit
+  %8 = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-bb.p:                                             ; preds = %bb.i
-  %7 = landingpad { ptr, i32 }
+bb.o:                                             ; preds = %bb.i
+  %i.x = landingpad { ptr, i32 }
           cleanup
+  br label %bb.p
+
+bb.p:                                             ; preds = %bb.o, %bb.h
+  %.pn.ph = phi { ptr, i32 } [ %.pn.i, %bb.h ], [ %i.x, %bb.o ]
   call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %6) #12
   br label %.body
 
-.body:                                            ; preds = %bb.o, %bb.h, %bb.p
-  %.pn = phi { ptr, i32 } [ %7, %bb.p ], [ %i.x, %bb.o ], [ %.pn.i, %bb.h ]
+.body:                                            ; preds = %bb.p, %7
+  %.pn = phi { ptr, i32 } [ %8, %7 ], [ %.pn.ph, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   call void @_ZN6icu_786number4impl6DecNumD2Ev(ptr noundef nonnull align 8 dead_on_return(92) dereferenceable(92) %5) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12

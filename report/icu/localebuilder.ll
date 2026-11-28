@@ -202,7 +202,7 @@ bb.a:
   %9 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
   %10 = alloca %"class.icu_78::CharString", align 8 ; 19 uses
   %i.a = alloca i32, align 4                      ; 7 uses
-  %11 = alloca %"class.icu_78::CharString", align 8 ; 14 uses
+  %11 = alloca %"class.icu_78::CharString", align 8 ; 13 uses
   %12 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %13 = alloca %"class.icu_78::CharString", align 8 ; 13 uses
   %14 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
@@ -385,8 +385,7 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.pn.i = phi { ptr, i32 } [ %i.as, %bb.r ], [ %i.ar, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13, !noalias !42
-  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %11) #13
-  br label %.body
+  br label %bb.ay
 
 _ZNK6icu_786Locale15getKeywordValueINS_10CharStringEEET_NS_11StringPieceER10UErrorCode.exit: ; preds = %bb.p
   call void @_ZN6icu_7818CharStringByteSinkD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %7) #13
@@ -716,13 +715,13 @@ _ZN6icu_7810CharStringD2Ev.exit82:                ; preds = %bb.av, %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %bb.az
 
-bb.ay:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.ag, %.body56
-  %.pn47.pn = phi { ptr, i32 } [ %.pn47, %.body56 ], [ %i.cp, %bb.ag ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+bb.ay:                                            ; preds = %.body56, %bb.ag, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.s
+  %.pn47.pn.pn.ph = phi { ptr, i32 } [ %.pn.i, %bb.s ], [ %.pn47, %.body56 ], [ %i.cp, %bb.ag ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %11) #13
   br label %.body
 
-.body:                                            ; preds = %bb.z, %bb.s, %bb.ay
-  %.pn47.pn.pn = phi { ptr, i32 } [ %.pn47.pn, %bb.ay ], [ %i.bq, %bb.z ], [ %.pn.i, %bb.s ]
+.body:                                            ; preds = %bb.ay, %bb.z
+  %.pn47.pn.pn = phi { ptr, i32 } [ %i.bq, %bb.z ], [ %.pn47.pn.pn.ph, %bb.ay ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %.loopexit.split-lp91
@@ -788,7 +787,7 @@ bb.a:
   %3 = alloca %"class.icu_78::StringByteSink", align 8 ; 8 uses
   %4 = alloca %"class.icu_78::CharString", align 8 ; 15 uses
   %i.a = alloca i32, align 4                      ; 7 uses
-  %5 = alloca %"class.icu_78::CharString", align 8 ; 14 uses
+  %5 = alloca %"class.icu_78::CharString", align 8 ; 13 uses
   %6 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %7 = alloca %"class.icu_78::CharString", align 8 ; 13 uses
   %8 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
@@ -924,8 +923,7 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.pn.i = phi { ptr, i32 } [ %i.ai, %bb.m ], [ %i.ah, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #13, !noalias !47
-  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %5) #13
-  br label %.body
+  br label %.body.sink.split
 
 _ZNK6icu_786Locale15getKeywordValueINS_10CharStringEEET_NS_11StringPieceER10UErrorCode.exit: ; preds = %bb.k
   call void @_ZN6icu_7818CharStringByteSinkD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #13
@@ -1010,14 +1008,14 @@ bb.s:                                             ; preds = %.outer, %_ZN6icu_78
 bb.t:                                             ; preds = %bb.q
   %i.bg = landingpad { ptr, i32 }
           cleanup
-  br label %9
+  br label %.body.sink.split
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.x, %bb.w, %bb.v, %._crit_edge61.thread
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %7) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
-  br label %9
+  br label %.body.sink.split
 
 bb.u:                                             ; preds = %bb.s
   %i.bh = load i32, ptr %i.ba, align 8, !tbaa !34
@@ -1066,11 +1064,6 @@ _ZN6icu_7810CharString6appendENS_11StringPieceER10UErrorCode.exit.thread: ; pred
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
   br label %bb.y
 
-9:                                                ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.t
-  %.pn39 = phi { ptr, i32 } [ %i.bg, %bb.t ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %5) #13
-  br label %.body
-
 bb.y:                                             ; preds = %_ZNK6icu_786Locale15getKeywordValueINS_10CharStringEEET_NS_11StringPieceER10UErrorCode.exit, %.critedge
   %.pr = load i8, ptr %i.af, align 4, !tbaa !32
   %.not.i.i.i = icmp eq i8 %.pr, 0
@@ -1093,8 +1086,13 @@ _ZN6icu_7810CharStringD2Ev.exit:                  ; preds = %bb.i, %bb.y, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %bb.ab
 
-.body:                                            ; preds = %bb.o, %bb.n, %9
-  %.pn39.pn = phi { ptr, i32 } [ %.pn39, %9 ], [ %i.ak, %bb.o ], [ %.pn.i, %bb.n ]
+.body.sink.split:                                 ; preds = %bb.t, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.n
+  %.pn39.pn.ph = phi { ptr, i32 } [ %.pn.i, %bb.n ], [ %i.bg, %bb.t ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %5) #13
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.o
+  %.pn39.pn = phi { ptr, i32 } [ %i.ak, %bb.o ], [ %.pn39.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %.loopexit.split-lp48
@@ -1256,7 +1254,7 @@ bb.a:
   %7 = alloca %"class.std::optional", align 8     ; 7 uses
   %8 = alloca %"class.std::optional", align 8     ; 7 uses
   %9 = alloca %"class.icu_78::StringByteSink", align 8 ; 8 uses
-  %10 = alloca %"class.icu_78::CharString", align 8 ; 17 uses
+  %10 = alloca %"class.icu_78::CharString", align 8 ; 16 uses
   %11 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %i.a = load i32, ptr %4, align 4, !tbaa !26
   %i.b = icmp slt i32 %i.a, 1
@@ -1343,8 +1341,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.k, %bb.j
   %.pn.i = phi { ptr, i32 } [ %i.aa, %bb.k ], [ %i.z, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13, !noalias !51
-  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %10) #13
-  br label %.body
+  br label %.body.sink.split
 
 _ZNK6icu_786Locale15getKeywordValueINS_10CharStringEEET_NS_11StringPieceER10UErrorCode.exit: ; preds = %bb.i
   call void @_ZN6icu_7818CharStringByteSinkD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %9) #13
@@ -1399,8 +1396,7 @@ bb.p:                                             ; preds = %.lr.ph.i
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.p, %.noexc49, %.noexc48, %bb.ac, %bb.ab, %bb.aa, %.noexc44, %bb.z, %bb.y, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %.noexc36, %bb.r
   %lpad.loopexit.split-lp83 = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %10) #13
-  br label %.body
+  br label %.body.sink.split
 
 _ZN6icu_7812_GLOBAL__N_19transformEPci.exit:      ; preds = %.noexc, %bb.o, %bb.n
   br i1 %3, label %bb.q, label %bb.ac
@@ -1566,8 +1562,13 @@ _ZN6icu_7810CharStringD2Ev.exit:                  ; preds = %bb.ad, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #13
   br i1 %i.cc, label %bb.d, label %.loopexit64, !llvm.loop !50
 
-.body:                                            ; preds = %bb.m, %bb.l, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp83, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ], [ %i.ac, %bb.m ], [ %.pn.i, %bb.l ]
+.body.sink.split:                                 ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.l
+  %.pn.ph = phi { ptr, i32 } [ %.pn.i, %bb.l ], [ %lpad.loopexit.split-lp83, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+  call void @_ZN6icu_7810CharStringD2Ev(ptr noundef nonnull align 8 dead_on_return(60) dereferenceable(60) %10) #13
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.m
+  %.pn = phi { ptr, i32 } [ %i.ac, %bb.m ], [ %.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #13
   br label %bb.aj
 
