@@ -196,9 +196,8 @@ bb.a:
 
 vector.body:                                      ; preds = %bb.a, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %bb.a ] ; 2 uses
-  %vec.ind = phi <8 x i32> [ %vec.ind.next, %vector.body ], [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %bb.a ] ; 2 uses
-  %vec.ind43 = phi <8 x i32> [ %vec.ind.next44, %vector.body ], [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %bb.a ] ; 3 uses
-  %i.f = shl nuw nsw <8 x i32> %vec.ind, splat (i32 2)
+  %vec.ind43 = phi <8 x i32> [ %vec.ind.next44, %vector.body ], [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %bb.a ] ; 4 uses
+  %i.f = shl nuw nsw <8 x i32> %vec.ind43, splat (i32 2)
   %i.g = and <8 x i32> %i.f, splat (i32 120)
   %i.h = or disjoint <8 x i32> %i.g, splat (i32 132)
   %i.i = lshr <8 x i32> %vec.ind43, splat (i32 5)
@@ -212,7 +211,6 @@ vector.body:                                      ; preds = %bb.a, %vector.body
   %i.q = getelementptr inbounds nuw [2 x i8], ptr %i.e, i64 %index
   store <8 x i16> %i.p, ptr %i.q, align 2, !tbaa !31
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next44 = add <8 x i32> %vec.ind43, splat (i32 8)
   %i.r = icmp eq i64 %index.next, 256
   br i1 %i.r, label %.loopexit, label %vector.body, !llvm.loop !61

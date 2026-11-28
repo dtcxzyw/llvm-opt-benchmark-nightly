@@ -23,29 +23,34 @@ bb.a:
   %wide.trip.count = zext nneg i32 %0 to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %0, 4
   %i.d = sub i64 %i.c, %i.b
-  %diff.check = icmp ugt i64 %i.d, -16
+  %diff.check = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader19, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483646   ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind17 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 2 uses
-  %i.e = uitofp nneg <2 x i32> %vec.ind to <2 x double>
-  %i.f = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %index
-  store <2 x double> %i.e, ptr %i.f, align 8, !tbaa !13
-  %3 = uitofp nneg <2 x i32> %vec.ind17 to <2 x double> ; 2 uses
-  %i.g = fmul nnan <2 x double> %3, %3            ; 2 uses
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 3 uses
+  %step.add = add <2 x i32> %vec.ind, splat (i32 2)
+  %3 = uitofp nneg <2 x i32> %vec.ind to <2 x double> ; 3 uses
+  %i.e = uitofp nneg <2 x i32> %step.add to <2 x double> ; 3 uses
+  %i.f = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %index ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  store <2 x double> %3, ptr %i.f, align 8, !tbaa !13
+  store <2 x double> %i.e, ptr %4, align 8, !tbaa !13
+  %5 = fmul nnan <2 x double> %3, %3              ; 2 uses
+  %i.g = fmul nnan <2 x double> %i.e, %i.e        ; 2 uses
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %index ; 2 uses
+  %6 = fmul <2 x double> %5, %5
   %i.i = fmul <2 x double> %i.g, %i.g
-  store <2 x double> %i.i, ptr %i.h, align 8, !tbaa !13
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
-  %vec.ind.next18 = add <2 x i32> %vec.ind17, splat (i32 2)
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  store <2 x double> %6, ptr %i.h, align 8, !tbaa !13
+  store <2 x double> %i.i, ptr %7, align 8, !tbaa !13
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %vec.ind.next18 = add <2 x i32> %vec.ind, splat (i32 4)
   %i.j = icmp eq i64 %index.next, %n.vec
   br i1 %i.j, label %middle.block, label %vector.body, !llvm.loop !17
 
@@ -169,32 +174,37 @@ bb.a:
 .lr.ph.preheader.i:                               ; preds = %.lr.ph16
   %i.z = ptrtoaddr ptr %i.v to i64
   %wide.trip.count.i = zext nneg i32 %i.u to i64  ; 9 uses
-  %min.iters.check46 = icmp eq i32 %i.u, 1
+  %min.iters.check46 = icmp ult i32 %i.u, 4
   %i.aa = sub i64 %i.x, %i.z
-  %diff.check48 = icmp ugt i64 %i.aa, -16
+  %diff.check48 = icmp ugt i64 %i.aa, -32
   %or.cond = select i1 %min.iters.check46, i1 true, i1 %diff.check48
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.ph49
 
 vector.ph49:                                      ; preds = %.lr.ph.preheader.i
-  %n.vec50 = and i64 %wide.trip.count.i, 2147483646 ; 3 uses
+  %n.vec50 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   br label %vector.body51
 
 vector.body51:                                    ; preds = %vector.body51, %vector.ph49
-  %index52 = phi i64 [ 0, %vector.ph49 ], [ %index.next54, %vector.body51 ] ; 3 uses
-  %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph49 ], [ %vec.ind.next, %vector.body51 ] ; 2 uses
-  %vec.ind53 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph49 ], [ %vec.ind.next55, %vector.body51 ] ; 2 uses
-  %i.ab = uitofp nneg <2 x i32> %vec.ind to <2 x double>
-  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %index52
-  store <2 x double> %i.ab, ptr %i.ac, align 8, !tbaa !13
-  %2 = uitofp nneg <2 x i32> %vec.ind53 to <2 x double> ; 2 uses
-  %i.ad = fmul nnan <2 x double> %2, %2           ; 2 uses
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %index52
+  %index52 = phi i64 [ 0, %vector.ph49 ], [ %index.next53, %vector.body51 ] ; 3 uses
+  %vec.ind = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph49 ], [ %vec.ind.next55, %vector.body51 ] ; 3 uses
+  %step.add = add <2 x i32> %vec.ind, splat (i32 2)
+  %2 = uitofp nneg <2 x i32> %vec.ind to <2 x double> ; 3 uses
+  %i.ab = uitofp nneg <2 x i32> %step.add to <2 x double> ; 3 uses
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %index52 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
+  store <2 x double> %2, ptr %i.ac, align 8, !tbaa !13
+  store <2 x double> %i.ab, ptr %3, align 8, !tbaa !13
+  %4 = fmul nnan <2 x double> %2, %2              ; 2 uses
+  %i.ad = fmul nnan <2 x double> %i.ab, %i.ab     ; 2 uses
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %index52 ; 2 uses
+  %5 = fmul <2 x double> %4, %4
   %i.af = fmul <2 x double> %i.ad, %i.ad
-  store <2 x double> %i.af, ptr %i.ae, align 8, !tbaa !13
-  %index.next54 = add nuw i64 %index52, 2         ; 2 uses
-  %vec.ind.next = add <2 x i32> %vec.ind, splat (i32 2)
-  %vec.ind.next55 = add <2 x i32> %vec.ind53, splat (i32 2)
-  %i.ag = icmp eq i64 %index.next54, %n.vec50
+  %6 = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
+  store <2 x double> %5, ptr %i.ae, align 8, !tbaa !13
+  store <2 x double> %i.af, ptr %6, align 8, !tbaa !13
+  %index.next53 = add nuw i64 %index52, 4         ; 2 uses
+  %vec.ind.next55 = add <2 x i32> %vec.ind, splat (i32 4)
+  %i.ag = icmp eq i64 %index.next53, %n.vec50
   br i1 %i.ag, label %middle.block56, label %vector.body51, !llvm.loop !20
 
 middle.block56:                                   ; preds = %vector.body51

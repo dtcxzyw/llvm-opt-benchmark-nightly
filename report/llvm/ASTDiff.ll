@@ -205,7 +205,7 @@ _ZNSt6vectorIN5clang4diff6NodeIdESaIS2_EED2Ev.exit63.i: ; preds = %bb.n
 
 bb.x:                                             ; preds = %.loopexit.i, %.lr.ph250.i
   %.sroa.0187.0249.i = phi ptr [ %i.ho, %.lr.ph250.i ], [ %i.is, %.loopexit.i ] ; 2 uses
-  %i.hx = load i32, ptr %.sroa.0187.0249.i, align 4, !tbaa !461, !noalias !938 ; 3 uses
+  %i.hx = load i32, ptr %.sroa.0187.0249.i, align 4, !tbaa !461, !noalias !938 ; 2 uses
   %i.hy = tail call noundef zeroext i1 @_ZNK5clang4diff7ASTDiff4Impl9identicalENS0_6NodeIdES3_(ptr noundef nonnull readonly align 8 dereferenceable(40) %0, i32 %i.ht, i32 %i.hx), !noalias !938
   br i1 %i.hy, label %bb.y, label %.loopexit.i
 
@@ -240,28 +240,22 @@ bb.aa:                                            ; preds = %bb.z
 
 vector.ph204:                                     ; preds = %.lr.ph.preheader.i
   %n.vec205 = and i64 %wide.trip.count.i, 2147483640 ; 3 uses
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.hx, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
-  %induction = add <4 x i32> %broadcast.splat, <i32 0, i32 1, i32 2, i32 3>
   %invariant.gep262 = getelementptr [4 x i8], ptr %i.ai, i64 %i.hz
   br label %vector.body209
 
 vector.body209:                                   ; preds = %vector.body209, %vector.ph204
   %index210 = phi i64 [ 0, %vector.ph204 ], [ %index.next213, %vector.body209 ] ; 3 uses
-  %vec.ind = phi <4 x i32> [ %induction, %vector.ph204 ], [ %vec.ind.next, %vector.body209 ] ; 3 uses
-  %vec.ind211 = phi <4 x i32> [ %induction208, %vector.ph204 ], [ %vec.ind.next214, %vector.body209 ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
-  %step.add212 = add <4 x i32> %vec.ind211, splat (i32 4)
+  %vec.ind211 = phi <4 x i32> [ %induction208, %vector.ph204 ], [ %vec.ind.next214, %vector.body209 ] ; 4 uses
+  %step.add212 = add <4 x i32> %vec.ind211, splat (i32 4) ; 2 uses
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %index210 ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %gep, i64 16
-  store <4 x i32> %vec.ind, ptr %gep, align 4, !tbaa !461, !noalias !938
-  store <4 x i32> %step.add, ptr %i.ij, align 4, !tbaa !461, !noalias !938
+  store <4 x i32> %vec.ind211, ptr %gep, align 4, !tbaa !461, !noalias !938
+  store <4 x i32> %step.add212, ptr %i.ij, align 4, !tbaa !461, !noalias !938
   %gep263 = getelementptr [4 x i8], ptr %invariant.gep262, i64 %index210 ; 2 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %gep263, i64 16
   store <4 x i32> %vec.ind211, ptr %gep263, align 4, !tbaa !461, !noalias !938
   store <4 x i32> %step.add212, ptr %i.ik, align 4, !tbaa !461, !noalias !938
   %index.next213 = add nuw i64 %index210, 8       ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next214 = add <4 x i32> %vec.ind211, splat (i32 8)
   %i.il = icmp eq i64 %index.next213, %n.vec205
   br i1 %i.il, label %middle.block215, label %vector.body209, !llvm.loop !920

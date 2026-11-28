@@ -204,28 +204,25 @@ vector.ph:                                        ; preds = %.lr.ph
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.ind62 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next65, %vector.body ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %vec.ind62 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next65, %vector.body ] ; 4 uses
+  %step.add = add <4 x i32> %vec.ind62, splat (i32 4) ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %index ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  store <4 x i32> %vec.ind, ptr %i.x, align 4, !tbaa !10
+  store <4 x i32> %vec.ind62, ptr %i.x, align 4, !tbaa !10
   store <4 x i32> %step.add, ptr %i.y, align 4, !tbaa !10
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %index ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %wide.load = load <4 x i32>, ptr %i.z, align 4, !tbaa !10
   %wide.load64 = load <4 x i32>, ptr %i.aa, align 4, !tbaa !10
   %i.ab = shl nuw <4 x i32> %vec.ind62, splat (i32 2)
-  %step.add63 = shl <4 x i32> %vec.ind62, splat (i32 2)
-  %1 = add <4 x i32> %step.add63, splat (i32 16)
+  %step.add63 = shl nuw <4 x i32> %step.add, splat (i32 2)
   %i.ac = add <4 x i32> %wide.load, %i.ab
-  %i.ad = add <4 x i32> %wide.load64, %1
+  %i.ad = add <4 x i32> %wide.load64, %step.add63
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %index ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   store <4 x i32> %i.ac, ptr %i.ae, align 4, !tbaa !10
   store <4 x i32> %i.ad, ptr %i.af, align 4, !tbaa !10
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next65 = add <4 x i32> %vec.ind62, splat (i32 8)
   %i.ag = icmp eq i64 %index.next, %n.vec
   br i1 %i.ag, label %middle.block, label %vector.body, !llvm.loop !70

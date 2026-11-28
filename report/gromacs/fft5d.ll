@@ -205,14 +205,12 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
-  %vec.ind = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind587 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next589, %vector.body ] ; 2 uses
-  %vec.ind588 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next590, %vector.body ] ; 2 uses
-  %i.ci = mul <8 x i32> %broadcast.splat, %vec.ind
+  %vec.ind588 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next590, %vector.body ] ; 4 uses
+  %i.ci = mul <8 x i32> %broadcast.splat, %vec.ind588
   %i.cj = sdiv <8 x i32> %i.ci, %broadcast.splat582
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %index
   store <8 x i32> %i.cj, ptr %i.ck, align 4, !tbaa !9
-  %i.cl = mul <8 x i32> %broadcast.splat584, %vec.ind587
+  %i.cl = mul <8 x i32> %broadcast.splat584, %vec.ind588
   %i.cm = sdiv <8 x i32> %i.cl, %broadcast.splat582
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %index
   store <8 x i32> %i.cm, ptr %i.cn, align 4, !tbaa !9
@@ -221,8 +219,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cq = getelementptr inbounds nuw [4 x i8], ptr %i.cf, i64 %index
   store <8 x i32> %i.cp, ptr %i.cq, align 4, !tbaa !9
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
-  %vec.ind.next589 = add <8 x i32> %vec.ind587, splat (i32 8)
   %vec.ind.next590 = add <8 x i32> %vec.ind588, splat (i32 8)
   %i.cr = icmp eq i64 %index.next, %n.vec
   br i1 %i.cr, label %middle.block, label %vector.body, !llvm.loop !42
@@ -260,14 +256,12 @@ vector.ph593:                                     ; preds = %.lr.ph475.preheader
 
 vector.body603:                                   ; preds = %vector.body603, %vector.ph593
   %index604 = phi i64 [ 0, %vector.ph593 ], [ %index.next608, %vector.body603 ] ; 4 uses
-  %vec.ind605 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph593 ], [ %vec.ind.next609, %vector.body603 ] ; 2 uses
-  %vec.ind606 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph593 ], [ %vec.ind.next610, %vector.body603 ] ; 2 uses
-  %vec.ind607 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph593 ], [ %vec.ind.next611, %vector.body603 ] ; 2 uses
-  %i.cv = mul <8 x i32> %broadcast.splat596.a, %vec.ind605
+  %vec.ind607 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph593 ], [ %vec.ind.next611, %vector.body603 ] ; 4 uses
+  %i.cv = mul <8 x i32> %broadcast.splat596.a, %vec.ind607
   %i.cw = sdiv <8 x i32> %i.cv, %broadcast.splat598.a
   %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %index604
   store <8 x i32> %i.cw, ptr %i.cx, align 4, !tbaa !9
-  %i.cy = mul <8 x i32> %broadcast.splat600, %vec.ind606
+  %i.cy = mul <8 x i32> %broadcast.splat600, %vec.ind607
   %i.cz = sdiv <8 x i32> %i.cy, %broadcast.splat598.a
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %index604
   store <8 x i32> %i.cz, ptr %i.da, align 4, !tbaa !9
@@ -276,8 +270,6 @@ vector.body603:                                   ; preds = %vector.body603, %ve
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.cg, i64 %index604
   store <8 x i32> %i.dc, ptr %i.dd, align 4, !tbaa !9
   %index.next608 = add nuw i64 %index604, 8       ; 2 uses
-  %vec.ind.next609 = add <8 x i32> %vec.ind605, splat (i32 8)
-  %vec.ind.next610 = add <8 x i32> %vec.ind606, splat (i32 8)
   %vec.ind.next611 = add <8 x i32> %vec.ind607, splat (i32 8)
   %i.de = icmp eq i64 %index.next608, %n.vec594
   br i1 %i.de, label %middle.block612, label %vector.body603, !llvm.loop !43

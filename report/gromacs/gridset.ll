@@ -205,10 +205,10 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.bj = add nsw i64 %n.vec, %i.az               ; 3 uses
   %i.bk = add nsw i64 %n.vec, %i.ay               ; 2 uses
   %i.bl = trunc nuw nsw i64 %n.vec to i32
-  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %.02327, i64 0
+  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.av, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
   %induction = add <8 x i32> %broadcast.splat, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %broadcast.splatinsert44 = insertelement <8 x i32> poison, i32 %i.av, i64 0
+  %broadcast.splatinsert44 = insertelement <8 x i32> poison, i32 %.02327, i64 0
   %broadcast.splat45 = shufflevector <8 x i32> %broadcast.splatinsert44, <8 x i32> poison, <8 x i32> zeroinitializer
   %induction46 = add <8 x i32> %broadcast.splat45, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %invariant.gep = getelementptr [4 x i8], ptr %i.aw, i64 %i.ay
@@ -229,18 +229,18 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bm = getelementptr inbounds nuw i8, ptr %gep, i64 32
   %i.bn = getelementptr inbounds nuw i8, ptr %gep, i64 64
   %i.bo = getelementptr inbounds nuw i8, ptr %gep, i64 96
-  store <8 x i32> %vec.ind, ptr %gep, align 4, !tbaa !16
-  store <8 x i32> %step.add, ptr %i.bm, align 4, !tbaa !16
-  store <8 x i32> %step.add.2, ptr %i.bn, align 4, !tbaa !16
-  store <8 x i32> %step.add.3, ptr %i.bo, align 4, !tbaa !16
+  store <8 x i32> %vec.ind47, ptr %gep, align 4, !tbaa !16
+  store <8 x i32> %step.add48, ptr %i.bm, align 4, !tbaa !16
+  store <8 x i32> %step.add.249, ptr %i.bn, align 4, !tbaa !16
+  store <8 x i32> %step.add.350, ptr %i.bo, align 4, !tbaa !16
   %gep72 = getelementptr [4 x i8], ptr %invariant.gep71, i64 %index ; 4 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %gep72, i64 32
   %i.bq = getelementptr inbounds nuw i8, ptr %gep72, i64 64
   %i.br = getelementptr inbounds nuw i8, ptr %gep72, i64 96
-  store <8 x i32> %vec.ind47, ptr %gep72, align 4, !tbaa !16
-  store <8 x i32> %step.add48, ptr %i.bp, align 4, !tbaa !16
-  store <8 x i32> %step.add.249, ptr %i.bq, align 4, !tbaa !16
-  store <8 x i32> %step.add.350, ptr %i.br, align 4, !tbaa !16
+  store <8 x i32> %vec.ind, ptr %gep72, align 4, !tbaa !16
+  store <8 x i32> %step.add, ptr %i.bp, align 4, !tbaa !16
+  store <8 x i32> %step.add.2, ptr %i.bq, align 4, !tbaa !16
+  store <8 x i32> %step.add.3, ptr %i.br, align 4, !tbaa !16
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 32)
   %vec.ind.next51 = add <8 x i32> %vec.ind47, splat (i32 32)
@@ -257,8 +257,8 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.resume.val = phi i64 [ %i.bj, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
-  %bc.resume.val52 = phi i64 [ %i.bk, %vec.epilog.iter.check ], [ %i.ay, %vector.main.loop.iter.check ]
+  %bc.resume.val = phi i64 [ %i.bk, %vec.epilog.iter.check ], [ %i.ay, %vector.main.loop.iter.check ]
+  %bc.resume.val52 = phi i64 [ %i.bj, %vec.epilog.iter.check ], [ %i.az, %vector.main.loop.iter.check ]
   %n.vec53 = and i64 %i.ba, 2147483640            ; 5 uses
   %i.bt = add nsw i64 %n.vec53, %i.az             ; 2 uses
   %i.bu = add nsw i64 %n.vec53, %i.ay
@@ -280,9 +280,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %vec.ind61 = phi <8 x i32> [ %induction56, %vec.epilog.ph ], [ %vec.ind.next64, %vec.epilog.vector.body ] ; 2 uses
   %vec.ind62 = phi <8 x i32> [ %induction59, %vec.epilog.ph ], [ %vec.ind.next65, %vec.epilog.vector.body ] ; 2 uses
   %gep74 = getelementptr [4 x i8], ptr %invariant.gep73, i64 %index60
-  store <8 x i32> %vec.ind61, ptr %gep74, align 4, !tbaa !16
+  store <8 x i32> %vec.ind62, ptr %gep74, align 4, !tbaa !16
   %gep76 = getelementptr [4 x i8], ptr %invariant.gep75, i64 %index60
-  store <8 x i32> %vec.ind62, ptr %gep76, align 4, !tbaa !16
+  store <8 x i32> %vec.ind61, ptr %gep76, align 4, !tbaa !16
   %index.next63 = add nuw i64 %index60, 8         ; 2 uses
   %vec.ind.next64 = add <8 x i32> %vec.ind61, splat (i32 8)
   %vec.ind.next65 = add <8 x i32> %vec.ind62, splat (i32 8)

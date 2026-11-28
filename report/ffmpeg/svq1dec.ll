@@ -205,9 +205,8 @@ vector.ph:                                        ; preds = %.lr.ph162
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind311 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next312, %vector.body ] ; 2 uses
-  %i.gv = xor <4 x i32> %vec.ind, splat (i32 -1)
+  %vec.ind311 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next312, %vector.body ] ; 3 uses
+  %i.gv = xor <4 x i32> %vec.ind311, splat (i32 -1)
   %i.gw = add nsw <4 x i32> %broadcast.splat310, %i.gv
   %i.gx = shl nsw <4 x i32> %i.gw, splat (i32 2)
   %i.gy = lshr <4 x i32> %broadcast.splat, %i.gx
@@ -218,7 +217,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %index
   store <4 x i32> %i.hc, ptr %i.hd, align 16, !tbaa !35
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next312 = add <4 x i32> %vec.ind311, splat (i32 4)
   %i.he = icmp eq i64 %index.next, %n.vec
   br i1 %i.he, label %middle.block, label %vector.body, !llvm.loop !89
@@ -621,9 +619,8 @@ vector.ph241:                                     ; preds = %.lr.ph150
 
 vector.body249:                                   ; preds = %vector.body249, %vector.ph241
   %index250 = phi i64 [ 0, %vector.ph241 ], [ %index.next252, %vector.body249 ] ; 2 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph241 ], [ %vec.ind.next, %vector.body249 ] ; 2 uses
-  %vec.ind251 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph241 ], [ %vec.ind.next253, %vector.body249 ] ; 2 uses
-  %i.fn = xor <4 x i32> %vec.ind, splat (i32 -1)
+  %vec.ind251 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph241 ], [ %vec.ind.next253, %vector.body249 ] ; 3 uses
+  %i.fn = xor <4 x i32> %vec.ind251, splat (i32 -1)
   %i.fo = add nsw <4 x i32> %broadcast.splat248, %i.fn
   %i.fp = shl nsw <4 x i32> %i.fo, splat (i32 2)
   %i.fq = lshr <4 x i32> %broadcast.splat244, %i.fp
@@ -634,7 +631,6 @@ vector.body249:                                   ; preds = %vector.body249, %ve
   %i.fv = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %index250
   store <4 x i32> %i.fu, ptr %i.fv, align 16, !tbaa !35
   %index.next252 = add nuw i64 %index250, 4       ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %vec.ind.next253 = add <4 x i32> %vec.ind251, splat (i32 4)
   %i.fw = icmp eq i64 %index.next252, %n.vec242
   br i1 %i.fw, label %middle.block254, label %vector.body249, !llvm.loop !99

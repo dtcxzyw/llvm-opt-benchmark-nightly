@@ -105,7 +105,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br label %bb.a
 
 bb.a:                                             ; preds = %.lr.ph78.split.us, %._crit_edge.us
-  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %._crit_edge.us ], [ 0, %.lr.ph78.split.us ] ; 8 uses
+  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %._crit_edge.us ], [ 0, %.lr.ph78.split.us ] ; 7 uses
   %.07276.us = phi i32 [ %.2.us.lcssa, %._crit_edge.us ], [ 0, %.lr.ph78.split.us ] ; 6 uses
   %i.an = trunc nuw i64 %indvars.iv85 to i32
   %i.ao = uitofp nneg i32 %i.an to double
@@ -224,16 +224,11 @@ vector.memcheck:                                  ; preds = %.peel.next
 vector.ph:                                        ; preds = %vector.memcheck
   %i.cc = add i32 %.07276.us, %i.am               ; 2 uses
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %iv.rem, i64 0
-  %broadcast.splat = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert258 = insertelement <2 x double> poison, double %i.ar, i64 0
   %broadcast.splat259 = shufflevector <2 x double> %broadcast.splatinsert258, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert260 = insertelement <2 x double> poison, double %i.as, i64 0
   %broadcast.splat261 = shufflevector <2 x double> %broadcast.splatinsert260, <2 x double> poison, <2 x i32> zeroinitializer
-  %4 = trunc i64 %indvars.iv85 to i32
-  %5 = add i32 %4, 1
-  %broadcast.splatinsert262 = insertelement <2 x i32> poison, i32 %5, i64 0
-  %broadcast.splat263 = shufflevector <2 x i32> %broadcast.splatinsert262, <2 x i32> poison, <2 x i32> zeroinitializer
-  %induction = add <2 x i32> %broadcast.splat263, <i32 0, i32 1>
   %.scalar = add nsw i64 %indvars.iv85, -1
   %i.cd = insertelement <2 x i64> poison, i64 %.scalar, i64 0
   %i.ce = shufflevector <2 x i64> %i.cd, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -242,14 +237,11 @@ vector.ph:                                        ; preds = %vector.memcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %vec.ind = phi <2 x i64> [ <i64 1, i64 2>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind264 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next270, %vector.body ] ; 2 uses
-  %vec.ind265 = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next271, %vector.body ] ; 2 uses
-  %vec.ind266 = phi <2 x i32> [ %induction, %vector.ph ], [ %vec.ind.next272, %vector.body ] ; 2 uses
-  %vec.ind267 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next273, %vector.body ] ; 2 uses
+  %vec.ind267 = phi <2 x i32> [ <i32 1, i32 2>, %vector.ph ], [ %vec.ind.next273, %vector.body ] ; 4 uses
   %i.cf = trunc i64 %index to i32
   %i.cg = shl i32 %i.cf, 1
   %i.ch = add i32 %.07276.us, %i.cg
-  %i.ci = uitofp nneg <2 x i32> %vec.ind264 to <2 x double>
+  %i.ci = uitofp nneg <2 x i32> %vec.ind267 to <2 x double>
   %i.cj = fdiv <2 x double> %i.ci, %broadcast.splat255
   %i.ck = getelementptr [8 x i8], ptr %i.p, i64 %index
   %i.cl = getelementptr i8, ptr %i.ck, i64 8
@@ -264,20 +256,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cr = getelementptr [4 x i8], ptr %i.aw, i64 %i.cq ; 3 uses
   %i.cs = trunc nsw <2 x i64> %i.cp to <2 x i32>
   %i.ct = getelementptr [4 x i8], ptr %i.cr, i64 %i.az
-  %i.cu = add <2 x i32> %broadcast.splat, %vec.ind265 ; 2 uses
+  %i.cu = add <2 x i32> %broadcast.splat, %vec.ind267 ; 2 uses
   %i.cv = getelementptr [4 x i8], ptr %i.cr, i64 %i.ba
   %interleaved.vec = shufflevector <2 x i32> %i.cs, <2 x i32> %i.cu, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x i32> %interleaved.vec, ptr %i.cr, align 4, !tbaa !35
-  %6 = add <2 x i32> %broadcast.splat, %vec.ind267
-  %interleaved.vec268 = shufflevector <2 x i32> %i.cu, <2 x i32> %6, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x i32> %interleaved.vec268, ptr %i.ct, align 4, !tbaa !35
-  %interleaved.vec269 = shufflevector <2 x i32> %vec.ind266, <2 x i32> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %interleaved.vec263 = shufflevector <2 x i32> %i.cu, <2 x i32> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  store <4 x i32> %interleaved.vec263, ptr %i.ct, align 4, !tbaa !35
+  %interleaved.vec269 = shufflevector <2 x i32> %vec.ind267, <2 x i32> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   store <4 x i32> %interleaved.vec269, ptr %i.cv, align 4, !tbaa !35
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
-  %vec.ind.next270 = add <2 x i32> %vec.ind264, splat (i32 2)
-  %vec.ind.next271 = add <2 x i32> %vec.ind265, splat (i32 2)
-  %vec.ind.next272 = add <2 x i32> %vec.ind266, splat (i32 2)
   %vec.ind.next273 = add <2 x i32> %vec.ind267, splat (i32 2)
   %i.cw = icmp eq i64 %index.next, %n.vec
   br i1 %i.cw, label %middle.block, label %vector.body, !llvm.loop !25

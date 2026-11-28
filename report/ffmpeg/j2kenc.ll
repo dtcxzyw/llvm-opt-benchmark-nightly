@@ -205,10 +205,8 @@ vector.ph:
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
   %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.ind36 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next39, %vector.body ] ; 3 uses
-  %vec.ind37 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next40, %vector.body ] ; 2 uses
-  %vec.ind38 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next41, %vector.body ] ; 2 uses
-  %i.a = mul <4 x i32> %vec.ind37, splat (i32 384)
+  %vec.ind38 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next41, %vector.body ] ; 4 uses
+  %i.a = mul <4 x i32> %vec.ind38, splat (i32 384)
   %i.b = tail call <4 x i32> @llvm.usub.sat.v4i32(<4 x i32> %i.a, <4 x i32> splat (i32 18432))
   %i.c = getelementptr inbounds nuw [4 x i8], ptr @lut_nmsedec_sig, i64 %index
   store <4 x i32> %i.b, ptr %i.c, align 16, !tbaa !39
@@ -219,11 +217,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.h = and <4 x i32> %i.g, splat (i32 65408)
   %i.i = getelementptr inbounds nuw [4 x i8], ptr @lut_nmsedec_sig0, i64 %index
   store <4 x i32> %i.h, ptr %i.i, align 16, !tbaa !39
-  %i.j = lshr <4 x i32> %vec.ind36, splat (i32 5)
+  %i.j = lshr <4 x i32> %vec.ind38, splat (i32 5)
   %i.k = or <4 x i32> %i.j, splat (i32 1)         ; 3 uses
   %i.l = add nsw <4 x i32> %i.k, splat (i32 -2)
-  %0 = shl nuw nsw <4 x i32> %vec.ind36, splat (i32 7)
-  %i.m = shl nuw nsw <4 x i32> %vec.ind38, splat (i32 7)
+  %i.m = shl nuw nsw <4 x i32> %vec.ind38, splat (i32 7) ; 2 uses
   %i.n = mul nsw <4 x i32> %i.l, %i.m
   %i.o = add nsw <4 x i32> %i.n, splat (i32 8192)
   %i.p = mul <4 x i32> %i.k, splat (i32 -2048)
@@ -232,7 +229,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.s = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.r, <4 x i32> zeroinitializer)
   %i.t = getelementptr inbounds nuw [4 x i8], ptr @lut_nmsedec_ref, i64 %index
   store <4 x i32> %i.s, ptr %i.t, align 16, !tbaa !39
-  %i.u = sub nsw <4 x i32> %i.e, %0               ; 2 uses
+  %i.u = sub nsw <4 x i32> %i.e, %i.m             ; 2 uses
   %i.v = shl nsw <4 x i32> %i.u, splat (i32 1)
   %i.w = icmp sgt <4 x i32> %i.u, splat (i32 -4065)
   %i.x = add nsw <4 x i32> %i.v, splat (i32 8256)
@@ -242,8 +239,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.z, ptr %i.aa, align 16, !tbaa !39
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw nsw <4 x i64> %vec.ind, splat (i64 4)
-  %vec.ind.next39 = add <4 x i32> %vec.ind36, splat (i32 4)
-  %vec.ind.next40 = add <4 x i32> %vec.ind37, splat (i32 4)
   %vec.ind.next41 = add <4 x i32> %vec.ind38, splat (i32 4)
   %i.ab = icmp eq i64 %index.next, 128
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !221

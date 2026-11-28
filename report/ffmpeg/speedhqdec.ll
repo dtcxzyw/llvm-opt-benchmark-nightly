@@ -204,7 +204,7 @@ vector.ph:
   %scevgep = getelementptr inbounds nuw i8, ptr %i.c, i64 1
   store i32 67372036, ptr %scevgep, align 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store <4 x i16> <i16 1, i16 5, i16 9, i16 13>, ptr %i.g, align 2, !tbaa !44
+  store <4 x i16> <i16 5, i16 9, i16 13, i16 17>, ptr %i.g, align 2, !tbaa !44
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 2
   store <4 x i16> <i16 1, i16 2, i16 3, i16 4>, ptr %i.h, align 2, !tbaa !44
   %scevgep73 = getelementptr inbounds nuw i8, ptr %i.c, i64 5

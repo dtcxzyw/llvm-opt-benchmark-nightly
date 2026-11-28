@@ -205,18 +205,16 @@ vector.ph87:                                      ; preds = %_ZN2cv3Mat2atIfEERT
 vector.body93:                                    ; preds = %vector.body93, %vector.ph87
   %index94 = phi i64 [ 0, %vector.ph87 ], [ %index.next98, %vector.body93 ] ; 2 uses
   %vec.ind95 = phi <4 x i64> [ <i64 1, i64 2, i64 3, i64 4>, %vector.ph87 ], [ %vec.ind.next99, %vector.body93 ] ; 2 uses
-  %vec.ind96 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph87 ], [ %vec.ind.next100, %vector.body93 ] ; 2 uses
-  %vec.ind97 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph87 ], [ %vec.ind.next101, %vector.body93 ] ; 2 uses
+  %vec.ind97 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph87 ], [ %vec.ind.next101, %vector.body93 ] ; 3 uses
   %i.be = icmp samesign ult <4 x i64> %vec.ind95, %broadcast.splat90.a
   %i.bf = sub <4 x i32> %broadcast.splat92, %vec.ind97
-  %i.bg = select <4 x i1> %i.be, <4 x i32> %vec.ind96, <4 x i32> %i.bf
+  %i.bg = select <4 x i1> %i.be, <4 x i32> %vec.ind97, <4 x i32> %i.bf
   %i.bh = uitofp <4 x i32> %i.bg to <4 x float>
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %index94
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 4
   store <4 x float> %i.bh, ptr %i.bj, align 4, !tbaa !30
   %index.next98 = add nuw i64 %index94, 4         ; 2 uses
   %vec.ind.next99 = add nuw nsw <4 x i64> %vec.ind95, splat (i64 4)
-  %vec.ind.next100 = add <4 x i32> %vec.ind96, splat (i32 4)
   %vec.ind.next101 = add <4 x i32> %vec.ind97, splat (i32 4)
   %i.bk = icmp eq i64 %index.next98, %n.vec88
   br i1 %i.bk, label %middle.block102, label %vector.body93, !llvm.loop !43
@@ -269,18 +267,16 @@ vector.ph:                                        ; preds = %_ZN2cv3Mat2atIfEERT
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <4 x i64> [ <i64 1, i64 2, i64 3, i64 4>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %vec.ind81 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next83, %vector.body ] ; 2 uses
-  %vec.ind82 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next84, %vector.body ] ; 2 uses
+  %vec.ind82 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next84, %vector.body ] ; 3 uses
   %i.bw = icmp samesign ult <4 x i64> %vec.ind, %broadcast.splat
   %i.bx = sub <4 x i32> %broadcast.splat80, %vec.ind82
-  %i.by = select <4 x i1> %i.bw, <4 x i32> %vec.ind81, <4 x i32> %i.bx
+  %i.by = select <4 x i1> %i.bw, <4 x i32> %vec.ind82, <4 x i32> %i.bx
   %i.bz = uitofp <4 x i32> %i.by to <4 x float>
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %index
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 4
   store <4 x float> %i.bz, ptr %i.cb, align 4, !tbaa !30
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add nuw nsw <4 x i64> %vec.ind, splat (i64 4)
-  %vec.ind.next83 = add <4 x i32> %vec.ind81, splat (i32 4)
   %vec.ind.next84 = add <4 x i32> %vec.ind82, splat (i32 4)
   %i.cc = icmp eq i64 %index.next, %n.vec
   br i1 %i.cc, label %middle.block, label %vector.body, !llvm.loop !45

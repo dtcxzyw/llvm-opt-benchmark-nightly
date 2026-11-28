@@ -205,11 +205,11 @@ vector.ph:                                        ; preds = %.lr.ph.i
   %i.ab = add nsw i64 %n.vec, %i.x                ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.y, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %4 = trunc i64 %indvars.iv38.i to i32
-  %broadcast.splatinsert108 = insertelement <4 x i32> poison, i32 %4, i64 0
+  %broadcast.splatinsert108 = insertelement <4 x i32> poison, i32 %.036.i, i64 0
   %broadcast.splat109 = shufflevector <4 x i32> %broadcast.splatinsert108, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add <4 x i32> %broadcast.splat109, <i32 0, i32 1, i32 2, i32 3>
-  %broadcast.splatinsert110 = insertelement <4 x i32> poison, i32 %.036.i, i64 0
+  %4 = trunc i64 %indvars.iv38.i to i32
+  %broadcast.splatinsert110 = insertelement <4 x i32> poison, i32 %4, i64 0
   %broadcast.splat111 = shufflevector <4 x i32> %broadcast.splatinsert110, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction112 = add <4 x i32> %broadcast.splat111, <i32 0, i32 1, i32 2, i32 3>
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i, i64 %indvars.iv38.i
@@ -228,12 +228,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %broadcast.splat, ptr %i.af, align 4, !tbaa !17
   %i.ag = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.ad ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  store <4 x i32> %vec.ind, ptr %i.ag, align 4, !tbaa !17
-  store <4 x i32> %step.add, ptr %i.ah, align 4, !tbaa !17
+  store <4 x i32> %vec.ind113, ptr %i.ag, align 4, !tbaa !17
+  store <4 x i32> %step.add114, ptr %i.ah, align 4, !tbaa !17
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %index ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
-  store <4 x i32> %vec.ind113, ptr %i.ai, align 4, !tbaa !17
-  store <4 x i32> %step.add114, ptr %i.aj, align 4, !tbaa !17
+  store <4 x i32> %vec.ind, ptr %i.ai, align 4, !tbaa !17
+  store <4 x i32> %step.add, ptr %i.aj, align 4, !tbaa !17
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next115 = add <4 x i32> %vec.ind113, splat (i32 8)

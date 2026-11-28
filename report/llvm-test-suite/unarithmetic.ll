@@ -32,7 +32,7 @@ vector.ph:
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ] ; 4 uses
-  %vec.ind = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 5 uses
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next.1, %vector.body ] ; 5 uses
   %vec.ind85 = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next87.1, %vector.body ] ; 5 uses
   %step.add = add <4 x i32> %vec.ind, splat (i32 4)
   %step.add86 = add <4 x i8> %vec.ind85, splat (i8 4)

@@ -205,22 +205,19 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.ind120 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next122, %vector.body ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %vec.ind120 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next122, %vector.body ] ; 4 uses
+  %step.add = add <4 x i32> %vec.ind120, splat (i32 4) ; 2 uses
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %index ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  store <4 x i32> %vec.ind, ptr %i.ab, align 16, !tbaa !36
+  store <4 x i32> %vec.ind120, ptr %i.ab, align 16, !tbaa !36
   store <4 x i32> %step.add, ptr %i.ac, align 16, !tbaa !36
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %index ; 2 uses
   %i.ae = shl nuw nsw <4 x i32> %vec.ind120, splat (i32 1)
-  %step.add121 = shl <4 x i32> %vec.ind120, splat (i32 1)
-  %3 = add <4 x i32> %step.add121, splat (i32 8)
+  %step.add121 = shl nuw nsw <4 x i32> %step.add, splat (i32 1)
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   store <4 x i32> %i.ae, ptr %i.ad, align 16, !tbaa !36
-  store <4 x i32> %3, ptr %i.af, align 16, !tbaa !36
+  store <4 x i32> %step.add121, ptr %i.af, align 16, !tbaa !36
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next122 = add <4 x i32> %vec.ind120, splat (i32 8)
   %i.ag = icmp eq i64 %index.next, %n.vec
   br i1 %i.ag, label %middle.block, label %vector.body, !llvm.loop !173

@@ -205,27 +205,23 @@ vector.memcheck:                                  ; preds = %.lr.ph11.split
 vector.ph71:                                      ; preds = %vector.memcheck
   %n.vec72 = and i64 %wide.trip.count22, 2147483640 ; 3 uses
   %broadcast.splatinsert73 = insertelement <8 x float> poison, float %i.hd, i64 0
-  %broadcast.splat74 = shufflevector <8 x float> %broadcast.splatinsert73, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat74 = shufflevector <8 x float> %broadcast.splatinsert73, <8 x float> poison, <8 x i32> zeroinitializer
   br label %vector.body75
 
 vector.body75:                                    ; preds = %vector.body75, %vector.ph71
   %index76 = phi i64 [ 0, %vector.ph71 ], [ %index.next81, %vector.body75 ] ; 2 uses
   %vec.ind77 = phi <8 x i64> [ <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>, %vector.ph71 ], [ %vec.ind.next82.a, %vector.body75 ] ; 2 uses
-  %vec.ind78 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph71 ], [ %vec.ind.next83, %vector.body75 ] ; 2 uses
   %vec.ind79 = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %vector.ph71 ], [ %vec.ind.next84, %vector.body75 ] ; 2 uses
-  %i.ik = uitofp nneg <8 x i32> %vec.ind78 to <8 x float>
-  %i.il = fdiv <8 x float> %i.ik, %broadcast.splat74 ; 2 uses
+  %i.ik = uitofp nneg <8 x i32> %vec.ind79 to <8 x float>
+  %i.il = fdiv <8 x float> %i.ik, %broadcast.splat74 ; 3 uses
   %i.im = getelementptr inbounds nuw [4 x i8], ptr %i.hf, i64 %index76
   store <8 x float> %i.il, ptr %i.im, align 4, !tbaa !211, !alias.scope !849, !noalias !850
   %wide.gep = getelementptr inbounds nuw [16 x i8], ptr %i.ie, <8 x i64> %vec.ind77 ; 2 uses
   call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.il, <8 x ptr> align 4 %wide.gep, <8 x i1> splat (i1 true)), !tbaa !359, !alias.scope !850
-  %6 = uitofp nneg <8 x i32> %vec.ind79 to <8 x float>
-  %7 = fdiv <8 x float> %6, %broadcast.splat74
   %wide.gep80 = getelementptr inbounds nuw i8, <8 x ptr> %wide.gep, i64 4
-  call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %7, <8 x ptr> align 4 %wide.gep80, <8 x i1> splat (i1 true)), !tbaa !360, !alias.scope !850
+  call void @llvm.masked.scatter.v8f32.v8p0(<8 x float> %i.il, <8 x ptr> align 4 %wide.gep80, <8 x i1> splat (i1 true)), !tbaa !360, !alias.scope !850
   %index.next81 = add nuw i64 %index76, 8         ; 2 uses
   %vec.ind.next82.a = add nuw nsw <8 x i64> %vec.ind77, splat (i64 8)
-  %vec.ind.next83 = add <8 x i32> %vec.ind78, splat (i32 8)
   %vec.ind.next84 = add <8 x i32> %vec.ind79, splat (i32 8)
   %i.in = icmp eq i64 %index.next81, %n.vec72
   br i1 %i.in, label %middle.block85, label %vector.body75, !llvm.loop !844
