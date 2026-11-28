@@ -204,14 +204,14 @@ bb.l:                                             ; preds = %.preheader149.5, %.
 
 .preheader147:                                    ; preds = %.preheader148
   store i32 33, ptr @main.i__, align 4, !tbaa !10
-  store <4 x double> <double 1.000000e+00, double 4.000000e+00, double 1.000000e+01, double 2.000000e+01>, ptr @main.cc, align 32, !tbaa !14
-  store <4 x double> <double 3.500000e+01, double 5.600000e+01, double 8.400000e+01, double 1.200000e+02>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 32), align 32, !tbaa !14
-  store <4 x double> <double 1.650000e+02, double 2.200000e+02, double 2.860000e+02, double 3.640000e+02>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 64), align 32, !tbaa !14
-  store <4 x double> <double 4.550000e+02, double 5.600000e+02, double 6.800000e+02, double 8.160000e+02>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 96), align 32, !tbaa !14
-  store <4 x double> <double 9.690000e+02, double 1.140000e+03, double 1.330000e+03, double 1.540000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 128), align 32, !tbaa !14
-  store <4 x double> <double 1.771000e+03, double 2.024000e+03, double 2.300000e+03, double 2.600000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 160), align 32, !tbaa !14
-  store <4 x double> <double 2.925000e+03, double 3.276000e+03, double 3.654000e+03, double 4.060000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 192), align 32, !tbaa !14
-  store <4 x double> <double 4.495000e+03, double 4.960000e+03, double 5.456000e+03, double 5.984000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 224), align 32, !tbaa !14
+  store <4 x double> <double 0.000000e+00, double 0.000000e+00, double 2.000000e+00, double 4.000000e+00>, ptr @main.cc, align 32, !tbaa !14
+  store <4 x double> <double 1.100000e+01, double 2.100000e+01, double 3.600000e+01, double 5.700000e+01>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 32), align 32, !tbaa !14
+  store <4 x double> <double 8.600000e+01, double 1.210000e+02, double 1.670000e+02, double 2.220000e+02>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 64), align 32, !tbaa !14
+  store <4 x double> <double 2.880000e+02, double 3.660000e+02, double 4.580000e+02, double 5.620000e+02>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 96), align 32, !tbaa !14
+  store <4 x double> <double 6.830000e+02, double 8.190000e+02, double 9.720000e+02, double 1.143000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 128), align 32, !tbaa !14
+  store <4 x double> <double 1.334000e+03, double 1.543000e+03, double 1.775000e+03, double 2.028000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 160), align 32, !tbaa !14
+  store <4 x double> <double 2.304000e+03, double 2.604000e+03, double 2.930000e+03, double 3.280000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 192), align 32, !tbaa !14
+  store <4 x double> <double 3.659000e+03, double 4.065000e+03, double 4.500000e+03, double 4.965000e+03>, ptr getelementptr inbounds nuw (i8, ptr @main.cc, i64 224), align 32, !tbaa !14
   store i8 78, ptr @main.transa, align 1, !tbaa !11
   store i8 78, ptr @main.transb, align 1, !tbaa !11
   %i.hd = call i32 @dmmch_(ptr noundef nonnull @main.transa, ptr noundef nonnull @main.transb, ptr noundef nonnull @main.n, ptr noundef nonnull @c__1, ptr noundef nonnull @main.n, ptr noundef nonnull @c_b90, ptr noundef nonnull @main.ab, ptr noundef nonnull @c__65, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @main.ab, i64 33800), ptr noundef nonnull @c__65, ptr noundef nonnull @c_b104, ptr noundef nonnull @main.c__, ptr noundef nonnull @c__65, ptr noundef nonnull @main.ct, ptr noundef nonnull @main.g, ptr noundef nonnull @main.cc, ptr noundef nonnull @c__65, ptr noundef nonnull @main.eps, ptr noundef nonnull @main.err, ptr noundef nonnull @main.fatal, ptr nonnull poison, ptr noundef nonnull @c_true, i32 poison, i32 poison) ; 0 uses
@@ -372,12 +372,10 @@ vector.ph287:                                     ; preds = %.lr.ph197.preheader
 
 vector.body288:                                   ; preds = %vector.body288, %vector.ph287
   %index289 = phi i64 [ 0, %vector.ph287 ], [ %index.next293, %vector.body288 ] ; 2 uses
-  %vec.ind290 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph287 ], [ %vec.ind.next294, %vector.body288 ] ; 3 uses
-  %vec.ind291 = phi <4 x i32> [ <i32 2, i32 3, i32 4, i32 5>, %vector.ph287 ], [ %vec.ind.next295, %vector.body288 ] ; 2 uses
-  %vec.ind292 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph287 ], [ %vec.ind.next296, %vector.body288 ] ; 2 uses
+  %vec.ind292 = phi <4 x i32> [ <i32 1, i32 2, i32 3, i32 4>, %vector.ph287 ], [ %vec.ind.next296, %vector.body288 ] ; 5 uses
   %.neg298 = xor i64 %index289, -1
-  %i.ja = mul nuw nsw <4 x i32> %vec.ind291, %vec.ind290 ; 2 uses
-  %i.jb = mul nuw nsw <4 x i32> %i.ja, %vec.ind290
+  %i.ja = mul nuw nsw <4 x i32> %vec.ind292, %vec.ind292 ; 2 uses
+  %i.jb = mul nuw nsw <4 x i32> %i.ja, %vec.ind292
   %i.jc = lshr <4 x i32> %i.jb, splat (i32 1)
   %i.jd = add <4 x i32> %vec.ind292, splat (i32 -1)
   %i.je = mul nuw nsw <4 x i32> %i.ja, %i.jd
@@ -389,8 +387,6 @@ vector.body288:                                   ; preds = %vector.body288, %ve
   %reverse = sitofp <4 x i32> %i.ji to <4 x double>
   store <4 x double> %reverse, ptr %i.jh, align 8, !tbaa !14
   %index.next293 = add nuw i64 %index289, 4       ; 2 uses
-  %vec.ind.next294 = add <4 x i32> %vec.ind290, splat (i32 4)
-  %vec.ind.next295 = add <4 x i32> %vec.ind291, splat (i32 4)
   %vec.ind.next296 = add <4 x i32> %vec.ind292, splat (i32 4)
   %i.jj = icmp eq i64 %index.next293, %n.vec
   br i1 %i.jj, label %middle.block297, label %vector.body288, !llvm.loop !27

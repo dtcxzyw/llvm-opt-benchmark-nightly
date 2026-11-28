@@ -99,9 +99,8 @@ vector.ph113:                                     ; preds = %bb.a
 
 vector.body124:                                   ; preds = %vector.body124, %vector.ph113
   %index125 = phi i64 [ 0, %vector.ph113 ], [ %index.next128, %vector.body124 ] ; 2 uses
-  %vec.ind126 = phi <16 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, %vector.ph113 ], [ %vec.ind.next129, %vector.body124 ] ; 2 uses
-  %vec.ind127 = phi <16 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, %vector.ph113 ], [ %vec.ind.next130, %vector.body124 ] ; 2 uses
-  %i.as = uitofp nneg <16 x i32> %vec.ind126 to <16 x float> ; 3 uses
+  %vec.ind127 = phi <16 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, %vector.ph113 ], [ %vec.ind.next130, %vector.body124 ] ; 3 uses
+  %i.as = uitofp nneg <16 x i32> %vec.ind127 to <16 x float> ; 3 uses
   %i.at = fcmp reassoc nsz arcp contract afn ogt <16 x float> %broadcast.splat115, %i.as
   %i.au = tail call reassoc nsz arcp contract afn <16 x float> @llvm.pow.v16f32(<16 x float> %i.as, <16 x float> splat (float f0x3EAAAAAB))
   %i.av = fadd reassoc nnan nsz arcp contract afn <16 x float> %i.au, splat (float f0xC22144E3)
@@ -122,7 +121,6 @@ vector.body124:                                   ; preds = %vector.body124, %ve
   %i.bj = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %index125
   store <16 x i16> %predphi, ptr %i.bj, align 2, !tbaa !12
   %index.next128 = add nuw i64 %index125, 16      ; 2 uses
-  %vec.ind.next129 = add <16 x i32> %vec.ind126, splat (i32 16)
   %vec.ind.next130 = add <16 x i32> %vec.ind127, splat (i32 16)
   %i.bk = icmp eq i64 %index.next128, 65536
   br i1 %i.bk, label %.loopexit, label %vector.body124, !llvm.loop !83

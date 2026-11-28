@@ -118,16 +118,14 @@ vector.ph:                                        ; preds = %bb.b
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 4 uses
-  %vec.ind24 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next26, %vector.body ] ; 2 uses
-  %vec.ind25 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next27, %vector.body ] ; 2 uses
-  %i.s = lshr <4 x i32> %vec.ind, splat (i32 3)
-  %i.t = xor <4 x i32> %i.s, %vec.ind             ; 3 uses
-  %i.u = lshr <4 x i32> %vec.ind, splat (i32 2)
+  %vec.ind25 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next27, %vector.body ] ; 6 uses
+  %i.s = lshr <4 x i32> %vec.ind25, splat (i32 3)
+  %i.t = xor <4 x i32> %i.s, %vec.ind25           ; 3 uses
+  %i.u = lshr <4 x i32> %vec.ind25, splat (i32 2)
   %i.v = and <4 x i32> %i.u, splat (i32 1)
   %i.w = lshr <4 x i32> %i.t, splat (i32 1)
   %i.x = and <4 x i32> %i.w, splat (i32 2)
-  %i.y = shl nuw nsw <4 x i32> %vec.ind24, splat (i32 1)
+  %i.y = shl nuw nsw <4 x i32> %vec.ind25, splat (i32 1)
   %i.z = and <4 x i32> %i.y, splat (i32 4)
   %i.aa = shl nuw nsw <4 x i32> %i.t, splat (i32 2)
   %i.ab = and <4 x i32> %i.aa, splat (i32 8)
@@ -145,8 +143,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %index
   store <4 x i32> %i.am, ptr %i.an, align 4, !tbaa !34
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
-  %vec.ind.next26 = add <4 x i32> %vec.ind24, splat (i32 4)
   %vec.ind.next27 = add <4 x i32> %vec.ind25, splat (i32 4)
   %i.ao = icmp eq i64 %index.next, 64
   br i1 %i.ao, label %.loopexit, label %vector.body, !llvm.loop !67

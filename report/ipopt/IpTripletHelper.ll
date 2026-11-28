@@ -204,11 +204,10 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.ind16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 3 uses
+  %vec.ind16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 5 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %index ; 2 uses
-  %i.h = add <4 x i32> %broadcast.splat15, %vec.ind
-  %.reass = add <4 x i32> %vec.ind, %invariant.op
+  %i.h = add <4 x i32> %broadcast.splat15, %vec.ind16
+  %.reass = add <4 x i32> %vec.ind16, %invariant.op
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store <4 x i32> %i.h, ptr %i.g, align 4, !tbaa !118
   store <4 x i32> %.reass, ptr %i.i, align 4, !tbaa !118
@@ -219,7 +218,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.k, ptr %i.j, align 4, !tbaa !118
   store <4 x i32> %.reass21, ptr %i.l, align 4, !tbaa !118
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next18 = add <4 x i32> %vec.ind16, splat (i32 8)
   %i.m = icmp eq i64 %index.next, %n.vec
   br i1 %i.m, label %middle.block, label %vector.body, !llvm.loop !233
@@ -309,11 +307,10 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.ind16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 3 uses
+  %vec.ind16 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next18, %vector.body ] ; 5 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %index ; 2 uses
-  %i.h = add <4 x i32> %broadcast.splat15, %vec.ind
-  %.reass = add <4 x i32> %vec.ind, %invariant.op
+  %i.h = add <4 x i32> %broadcast.splat15, %vec.ind16
+  %.reass = add <4 x i32> %vec.ind16, %invariant.op
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store <4 x i32> %i.h, ptr %i.g, align 4, !tbaa !118
   store <4 x i32> %.reass, ptr %i.i, align 4, !tbaa !118
@@ -324,7 +321,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.k, ptr %i.j, align 4, !tbaa !118
   store <4 x i32> %.reass21, ptr %i.l, align 4, !tbaa !118
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next18 = add <4 x i32> %vec.ind16, splat (i32 8)
   %i.m = icmp eq i64 %index.next, %n.vec
   br i1 %i.m, label %middle.block, label %vector.body, !llvm.loop !235

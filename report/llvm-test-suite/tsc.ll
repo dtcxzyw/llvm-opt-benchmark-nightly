@@ -203,23 +203,19 @@ bb.a:
 
 vector.body5703:                                  ; preds = %bb.a, %vector.body5703
   %index5704 = phi i64 [ %index.next5710, %vector.body5703 ], [ 0, %bb.a ] ; 6 uses
-  %vec.ind5705 = phi <4 x i32> [ %vec.ind.next5711, %vector.body5703 ], [ <i32 1, i32 2, i32 3, i32 4>, %bb.a ] ; 2 uses
-  %vec.ind5706 = phi <4 x i32> [ %vec.ind.next5712, %vector.body5703 ], [ <i32 0, i32 1, i32 2, i32 3>, %bb.a ] ; 2 uses
-  %vec.ind5707 = phi <4 x i32> [ %vec.ind.next5713, %vector.body5703 ], [ <i32 0, i32 1, i32 2, i32 3>, %bb.a ] ; 2 uses
-  %vec.ind5708 = phi <4 x i32> [ %vec.ind.next5714, %vector.body5703 ], [ <i32 0, i32 1, i32 2, i32 3>, %bb.a ] ; 2 uses
-  %vec.ind5709 = phi <4 x i32> [ %vec.ind.next5715, %vector.body5703 ], [ <i32 0, i32 1, i32 2, i32 3>, %bb.a ] ; 2 uses
-  %i.b = uitofp nneg <4 x i32> %vec.ind5705 to <4 x float>
+  %vec.ind5709 = phi <4 x i32> [ %vec.ind.next5715, %vector.body5703 ], [ <i32 0, i32 1, i32 2, i32 3>, %bb.a ] ; 6 uses
+  %i.b = uitofp nneg <4 x i32> %vec.ind5709 to <4 x float>
   %i.c = getelementptr inbounds nuw [4 x i8], ptr @X, i64 %index5704
   store <4 x float> %i.b, ptr %i.c, align 16, !tbaa !174
-  %i.d = add <4 x i32> %vec.ind5706, splat (i32 2)
+  %i.d = add <4 x i32> %vec.ind5709, splat (i32 2)
   %i.e = uitofp nneg <4 x i32> %i.d to <4 x float>
   %i.f = getelementptr inbounds nuw [4 x i8], ptr @Y, i64 %index5704
   store <4 x float> %i.e, ptr %i.f, align 16, !tbaa !174
-  %i.g = add <4 x i32> %vec.ind5707, splat (i32 3)
+  %i.g = add <4 x i32> %vec.ind5709, splat (i32 3)
   %i.h = uitofp nneg <4 x i32> %i.g to <4 x float>
   %i.i = getelementptr inbounds nuw [4 x i8], ptr @Z, i64 %index5704
   store <4 x float> %i.h, ptr %i.i, align 16, !tbaa !174
-  %i.j = add <4 x i32> %vec.ind5708, splat (i32 4)
+  %i.j = add <4 x i32> %vec.ind5709, splat (i32 4)
   %i.k = uitofp nneg <4 x i32> %i.j to <4 x float>
   %i.l = getelementptr inbounds nuw [4 x i8], ptr @U, i64 %index5704
   store <4 x float> %i.k, ptr %i.l, align 16, !tbaa !174
@@ -228,10 +224,6 @@ vector.body5703:                                  ; preds = %bb.a, %vector.body5
   %i.o = getelementptr inbounds nuw [4 x i8], ptr @V, i64 %index5704
   store <4 x float> %i.n, ptr %i.o, align 16, !tbaa !174
   %index.next5710 = add nuw i64 %index5704, 4     ; 2 uses
-  %vec.ind.next5711 = add <4 x i32> %vec.ind5705, splat (i32 4)
-  %vec.ind.next5712 = add <4 x i32> %vec.ind5706, splat (i32 4)
-  %vec.ind.next5713 = add <4 x i32> %vec.ind5707, splat (i32 4)
-  %vec.ind.next5714 = add <4 x i32> %vec.ind5708, splat (i32 4)
   %vec.ind.next5715 = add <4 x i32> %vec.ind5709, splat (i32 4)
   %i.p = icmp eq i64 %index.next5710, 32000
   br i1 %i.p, label %set1d.exit1086, label %vector.body5703, !llvm.loop !191

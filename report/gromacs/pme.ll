@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %_ZNSt6vector
 vector.ph:                                        ; preds = %.lr.ph.split.us
   %n.vec = and i64 %wide.trip.count197, 2147483640 ; 3 uses
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %5, i64 0
-  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert255 = insertelement <8 x i32> poison, i32 %3, i64 0
   %broadcast.splat256 = shufflevector <8 x i32> %broadcast.splatinsert255, <8 x i32> poison, <8 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert257 = insertelement <8 x i32> poison, i32 %i.ag, i64 0
@@ -216,20 +216,17 @@ vector.ph:                                        ; preds = %.lr.ph.split.us
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %vec.ind = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
   %vec.ind261 = phi <8 x i32> [ <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>, %vector.ph ], [ %vec.ind.next262, %vector.body ] ; 2 uses
-  %i.ar = mul <8 x i32> %broadcast.splat, %vec.ind
+  %i.ar = mul <8 x i32> %broadcast.splat, %vec.ind261 ; 2 uses
   %i.as = sdiv <8 x i32> %i.ar, %broadcast.splat256
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %index
   store <8 x i32> %i.as, ptr %i.at, align 4, !tbaa !256
-  %8 = mul <8 x i32> %broadcast.splat, %vec.ind261
-  %i.au = add <8 x i32> %broadcast.splat258, %8
+  %i.au = add <8 x i32> %broadcast.splat258, %i.ar
   %i.av = sdiv <8 x i32> %i.au, %broadcast.splat256
   %i.aw = add <8 x i32> %broadcast.splat260, %i.av
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %index
   store <8 x i32> %i.aw, ptr %i.ax, align 4, !tbaa !256
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <8 x i32> %vec.ind, splat (i32 8)
   %vec.ind.next262 = add <8 x i32> %vec.ind261, splat (i32 8)
   %i.ay = icmp eq i64 %index.next, %n.vec
   br i1 %i.ay, label %middle.block, label %vector.body, !llvm.loop !610
